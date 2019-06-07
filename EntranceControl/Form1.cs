@@ -113,8 +113,10 @@ namespace EntranceControl
         }
         
         public void ParametersInitialization() {
-            // Create Output Folder
+            // Create Necessary Folders
             Directory.CreateDirectory("Report");
+            Directory.CreateDirectory("Owner");         // To Save Valid Persons Images
+            Directory.CreateDirectory("Vehicle");       // To Save Valid Persons Vehicle Images
             today = DateTime.UtcNow.Date;
 
             // Set PictureBox Settings
