@@ -1,7 +1,5 @@
 packages
 .vs
-car_speed_calculator/bin
-car_speed_calculator/res
-
-bin/
-obj/
+EntranceControl/bin
+EntranceControl/res
+EntranceControl/obj
