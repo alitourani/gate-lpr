@@ -92,7 +92,7 @@ namespace EntranceControl
 
             try {
                 connectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; Integrated Security = True; MultipleActiveResultSets = True;
-                    AttachDbFilename = C:\Users\Alex\Documents\Visual Studio 2015\Projects\EntranceControl\EntranceControl\GateDB.mdf";
+                    AttachDbFilename = D:\Git\gate-lpr\EntranceControl\GateDB.mdf";
                 cnn = new SqlConnection(connectionString);
                 dataAdapter = new SqlDataAdapter();
             } catch (Exception err) {
@@ -106,15 +106,14 @@ namespace EntranceControl
             gridView_Recent_Fill();
             gridView_LastCross_Fill();
             gridView_Valid_Fill();
-            gridView_Report_Fill();
-
-            // License-Plate Detector
-            
+            gridView_Report_Fill();            
         }
         
         public void ParametersInitialization() {
-            // Create Output Folder
+            // Create Necessary Folders
             Directory.CreateDirectory("Report");
+            Directory.CreateDirectory("Owner");         // To Save Valid Persons Images
+            Directory.CreateDirectory("Vehicle");       // To Save Valid Persons Vehicle Images
             today = DateTime.UtcNow.Date;
 
             // Set PictureBox Settings

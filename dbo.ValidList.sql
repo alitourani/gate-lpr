@@ -6,4 +6,3 @@
     [VehicleImage] NVARCHAR(50)         NULL,
     PRIMARY KEY CLUSTERED ([LPNumber] ASC)
 );
-
