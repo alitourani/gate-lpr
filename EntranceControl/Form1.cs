@@ -26,6 +26,7 @@ namespace EntranceControl
         SqlCommand command, command2;
         SqlDataReader dataReader, dataReader2;
         SqlDataAdapter dataAdapter;
+        Mat uploadedOwnerImage, uploadedVehicleImage;
 
         // ROI (Region of Interest) Size and Position
         public struct ROI {
@@ -189,6 +190,10 @@ namespace EntranceControl
             numericUpDownEdge2.Value = cannyThresholdSecond;
             numericUpDownMorphological_Open.Value = openKernel;
             numericUpDownMorphological_Close.Value = closeKernel;
+
+            // Data Management
+            uploadedOwnerImage = null;
+            uploadedVehicleImage = null;
         }
 
         private void gridView_Valid_Fill() {
@@ -415,13 +420,15 @@ namespace EntranceControl
             textBox_VehicleType.Text = "";
             textBox_VehicleColor.Text = "";
             radioButton_Man.Checked = true;
-            radioButton_Woman.Checked = true;
+            radioButton_Woman.Checked = false;
             textBox_OwnerName.Text = "";
             textBox_OwnerSurname.Text = "";
             textBox_NationalCode.Text = "";
             textBox_OwnerDescription.Text = "";
             pictureBox_OwnerImage.Image = Properties.Resources.OwnerImage;
             pictureBox_VehicleImage.Image = Properties.Resources.VehicleImage;
+            uploadedOwnerImage = null;
+            uploadedVehicleImage = null;
         }
 
         private void pictureBox_OwnerImage_Click(object sender, EventArgs e)
@@ -433,29 +440,26 @@ namespace EntranceControl
             if (dialog.ShowDialog() == DialogResult.OK) {
                 try {
                     pictureBox_OwnerImage.Image = null;
-                    pictureBox_OwnerImage.Image = new Bitmap(dialog.FileName);
+                    uploadedOwnerImage = CvInvoke.Imread(dialog.FileName);
+                    pictureBox_OwnerImage.Image = new Bitmap(uploadedOwnerImage.Bitmap);
                 } catch (Exception error) {
-                    MessageBox.Show("خطای زیر رخ داده است: \r\n" + error.ToString(), "خطا");
+                    MessageBox.Show("خطا در آپلود تصویر مالک خودرو: \r\n" + error.ToString(), "خطا");
                 }
             }
         }
 
-        private void pictureBox_VehicleImage_Click(object sender, EventArgs e)
-        {
+        private void pictureBox_VehicleImage_Click(object sender, EventArgs e) {
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Title = "تصویر خودرو را انتخاب کنید";
             dialog.Filter = "All Image Files|*.bmp;*.jpg;*.jpeg;*.png;*.tif;*.tiff";
 
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
+            if (dialog.ShowDialog() == DialogResult.OK) {
+                try {
                     pictureBox_VehicleImage.Image = null;
-                    pictureBox_VehicleImage.Image = new Bitmap(dialog.FileName);
-                }
-                catch (Exception error)
-                {
-                    MessageBox.Show("خطای زیر رخ داده است: \r\n" + error.ToString(), "خطا");
+                    uploadedVehicleImage = CvInvoke.Imread(dialog.FileName);
+                    pictureBox_VehicleImage.Image = new Bitmap(uploadedVehicleImage.Bitmap);
+                } catch (Exception error) {
+                    MessageBox.Show("خطا در آپلود تصویر خودرو: \r\n" + error.ToString(), "خطا");
                 }
             }
         }
@@ -617,7 +621,41 @@ namespace EntranceControl
 
         private void button_Register_Click(object sender, EventArgs e)
         {
-            // db_Insert_ValidList("19ق656", "1130136205", "Pride", "Sefid", processedFrame);
+            string LPNumber = "";
+            string NationalCode = "";
+            // Add Owner Information
+            if (textBox_OwnerName.Text.Length < 3 && textBox_OwnerSurname.Text.Length < 3 && textBox_NationalCode.Text.Length < 10) {
+                MessageBox.Show("همه فیلدهای ضروری مربوط به مالک را پر کنید");
+            } else {
+                bool TempGender = radioButton_Man.Checked ? true : false;
+                NationalCode = textBox_NationalCode.Text;
+                string TempDescription = (textBox_OwnerDescription.Text.Length < 3) ? "-نامشخص-" : textBox_OwnerDescription.Text;
+                db_Create_Owner(NationalCode, textBox_OwnerName.Text, textBox_OwnerSurname.Text, TempGender, TempDescription);
+            }
+            // Add Valid Car Information
+            if (textBox_VehicleColor.Text.Length < 2 && textBox_VehicleType.Text.Length < 1) {
+                MessageBox.Show("همه فیلدهای ضروری مربوط به خودروی مجاز را پر کنید");
+            } else {
+                LPNumber = numericUpDown_LP_NumberL_VehicleProperties.Value + "-" + comboBox_LP_Char_VehicleProperties.SelectedIndex
+                    + "-" + numericUpDown_LP_NumberR_VehicleProperties.Value + "-" + numericUpDown_LP_City_VehicleProperties.Value;
+                db_Create_ValidList(LPNumber, textBox_NationalCode.Text, textBox_VehicleType.Text, textBox_VehicleColor.Text, LPNumber);
+            }
+            // Add Vehicle Image
+            try {
+                String fileName = LPNumber + ".png";
+                uploadedVehicleImage.Save(Path.Combine("Vehicle", fileName));
+            } catch (Exception error) {
+                MessageBox.Show("خطا در آپلود تصویر خودروی جدید: \r\n" + error, "خطا");
+            }
+            // Add Owner Image
+            try {
+                String fileName = NationalCode + ".png";
+                uploadedOwnerImage.Save(Path.Combine("Owner", fileName));
+            } catch (Exception error) {
+                MessageBox.Show("خطا در آپلود تصویر مالک جدید: \r\n" + error, "خطا");
+            }
+            // Clear Fields
+            button_Clear_Click(sender, e);
         }
 
         private void button_SubmitCalibration_Click(object sender, EventArgs e)
@@ -671,7 +709,6 @@ namespace EntranceControl
                         MessageBox.Show("مالک جدید به درستی وارد لیست شد");
                 }
                 cnn.Close();
-                // Adding Owner's image to the directory
             } catch (Exception err) {
                 MessageBox.Show("خطا در تراکنش‌های دیتابیس:\n" + err.ToString(), "خطا");
                 cnn.Close();
@@ -710,13 +747,11 @@ namespace EntranceControl
 
         private void db_Create_ValidList(string LPNumber, string OwnerID, string VehicleType, string VehicleColor, string VehicleImage)
         {
-            try
-            {
+            try {
                 cnn.Open();
                 String query = "INSERT INTO ValidList(LPNumber, OwnerID, VehicleType, VehicleColor, VehicleImage)" +
                     " VALUES (@LPNumber, @OwnerID, @VehicleType, @VehicleColor, @VehicleImage)";
-                using (SqlCommand command = new SqlCommand(query, cnn))
-                {
+                using (SqlCommand command = new SqlCommand(query, cnn)) {
                     command.Parameters.AddWithValue("@LPNumber", LPNumber);
                     command.Parameters.AddWithValue("@OwnerID", OwnerID);
                     command.Parameters.AddWithValue("@VehicleType", VehicleType);
@@ -729,10 +764,7 @@ namespace EntranceControl
                         MessageBox.Show("گزارش جدید به درستی وارد لیست شد");
                 }
                 cnn.Close();
-                // Adding Vehicle Image to the directory
-            }
-            catch (Exception err)
-            {
+            } catch (Exception err) {
                 MessageBox.Show("خطا در تراکنش‌های دیتابیس:\n" + err.ToString(), "خطا");
                 cnn.Close();
             }
@@ -1024,7 +1056,7 @@ namespace EntranceControl
                 outputImage.Save(Path.Combine("Report", today.ToString("yyyy/MM"), fileName));
             } catch (Exception error) {
                 MessageBox.Show("خطای زیر در ذخیره تصویر رخ داده است: \r\n" + error, "خطا");
-            }            
+            }
         }
     }
 }
