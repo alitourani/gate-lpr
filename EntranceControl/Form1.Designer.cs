@@ -936,7 +936,7 @@
             // textBox_NationalCode
             // 
             this.textBox_NationalCode.Location = new System.Drawing.Point(13, 279);
-            this.textBox_NationalCode.MaxLength = 250;
+            this.textBox_NationalCode.MaxLength = 10;
             this.textBox_NationalCode.Name = "textBox_NationalCode";
             this.textBox_NationalCode.Size = new System.Drawing.Size(233, 32);
             this.textBox_NationalCode.TabIndex = 61;
@@ -988,7 +988,7 @@
             // textBox_OwnerDescription
             // 
             this.textBox_OwnerDescription.Location = new System.Drawing.Point(13, 318);
-            this.textBox_OwnerDescription.MaxLength = 250;
+            this.textBox_OwnerDescription.MaxLength = 50;
             this.textBox_OwnerDescription.Name = "textBox_OwnerDescription";
             this.textBox_OwnerDescription.Size = new System.Drawing.Size(233, 32);
             this.textBox_OwnerDescription.TabIndex = 54;
@@ -996,7 +996,7 @@
             // textBox_OwnerSurname
             // 
             this.textBox_OwnerSurname.Location = new System.Drawing.Point(13, 241);
-            this.textBox_OwnerSurname.MaxLength = 200;
+            this.textBox_OwnerSurname.MaxLength = 30;
             this.textBox_OwnerSurname.Name = "textBox_OwnerSurname";
             this.textBox_OwnerSurname.Size = new System.Drawing.Size(168, 32);
             this.textBox_OwnerSurname.TabIndex = 53;
@@ -1004,7 +1004,7 @@
             // textBox_OwnerName
             // 
             this.textBox_OwnerName.Location = new System.Drawing.Point(187, 241);
-            this.textBox_OwnerName.MaxLength = 100;
+            this.textBox_OwnerName.MaxLength = 20;
             this.textBox_OwnerName.Name = "textBox_OwnerName";
             this.textBox_OwnerName.Size = new System.Drawing.Size(143, 32);
             this.textBox_OwnerName.TabIndex = 52;
@@ -1012,7 +1012,7 @@
             // textBox_VehicleColor
             // 
             this.textBox_VehicleColor.Location = new System.Drawing.Point(13, 165);
-            this.textBox_VehicleColor.MaxLength = 100;
+            this.textBox_VehicleColor.MaxLength = 20;
             this.textBox_VehicleColor.Name = "textBox_VehicleColor";
             this.textBox_VehicleColor.Size = new System.Drawing.Size(233, 32);
             this.textBox_VehicleColor.TabIndex = 51;
@@ -1030,7 +1030,7 @@
             // textBox_VehicleType
             // 
             this.textBox_VehicleType.Location = new System.Drawing.Point(13, 124);
-            this.textBox_VehicleType.MaxLength = 100;
+            this.textBox_VehicleType.MaxLength = 20;
             this.textBox_VehicleType.Name = "textBox_VehicleType";
             this.textBox_VehicleType.Size = new System.Drawing.Size(233, 32);
             this.textBox_VehicleType.TabIndex = 49;

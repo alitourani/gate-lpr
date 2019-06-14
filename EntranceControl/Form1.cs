@@ -26,6 +26,7 @@ namespace EntranceControl
         SqlCommand command, command2;
         SqlDataReader dataReader, dataReader2;
         SqlDataAdapter dataAdapter;
+        Mat uploadedOwnerImage, uploadedVehicleImage;
 
         // ROI (Region of Interest) Size and Position
         public struct ROI {
@@ -140,6 +141,13 @@ namespace EntranceControl
                 new { Char = "ش" }, new { Char = "ت" }, new { Char = "س" }, new { Char = "ص" }, new { Char = "س" },
                 new { Char = "تاکسی" }, new { Char = "عمومی" }, new { Char = "ث" }
             };
+            var comboboxItemsConverted = new[] {
+                new { Char = "Alef" }, new { Char = "Be" }, new { Char = "Jim" }, new { Char = "Dal" }, new { Char = "He" },
+                new { Char = "Vav" }, new { Char = "Ze" }, new { Char = "Ha" }, new { Char = "Ta" }, new { Char = "Ye" },
+                new { Char = "Kaf" }, new { Char = "Lam" }, new { Char = "Mim" }, new { Char = "Noon" }, new { Char = "Ghaf" },
+                new { Char = "Shin" }, new { Char = "Te" }, new { Char = "Sin" }, new { Char = "Sad" }, new { Char = "Zad" },
+                new { Char = "Taxi" }, new { Char = "Omumi" }, new { Char = "Th" }
+            };
             comboBox_LP_Char_VehicleProperties.DataSource = comboboxItems;
             toolTip1.AutoPopDelay = 5000;
             toolTip1.ReshowDelay = 200;
@@ -182,6 +190,10 @@ namespace EntranceControl
             numericUpDownEdge2.Value = cannyThresholdSecond;
             numericUpDownMorphological_Open.Value = openKernel;
             numericUpDownMorphological_Close.Value = closeKernel;
+
+            // Data Management
+            uploadedOwnerImage = null;
+            uploadedVehicleImage = null;
         }
 
         private void gridView_Valid_Fill() {
@@ -191,9 +203,8 @@ namespace EntranceControl
                 dataReader = command.ExecuteReader();
                 while (dataReader.Read()) {
                     validList.LP = dataReader.GetValue(0).ToString();
-                    db_OwnerFind_Valid(dataReader.GetValue(1).ToString());
+                    // db_OwnerFind_Valid(dataReader.GetValue(1).ToString());
                     validList.Car = dataReader.GetValue(2).ToString() + " " + dataReader.GetValue(3).ToString();
-                    validList.CarImage = convertBinaryToImage((byte[]) dataReader.GetValue(4));
                     //validList.CarImage = CvInvoke.Imread("Temp_Car.jpg");       // Default should be 150x150                    
                     CvInvoke.Resize(validList.CarImage, validList.CarImage, new Size(150, 150), 0, 0, Emgu.CV.CvEnum.Inter.Cubic);
                     CvInvoke.Resize(validList.OwnerImage, validList.OwnerImage, new Size(150, 150), 0, 0, Emgu.CV.CvEnum.Inter.Cubic);
@@ -222,7 +233,7 @@ namespace EntranceControl
                     detectionReport.DetectionTime = dataReader.GetValue(2).ToString();
                     detectionReport.Validity = (bool) dataReader.GetValue(3);                    
                     if (!detectionReport.Validity) validityText = "غیرمجاز";
-                    db_OwnerFind_Report(dataReader.GetValue(4).ToString());
+                    // db_OwnerFind_Report(dataReader.GetValue(4).ToString());
                     // detectionReport.LPImage = dataReader.GetValue(5); -------- Temp Next Row
                     detectionReport.LPImage = CvInvoke.Imread("Temp_LP.jpg");       // Default should be 150x150
                     // detectionReport.LPImage = dataReader.GetValue(6); -------- Temp Next Row
@@ -282,7 +293,7 @@ namespace EntranceControl
                     detectionReport.LPImage = CvInvoke.Imread("Temp_LP.jpg");       // Default should be 150x150
                     // detectionReport.LPImage = dataReader.GetValue(6); -------- Temp Next Row
                     detectionReport.CarImage = CvInvoke.Imread("Temp_Car.jpg");     // Default should be 150x150
-                    db_OwnerFind_Report(dataReader.GetValue(4).ToString());
+                    // db_OwnerFind_Report(dataReader.GetValue(4).ToString());
                 }                
                 dataReader.Close();
                 command.Dispose();
@@ -409,13 +420,15 @@ namespace EntranceControl
             textBox_VehicleType.Text = "";
             textBox_VehicleColor.Text = "";
             radioButton_Man.Checked = true;
-            radioButton_Woman.Checked = true;
+            radioButton_Woman.Checked = false;
             textBox_OwnerName.Text = "";
             textBox_OwnerSurname.Text = "";
             textBox_NationalCode.Text = "";
             textBox_OwnerDescription.Text = "";
             pictureBox_OwnerImage.Image = Properties.Resources.OwnerImage;
             pictureBox_VehicleImage.Image = Properties.Resources.VehicleImage;
+            uploadedOwnerImage = null;
+            uploadedVehicleImage = null;
         }
 
         private void pictureBox_OwnerImage_Click(object sender, EventArgs e)
@@ -427,29 +440,26 @@ namespace EntranceControl
             if (dialog.ShowDialog() == DialogResult.OK) {
                 try {
                     pictureBox_OwnerImage.Image = null;
-                    pictureBox_OwnerImage.Image = new Bitmap(dialog.FileName);
+                    uploadedOwnerImage = CvInvoke.Imread(dialog.FileName);
+                    pictureBox_OwnerImage.Image = new Bitmap(uploadedOwnerImage.Bitmap);
                 } catch (Exception error) {
-                    MessageBox.Show("خطای زیر رخ داده است: \r\n" + error.ToString(), "خطا");
+                    MessageBox.Show("خطا در آپلود تصویر مالک خودرو: \r\n" + error.ToString(), "خطا");
                 }
             }
         }
 
-        private void pictureBox_VehicleImage_Click(object sender, EventArgs e)
-        {
+        private void pictureBox_VehicleImage_Click(object sender, EventArgs e) {
             OpenFileDialog dialog = new OpenFileDialog();
             dialog.Title = "تصویر خودرو را انتخاب کنید";
             dialog.Filter = "All Image Files|*.bmp;*.jpg;*.jpeg;*.png;*.tif;*.tiff";
 
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                try
-                {
+            if (dialog.ShowDialog() == DialogResult.OK) {
+                try {
                     pictureBox_VehicleImage.Image = null;
-                    pictureBox_VehicleImage.Image = new Bitmap(dialog.FileName);
-                }
-                catch (Exception error)
-                {
-                    MessageBox.Show("خطای زیر رخ داده است: \r\n" + error.ToString(), "خطا");
+                    uploadedVehicleImage = CvInvoke.Imread(dialog.FileName);
+                    pictureBox_VehicleImage.Image = new Bitmap(uploadedVehicleImage.Bitmap);
+                } catch (Exception error) {
+                    MessageBox.Show("خطا در آپلود تصویر خودرو: \r\n" + error.ToString(), "خطا");
                 }
             }
         }
@@ -611,7 +621,41 @@ namespace EntranceControl
 
         private void button_Register_Click(object sender, EventArgs e)
         {
-            db_Insert_ValidList("19ق656", "1130136205", "Pride", "Sefid", processedFrame);
+            string LPNumber = "";
+            string NationalCode = "";
+            // Add Owner Information
+            if (textBox_OwnerName.Text.Length < 3 && textBox_OwnerSurname.Text.Length < 3 && textBox_NationalCode.Text.Length < 10) {
+                MessageBox.Show("همه فیلدهای ضروری مربوط به مالک را پر کنید");
+            } else {
+                bool TempGender = radioButton_Man.Checked ? true : false;
+                NationalCode = textBox_NationalCode.Text;
+                string TempDescription = (textBox_OwnerDescription.Text.Length < 3) ? "-نامشخص-" : textBox_OwnerDescription.Text;
+                db_Create_Owner(NationalCode, textBox_OwnerName.Text, textBox_OwnerSurname.Text, TempGender, TempDescription);
+            }
+            // Add Valid Car Information
+            if (textBox_VehicleColor.Text.Length < 2 && textBox_VehicleType.Text.Length < 1) {
+                MessageBox.Show("همه فیلدهای ضروری مربوط به خودروی مجاز را پر کنید");
+            } else {
+                LPNumber = numericUpDown_LP_NumberL_VehicleProperties.Value + "-" + comboBox_LP_Char_VehicleProperties.SelectedIndex
+                    + "-" + numericUpDown_LP_NumberR_VehicleProperties.Value + "-" + numericUpDown_LP_City_VehicleProperties.Value;
+                db_Create_ValidList(LPNumber, textBox_NationalCode.Text, textBox_VehicleType.Text, textBox_VehicleColor.Text, LPNumber);
+            }
+            // Add Vehicle Image
+            try {
+                String fileName = LPNumber + ".png";
+                uploadedVehicleImage.Save(Path.Combine("Vehicle", fileName));
+            } catch (Exception error) {
+                MessageBox.Show("خطا در آپلود تصویر خودروی جدید: \r\n" + error, "خطا");
+            }
+            // Add Owner Image
+            try {
+                String fileName = NationalCode + ".png";
+                uploadedOwnerImage.Save(Path.Combine("Owner", fileName));
+            } catch (Exception error) {
+                MessageBox.Show("خطا در آپلود تصویر مالک جدید: \r\n" + error, "خطا");
+            }
+            // Clear Fields
+            button_Clear_Click(sender, e);
         }
 
         private void button_SubmitCalibration_Click(object sender, EventArgs e)
@@ -646,102 +690,303 @@ namespace EntranceControl
             numericUpDownMorphological_Close.Value = closeKernel;
         }
 
-        byte[] convertImageToBinary(Mat inputImage) {
-            using (MemoryStream stream = new MemoryStream()) {
-                Image imgeOrigenal = new Bitmap(inputImage.Bitmap);
-                imgeOrigenal.Save(stream, System.Drawing.Imaging.ImageFormat.Jpeg);
-                return stream.ToArray();
-            }
-        }
-
-        Mat convertBinaryToImage(byte[] inputImageObject) {
-            Mat imageMatrix = new Mat();
-            using (MemoryStream stream = new MemoryStream(inputImageObject)) {
-                imageMatrix = convertImageToMat(Image.FromStream(stream));
-                return imageMatrix;
-            }
-        }
-
-        private Mat convertImageToMat(Image image) {
-            int stride = 0;
-            Bitmap bmp = new Bitmap(image);
-
-            Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
-            System.Drawing.Imaging.BitmapData bmpData = bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite, bmp.PixelFormat);
-
-            System.Drawing.Imaging.PixelFormat pf = bmp.PixelFormat;
-            if (pf == System.Drawing.Imaging.PixelFormat.Format32bppArgb)
-                stride = bmp.Width * 4;
-            else
-                stride = bmp.Width * 3;
-
-            Image<Bgra, byte> cvImage = new Image<Bgra, byte>(bmp.Width, bmp.Height, stride, (IntPtr)bmpData.Scan0);
-            bmp.UnlockBits(bmpData);
-
-            return cvImage.Mat;
-        }
-
-        private void db_OwnerFind_Report(string ownerID) {
-            try {
-                command2 = new SqlCommand("SELECT Top 1 Name, Surname, OwnerImage FROM Owner WHERE NationalCode = " + ownerID + " ORDER BY NationalCode", cnn);
-                dataReader2 = command2.ExecuteReader();
-                while (dataReader2.Read()) {
-                    detectionReport.OwnerName = dataReader2.GetValue(0).ToString() + " " + dataReader2.GetValue(1).ToString();
-                    // --------------------- Temp Below Row -------------------------
-                    // detectionReport.OwnerImage = dataReader.GetValue(2).ToString();
-                    detectionReport.OwnerImage = CvInvoke.Imread("Temp_Person.jpg");     // Default should be 150x150
-                }
-                dataReader2.Close();
-                command2.Dispose();
-            } catch (Exception err) {
-                MessageBox.Show("خطا در تراکنش‌های دیتابیس:\n" + err.ToString(), "خطا");
-            }
-        }
-
-        private void db_OwnerFind_Valid(string ownerID) {
-            try {
-                command2 = new SqlCommand("SELECT Top 1 NationalCode, Name, Surname, Description, OwnerImage FROM Owner WHERE NationalCode = " + ownerID + " ORDER BY NationalCode", cnn);
-                dataReader2 = command2.ExecuteReader();
-                while (dataReader2.Read()) {
-                    validList.NationalCode = dataReader2.GetValue(0).ToString();
-                    validList.OwnerName = dataReader2.GetValue(1).ToString() + " " + dataReader2.GetValue(2).ToString();
-                    validList.Description = dataReader2.GetValue(3).ToString();
-                    // --------------------- Temp Below Row -------------------------
-                    // validList.OwnerImage = dataReader2.GetValue(4).ToString();
-                    validList.OwnerImage = CvInvoke.Imread("Temp_Person.jpg");  // Default should be 150x150
-                }
-                dataReader2.Close();
-                command2.Dispose();
-            } catch (Exception err) {
-                MessageBox.Show("خطا در تراکنش‌های دیتابیس:\n" + err.ToString(), "خطا");
-            }
-        }
-
-        private void db_Insert_ValidList(string LPNumber, string OwnerID, string VehicleType, string VehicleColor, Mat VehicleImageMat) {
+        private void db_Create_Owner(string NationalCode, string Name, string Surname, bool Gender, string Description)
+        {
             try {
                 cnn.Open();
-                byte[] VehicleImage = convertImageToBinary(VehicleImageMat);
+                String query = "INSERT INTO Owner(NationalCode, Name, Surname, Gender, Description)" +
+                    " VALUES (@NationalCode, @Name, @Surname, @Gender, @Description)";
+                using (SqlCommand command = new SqlCommand(query, cnn)) {
+                    command.Parameters.AddWithValue("@NationalCode", NationalCode);
+                    command.Parameters.AddWithValue("@Name", Name);
+                    command.Parameters.AddWithValue("@Surname", Surname);
+                    command.Parameters.AddWithValue("@Gender", Gender);
+                    command.Parameters.AddWithValue("@Description", Description);
+                    int result = command.ExecuteNonQuery();
+                    if (result < 0)
+                        MessageBox.Show("خطا در واردکردن داده جدید به لیست مالکین خودروها");
+                    else
+                        MessageBox.Show("مالک جدید به درستی وارد لیست شد");
+                }
+                cnn.Close();
+            } catch (Exception err) {
+                MessageBox.Show("خطا در تراکنش‌های دیتابیس:\n" + err.ToString(), "خطا");
+                cnn.Close();
+            }
+        }
 
-                String query = "INSERT INTO ValidList(LPNumber,OwnerID,VehicleType,VehicleColor,VehicleImage)" +
-                    " VALUES (@LPNumber,@OwnerID,@VehicleType,@VehicleColor,@VehicleImage)";
+        private void db_Create_Report(string LPNumber, string OwnerID, bool Valid, string Date, string Time, string LPImage, string VehicleImage)
+        {
+            try {
+                cnn.Open();
+                String query = "INSERT INTO Report(LPNumber, OwnerID, Valid, Date, Time, LPImage, VehicleImage)" +
+                    " VALUES (@LPNumber, @OwnerID, @Valid, @Date, @Time, @LPImage, @VehicleImage)";
+                using (SqlCommand command = new SqlCommand(query, cnn)) {
+                    command.Parameters.AddWithValue("@LPNumber", LPNumber);
+                    command.Parameters.AddWithValue("@OwnerID", OwnerID);
+                    command.Parameters.AddWithValue("@Valid", Valid);
+                    command.Parameters.AddWithValue("@Date", Date);
+                    command.Parameters.AddWithValue("@Time", Time);
+                    command.Parameters.AddWithValue("@LPImage", LPImage);
+                    command.Parameters.AddWithValue("@VehicleImage", VehicleImage);
+                    int result = command.ExecuteNonQuery();
+                    if (result < 0)
+                        MessageBox.Show("خطا در واردکردن داده جدید به لیست گزارش");
+                    else
+                        MessageBox.Show("گزارش جدید به درستی وارد لیست شد");
+                }
+                cnn.Close();
+                // Adding LP Image and Vehicle image to the directory
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("خطا در تراکنش‌های دیتابیس:\n" + err.ToString(), "خطا");
+                cnn.Close();
+            }
+        }
 
+        private void db_Create_ValidList(string LPNumber, string OwnerID, string VehicleType, string VehicleColor, string VehicleImage)
+        {
+            try {
+                cnn.Open();
+                String query = "INSERT INTO ValidList(LPNumber, OwnerID, VehicleType, VehicleColor, VehicleImage)" +
+                    " VALUES (@LPNumber, @OwnerID, @VehicleType, @VehicleColor, @VehicleImage)";
                 using (SqlCommand command = new SqlCommand(query, cnn)) {
                     command.Parameters.AddWithValue("@LPNumber", LPNumber);
                     command.Parameters.AddWithValue("@OwnerID", OwnerID);
                     command.Parameters.AddWithValue("@VehicleType", VehicleType);
                     command.Parameters.AddWithValue("@VehicleColor", VehicleColor);
                     command.Parameters.AddWithValue("@VehicleImage", VehicleImage);
-
                     int result = command.ExecuteNonQuery();
-
                     if (result < 0)
-                        MessageBox.Show("خطا در واردکردن داده جدید به لیست افراد مجاز");
+                        MessageBox.Show("خطا در واردکردن داده جدید به لیست گزارش");
                     else
-                        MessageBox.Show("فرد مجاز به درستی وارد لیست شد");
+                        MessageBox.Show("گزارش جدید به درستی وارد لیست شد");
                 }
                 cnn.Close();
             } catch (Exception err) {
                 MessageBox.Show("خطا در تراکنش‌های دیتابیس:\n" + err.ToString(), "خطا");
+                cnn.Close();
+            }
+        }
+
+        private void db_Read_Owner(string ownerID)
+        {
+            try {
+                command2 = new SqlCommand("SELECT Top 1 Name, Surname, Gender, Description FROM Owner WHERE NationalCode = " + ownerID + " ORDER BY NationalCode", cnn);
+                dataReader2 = command2.ExecuteReader();
+                while (dataReader2.Read())
+                {
+                    detectionReport.OwnerName = dataReader2.GetValue(0).ToString() + " " + dataReader2.GetValue(1).ToString();
+                    // detectionReport.OwnerImage = CvInvoke.Imread("Temp_Person.jpg");     // Default should be 150x150
+                }
+                dataReader2.Close();
+                command2.Dispose();
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("خطا در تراکنش‌های دیتابیس:\n" + err.ToString(), "خطا");
+                cnn.Close();
+            }
+        }
+
+        private void db_Read_Report(string LPNumber)
+        {
+            try
+            {
+                command2 = new SqlCommand("SELECT Top 1 OwnerID, Valid, Date, Time, LPImage, VehicleImage FROM Report WHERE LPNumber = '" + LPNumber + "' ORDER BY LPNumber", cnn);
+                dataReader2 = command2.ExecuteReader();
+                while (dataReader2.Read())
+                {
+                    // detectionReport.OwnerName = dataReader2.GetValue(0).ToString() + " " + dataReader2.GetValue(1).ToString();
+                    // detectionReport.OwnerImage = CvInvoke.Imread("Temp_Person.jpg");     // Default should be 150x150
+                }
+                dataReader2.Close();
+                command2.Dispose();
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("خطا در تراکنش‌های دیتابیس:\n" + err.ToString(), "خطا");
+                cnn.Close();
+            }
+        }
+
+        private void db_Read_ValidList(string LPNumber)
+        {
+            try
+            {
+                command2 = new SqlCommand("SELECT Top 1 OwnerID, VehicleType, VehicleColor, VehicleImage FROM ValidList WHERE LPNumber = '" + LPNumber + "' ORDER BY LPNumber", cnn);
+                dataReader2 = command2.ExecuteReader();
+                while (dataReader2.Read())
+                {
+                    // detectionReport.OwnerName = dataReader2.GetValue(0).ToString() + " " + dataReader2.GetValue(1).ToString();
+                    // detectionReport.OwnerImage = CvInvoke.Imread("Temp_Person.jpg");     // Default should be 150x150
+                }
+                dataReader2.Close();
+                command2.Dispose();
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("خطا در تراکنش‌های دیتابیس:\n" + err.ToString(), "خطا");
+                cnn.Close();
+            }
+        }
+
+        public void db_Delete_Owner(string NationalCode)
+        {
+            try
+            {
+                cnn.Open();
+                using (SqlCommand command = new SqlCommand("DELETE FROM Owner WHERE NationalCode = @NationalCode", cnn))
+                {
+                    command.Parameters.AddWithValue("@NationalCode", NationalCode);
+                    int result = command.ExecuteNonQuery();
+                    if (result < 0)
+                        MessageBox.Show("خطا در حذف مالک");
+                    else
+                        MessageBox.Show("مالک به درستی حذف شد");
+                }
+                cnn.Close();
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("خطا در حذف مالک خودرو:\n" + err.ToString(), "خطا");
+                cnn.Close();
+            }
+        }
+
+        public void db_Delete_Report(string LPNumber)
+        {
+            try
+            {
+                cnn.Open();
+                using (SqlCommand command = new SqlCommand("DELETE FROM Report WHERE LPNumber = @LPNumber", cnn))
+                {
+                    command.Parameters.AddWithValue("@LPNumber", LPNumber);
+                    int result = command.ExecuteNonQuery();
+                    if (result < 0)
+                        MessageBox.Show("خطا در حذف رکورد از گزارش");
+                    else
+                        MessageBox.Show("رکورد گزارش به درستی حذف شد");
+                }
+                cnn.Close();
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("خطا در حذف رکورد گزارش:\n" + err.ToString(), "خطا");
+                cnn.Close();
+            }
+        }
+
+        public void db_Delete_ValidList(string LPNumber)
+        {
+            try
+            {
+                cnn.Open();
+                using (SqlCommand command = new SqlCommand("DELETE FROM ValidList WHERE LPNumber = @LPNumber", cnn))
+                {
+                    command.Parameters.AddWithValue("@LPNumber", LPNumber);
+                    int result = command.ExecuteNonQuery();
+                    if (result < 0)
+                        MessageBox.Show("خطا در حذف رکورد از لیست افراد مجاز");
+                    else
+                        MessageBox.Show("فرد مجاز به درستی حذف شد");
+                }
+                cnn.Close();
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("خطا در حذف فرد مجاز:\n" + err.ToString(), "خطا");
+                cnn.Close();
+            }
+        }
+
+        private void db_Update_Owner(string NationalCode, string Name, string Surname, bool Gender, string Description)
+        {
+            try
+            {
+                cnn.Open();
+                String query = "UPDATE Owner SET Name=@Name, Surname = @Surname, Gender = @Gender, Description = @Description" +
+                    " WHERE NationalCode = @NationalCode";
+                using (SqlCommand command = new SqlCommand(query, cnn))
+                {
+                    command.Parameters.AddWithValue("@NationalCode", NationalCode);
+                    command.Parameters.AddWithValue("@Name", Name);
+                    command.Parameters.AddWithValue("@Surname", Surname);
+                    command.Parameters.AddWithValue("@Gender", Gender);
+                    command.Parameters.AddWithValue("@Description", Description);
+                    int result = command.ExecuteNonQuery();
+                    if (result < 0)
+                        MessageBox.Show("خطا در به روز رسانی لیست مالکین خودروها");
+                    else
+                        MessageBox.Show("مالک به درستی به روز شد");
+                }
+                cnn.Close();
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("خطا در تراکنش‌های دیتابیس:\n" + err.ToString(), "خطا");
+                cnn.Close();
+            }
+        }
+
+        private void db_Update_Report(string LPNumber, string OwnerID, bool Valid, string Date, string Time, string LPImage, string VehicleImage)
+        {
+            try
+            {
+                cnn.Open();
+                String query = "UPDATE Report SET OwnerID = @OwnerID, Valid = @Valid, Date = @Date," +
+                    "Time = @Time, LPImage = @LPImage, VehicleImage = @VehicleImage WHERE LPNumber = @LPNumber";
+                using (SqlCommand command = new SqlCommand(query, cnn))
+                {
+                    command.Parameters.AddWithValue("@LPNumber", LPNumber);
+                    command.Parameters.AddWithValue("@OwnerID", OwnerID);
+                    command.Parameters.AddWithValue("@Valid", Valid);
+                    command.Parameters.AddWithValue("@Date", Date);
+                    command.Parameters.AddWithValue("@Time", Time);
+                    command.Parameters.AddWithValue("@LPImage", LPImage);
+                    command.Parameters.AddWithValue("@VehicleImage", VehicleImage);
+                    int result = command.ExecuteNonQuery();
+                    if (result < 0)
+                        MessageBox.Show("خطا در به روز رسانی لیست گزارش");
+                    else
+                        MessageBox.Show("گزارش به درستی به روز شد");
+                }
+                cnn.Close();
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("خطا در تراکنش‌های دیتابیس:\n" + err.ToString(), "خطا");
+                cnn.Close();
+            }
+        }
+
+        private void db_Update_ValidList(string LPNumber, string OwnerID, string VehicleType, string VehicleColor, string VehicleImage)
+        {
+            try
+            {
+                cnn.Open();
+                String query = "UPDATE ValidList SET OwnerID = @OwnerID, VehicleType = @VehicleType, VehicleColor = @VehicleColor, VehicleImage = @VehicleImage" + 
+                    " WHERE LPNumber = @LPNumber";
+                using (SqlCommand command = new SqlCommand(query, cnn))
+                {
+                    command.Parameters.AddWithValue("@LPNumber", LPNumber);
+                    command.Parameters.AddWithValue("@OwnerID", OwnerID);
+                    command.Parameters.AddWithValue("@VehicleType", VehicleType);
+                    command.Parameters.AddWithValue("@VehicleColor", VehicleColor);
+                    command.Parameters.AddWithValue("@VehicleImage", VehicleImage);
+                    int result = command.ExecuteNonQuery();
+                    if (result < 0)
+                        MessageBox.Show("خطا در به روز رسانی لیست گزارش");
+                    else
+                        MessageBox.Show("گزارش به درستی به روز شد");
+                }
+                cnn.Close();
+            }
+            catch (Exception err)
+            {
+                MessageBox.Show("خطا در تراکنش‌های دیتابیس:\n" + err.ToString(), "خطا");
+                cnn.Close();
             }
         }
 
@@ -811,7 +1056,7 @@ namespace EntranceControl
                 outputImage.Save(Path.Combine("Report", today.ToString("yyyy/MM"), fileName));
             } catch (Exception error) {
                 MessageBox.Show("خطای زیر در ذخیره تصویر رخ داده است: \r\n" + error, "خطا");
-            }            
+            }
         }
     }
 }
