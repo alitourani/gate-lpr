@@ -278,35 +278,33 @@ namespace EntranceControl
                 cnn.Open();
                 command = new SqlCommand("SELECT TOP 1 LPNumber, Date, Time, Valid, OwnerID, LPImage, VehicleImage FROM Report WHERE LPNumber IS NOT NULL ORDER BY Date", cnn);
                 dataReader = command.ExecuteReader();
-                //string validityText = "مجاز";
                 while (dataReader.Read()) {
                     detectionReport.LP = dataReader.GetValue(0).ToString();
                     detectionReport.DetectionDate = dataReader.GetValue(1).ToString();
                     detectionReport.DetectionTime = dataReader.GetValue(2).ToString();
-                    detectionReport.Validity = (bool)dataReader.GetValue(3);
+                    detectionReport.Validity = (bool) dataReader.GetValue(3);
+                    db_Read_Owner(dataReader.GetValue(4).ToString(), "LastCross");
                     // detectionReport.LPImage = dataReader.GetValue(5); -------- Temp Next Row
                     detectionReport.LPImage = CvInvoke.Imread("Temp_LP.jpg");       // Default should be 150x150
                     // detectionReport.LPImage = dataReader.GetValue(6); -------- Temp Next Row
                     detectionReport.CarImage = CvInvoke.Imread("Temp_Car.jpg");     // Default should be 150x150
-                    // db_OwnerFind_Report(dataReader.GetValue(4).ToString());
-                }                
+                }
                 dataReader.Close();
                 command.Dispose();
-
+                
                 string validityText = "مجاز (" + detectionReport.OwnerName + ")";
                 if (!detectionReport.Validity) validityText = "غیرمجاز";
 
                 label_LastDateTime.Text = detectionReport.DetectionDate + " - " + detectionReport.DetectionTime;
                 label_LastLP.Text = detectionReport.LP;
                 label_LastOwner.Text = validityText;
-
                 pictureBox_LastLPImage.Image = new Bitmap(detectionReport.LPImage.Bitmap);
                 pictureBox_LastOwnerImage.Image = new Bitmap(detectionReport.OwnerImage.Bitmap);
                 pictureBox_LastCarImage.Image = new Bitmap(detectionReport.CarImage.Bitmap);
                 
                 cnn.Close();
             } catch (Exception err) {
-                MessageBox.Show("خطا در تراکنش‌های دیتابیس:\n" + err.ToString(), "خطا");
+                MessageBox.Show("خطا در پر کردن اطلاعات آخرین تردد:\n" + err.ToString(), "خطا");
                 cnn.Close();
             }
         }
@@ -774,6 +772,8 @@ namespace EntranceControl
                     if (callerFunction == "ValidList") {
                         validList.OwnerName = dataReader2.GetValue(0).ToString() + " " + dataReader2.GetValue(1).ToString();
                         validList.Description = dataReader2.GetValue(3).ToString();
+                    } else if (callerFunction == "LastCross") {
+                        detectionReport.OwnerName = dataReader2.GetValue(0).ToString() + " " + dataReader2.GetValue(1).ToString();
                     }
                 }
                 dataReader2.Close();
