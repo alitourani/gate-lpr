@@ -141,13 +141,6 @@ namespace EntranceControl
                 new { Char = "ش" }, new { Char = "ت" }, new { Char = "س" }, new { Char = "ص" }, new { Char = "س" },
                 new { Char = "تاکسی" }, new { Char = "عمومی" }, new { Char = "ث" }
             };
-            var comboboxItemsConverted = new[] {
-                new { Char = "Alef" }, new { Char = "Be" }, new { Char = "Jim" }, new { Char = "Dal" }, new { Char = "He" },
-                new { Char = "Vav" }, new { Char = "Ze" }, new { Char = "Ha" }, new { Char = "Ta" }, new { Char = "Ye" },
-                new { Char = "Kaf" }, new { Char = "Lam" }, new { Char = "Mim" }, new { Char = "Noon" }, new { Char = "Ghaf" },
-                new { Char = "Shin" }, new { Char = "Te" }, new { Char = "Sin" }, new { Char = "Sad" }, new { Char = "Zad" },
-                new { Char = "Taxi" }, new { Char = "Omumi" }, new { Char = "Th" }
-            };
             comboBox_LP_Char_VehicleProperties.DataSource = comboboxItems;
             toolTip1.AutoPopDelay = 5000;
             toolTip1.ReshowDelay = 200;
@@ -203,9 +196,11 @@ namespace EntranceControl
                 dataReader = command.ExecuteReader();
                 while (dataReader.Read()) {
                     validList.LP = dataReader.GetValue(0).ToString();
-                    // db_OwnerFind_Valid(dataReader.GetValue(1).ToString());
+                    validList.NationalCode = dataReader.GetValue(1).ToString();
+                    db_Read_Owner(dataReader.GetValue(1).ToString(), "ValidList");
                     validList.Car = dataReader.GetValue(2).ToString() + " " + dataReader.GetValue(3).ToString();
-                    //validList.CarImage = CvInvoke.Imread("Temp_Car.jpg");       // Default should be 150x150                    
+                    validList.CarImage = CvInvoke.Imread("Vehicle/" + dataReader.GetValue(4).ToString() + ".png");
+                    validList.OwnerImage = CvInvoke.Imread("Owner/" + validList.NationalCode + ".png");
                     CvInvoke.Resize(validList.CarImage, validList.CarImage, new Size(150, 150), 0, 0, Emgu.CV.CvEnum.Inter.Cubic);
                     CvInvoke.Resize(validList.OwnerImage, validList.OwnerImage, new Size(150, 150), 0, 0, Emgu.CV.CvEnum.Inter.Cubic);
                     dataGridView_Valid.Rows.Add(validList.LP, validList.OwnerName, validList.Car, new Bitmap(validList.CarImage.Bitmap),
@@ -215,7 +210,7 @@ namespace EntranceControl
                 command.Dispose();
                 cnn.Close();
             } catch (Exception err) {
-                MessageBox.Show("خطا در تراکنش‌های دیتابیس:\n" + err.ToString(), "خطا");
+                MessageBox.Show("خطا در پر کردن لیست افراد مجاز:\n" + err.ToString(), "خطا");
                 cnn.Close();
             }
         }
@@ -283,35 +278,33 @@ namespace EntranceControl
                 cnn.Open();
                 command = new SqlCommand("SELECT TOP 1 LPNumber, Date, Time, Valid, OwnerID, LPImage, VehicleImage FROM Report WHERE LPNumber IS NOT NULL ORDER BY Date", cnn);
                 dataReader = command.ExecuteReader();
-                //string validityText = "مجاز";
                 while (dataReader.Read()) {
                     detectionReport.LP = dataReader.GetValue(0).ToString();
                     detectionReport.DetectionDate = dataReader.GetValue(1).ToString();
                     detectionReport.DetectionTime = dataReader.GetValue(2).ToString();
-                    detectionReport.Validity = (bool)dataReader.GetValue(3);
+                    detectionReport.Validity = (bool) dataReader.GetValue(3);
+                    db_Read_Owner(dataReader.GetValue(4).ToString(), "LastCross");
                     // detectionReport.LPImage = dataReader.GetValue(5); -------- Temp Next Row
                     detectionReport.LPImage = CvInvoke.Imread("Temp_LP.jpg");       // Default should be 150x150
                     // detectionReport.LPImage = dataReader.GetValue(6); -------- Temp Next Row
                     detectionReport.CarImage = CvInvoke.Imread("Temp_Car.jpg");     // Default should be 150x150
-                    // db_OwnerFind_Report(dataReader.GetValue(4).ToString());
-                }                
+                }
                 dataReader.Close();
                 command.Dispose();
-
+                
                 string validityText = "مجاز (" + detectionReport.OwnerName + ")";
                 if (!detectionReport.Validity) validityText = "غیرمجاز";
 
                 label_LastDateTime.Text = detectionReport.DetectionDate + " - " + detectionReport.DetectionTime;
                 label_LastLP.Text = detectionReport.LP;
                 label_LastOwner.Text = validityText;
-
                 pictureBox_LastLPImage.Image = new Bitmap(detectionReport.LPImage.Bitmap);
                 pictureBox_LastOwnerImage.Image = new Bitmap(detectionReport.OwnerImage.Bitmap);
                 pictureBox_LastCarImage.Image = new Bitmap(detectionReport.CarImage.Bitmap);
                 
                 cnn.Close();
             } catch (Exception err) {
-                MessageBox.Show("خطا در تراکنش‌های دیتابیس:\n" + err.ToString(), "خطا");
+                MessageBox.Show("خطا در پر کردن اطلاعات آخرین تردد:\n" + err.ToString(), "خطا");
                 cnn.Close();
             }
         }
@@ -770,15 +763,18 @@ namespace EntranceControl
             }
         }
 
-        private void db_Read_Owner(string ownerID)
+        private void db_Read_Owner(string ownerID, string callerFunction)
         {
             try {
                 command2 = new SqlCommand("SELECT Top 1 Name, Surname, Gender, Description FROM Owner WHERE NationalCode = " + ownerID + " ORDER BY NationalCode", cnn);
                 dataReader2 = command2.ExecuteReader();
-                while (dataReader2.Read())
-                {
-                    detectionReport.OwnerName = dataReader2.GetValue(0).ToString() + " " + dataReader2.GetValue(1).ToString();
-                    // detectionReport.OwnerImage = CvInvoke.Imread("Temp_Person.jpg");     // Default should be 150x150
+                while (dataReader2.Read()) {
+                    if (callerFunction == "ValidList") {
+                        validList.OwnerName = dataReader2.GetValue(0).ToString() + " " + dataReader2.GetValue(1).ToString();
+                        validList.Description = dataReader2.GetValue(3).ToString();
+                    } else if (callerFunction == "LastCross") {
+                        detectionReport.OwnerName = dataReader2.GetValue(0).ToString() + " " + dataReader2.GetValue(1).ToString();
+                    }
                 }
                 dataReader2.Close();
                 command2.Dispose();

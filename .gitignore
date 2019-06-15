@@ -3,3 +3,5 @@ packages
 EntranceControl/bin
 EntranceControl/res
 EntranceControl/obj
+EntranceControl/GateDB.mdf
+EntranceControl/GateDB_log.ldf
