@@ -104,10 +104,10 @@ namespace EntranceControl
             ParametersInitialization();
 
             // Temp: Add row to DataGridView
-            gridView_Recent_Fill();
+            //gridView_Recent_Fill();
             gridView_LastCross_Fill();
-            gridView_Valid_Fill();
-            gridView_Report_Fill();            
+            //gridView_Valid_Fill();
+            //gridView_Report_Fill();            
         }
         
         public void ParametersInitialization() {
@@ -255,8 +255,8 @@ namespace EntranceControl
                 string validityText = "مجاز";
                 while (dataReader.Read()) {
                     detectionReport.LP = dataReader.GetValue(0).ToString();
-                    detectionReport.DetectionDate = dataReader.GetValue(1).ToString();
-                    detectionReport.DetectionTime = dataReader.GetValue(2).ToString();
+                    detectionReport.DetectionDate = dataReader.GetValue(1).ToString().Substring(0, dataReader.GetValue(1).ToString().IndexOf(" "));
+                    detectionReport.DetectionTime = dataReader.GetValue(2).ToString().Substring(0, 5);
                     detectionReport.Validity = (bool) dataReader.GetValue(3);
 
                     if (!detectionReport.Validity) validityText = "غیرمجاز";
@@ -267,7 +267,7 @@ namespace EntranceControl
                 command.Dispose();
                 cnn.Close();
             } catch (Exception err) {
-                MessageBox.Show("خطا در تراکنش‌های دیتابیس:\n" + err.ToString(), "خطا");
+                MessageBox.Show("خطا در واکشی رکوردهای لیست آخرین تردد:\n" + err.ToString(), "خطا");
                 cnn.Close();
             }
         }
@@ -280,14 +280,14 @@ namespace EntranceControl
                 dataReader = command.ExecuteReader();
                 while (dataReader.Read()) {
                     detectionReport.LP = dataReader.GetValue(0).ToString();
-                    detectionReport.DetectionDate = dataReader.GetValue(1).ToString();
-                    detectionReport.DetectionTime = dataReader.GetValue(2).ToString();
+                    detectionReport.DetectionDate = dataReader.GetValue(1).ToString().Substring(0, dataReader.GetValue(1).ToString().IndexOf(" "));
+                    detectionReport.DetectionTime = dataReader.GetValue(2).ToString().Substring(0, 5);
                     detectionReport.Validity = (bool) dataReader.GetValue(3);
                     db_Read_Owner(dataReader.GetValue(4).ToString(), "LastCross");
-                    // detectionReport.LPImage = dataReader.GetValue(5); -------- Temp Next Row
-                    detectionReport.LPImage = CvInvoke.Imread("Temp_LP.jpg");       // Default should be 150x150
-                    // detectionReport.LPImage = dataReader.GetValue(6); -------- Temp Next Row
-                    detectionReport.CarImage = CvInvoke.Imread("Temp_Car.jpg");     // Default should be 150x150
+                    string LPImageName = dataReader.GetValue(5).ToString();
+                    string CarImageName = dataReader.GetValue(6).ToString();
+                    detectionReport.LPImage = CvInvoke.Imread("Report/" + LPImageName.Substring(0,4) + "/" + LPImageName.Substring(4,2) + "/" + LPImageName + ".png");
+                    detectionReport.CarImage = CvInvoke.Imread("Report/" + CarImageName.Substring(0,4) + "/" + CarImageName.Substring(4,2) + "/" + CarImageName + ".png");
                 }
                 dataReader.Close();
                 command.Dispose();
@@ -299,8 +299,8 @@ namespace EntranceControl
                 label_LastLP.Text = detectionReport.LP;
                 label_LastOwner.Text = validityText;
                 pictureBox_LastLPImage.Image = new Bitmap(detectionReport.LPImage.Bitmap);
-                pictureBox_LastOwnerImage.Image = new Bitmap(detectionReport.OwnerImage.Bitmap);
                 pictureBox_LastCarImage.Image = new Bitmap(detectionReport.CarImage.Bitmap);
+                pictureBox_LastOwnerImage.Image = new Bitmap(detectionReport.OwnerImage.Bitmap);
                 
                 cnn.Close();
             } catch (Exception err) {
@@ -766,7 +766,7 @@ namespace EntranceControl
         private void db_Read_Owner(string ownerID, string callerFunction)
         {
             try {
-                command2 = new SqlCommand("SELECT Top 1 Name, Surname, Gender, Description FROM Owner WHERE NationalCode = " + ownerID + " ORDER BY NationalCode", cnn);
+                command2 = new SqlCommand("SELECT Top 1 Name, Surname, Gender, Description FROM Owner WHERE NationalCode = '" + ownerID + "' ORDER BY NationalCode", cnn);
                 dataReader2 = command2.ExecuteReader();
                 while (dataReader2.Read()) {
                     if (callerFunction == "ValidList") {
@@ -774,6 +774,7 @@ namespace EntranceControl
                         validList.Description = dataReader2.GetValue(3).ToString();
                     } else if (callerFunction == "LastCross") {
                         detectionReport.OwnerName = dataReader2.GetValue(0).ToString() + " " + dataReader2.GetValue(1).ToString();
+                        detectionReport.OwnerImage = CvInvoke.Imread("Owner/" + ownerID + ".png");
                     }
                 }
                 dataReader2.Close();
