@@ -103,11 +103,11 @@ namespace EntranceControl
 
             ParametersInitialization();
 
-            // Temp: Add row to DataGridView
-            //gridView_Recent_Fill();
+            // Add rows to DataGridView
+            gridView_Recent_Fill();
             gridView_LastCross_Fill();
-            //gridView_Valid_Fill();
-            //gridView_Report_Fill();            
+            gridView_Valid_Fill();
+            gridView_Report_Fill();            
         }
         
         public void ParametersInitialization() {
@@ -192,15 +192,18 @@ namespace EntranceControl
         private void gridView_Valid_Fill() {
             try {
                 cnn.Open();
-                command = new SqlCommand("SELECT LPNumber, OwnerID, VehicleType, VehicleColor, VehicleImage FROM ValidList WHERE LPNumber IS NOT NULL ORDER BY LPNumber", cnn);
+                command = new SqlCommand("SELECT ValidList.LPNumber, Owner.Name, Owner.Surname, ValidList.VehicleType, ValidList.VehicleColor, " +
+                    "ValidList.VehicleImage, ValidList.OwnerID, Owner.Description FROM ValidList INNER JOIN Owner ON ValidList.OwnerID=Owner.NationalCode " +
+                    "ORDER BY LPNumber", cnn);
                 dataReader = command.ExecuteReader();
                 while (dataReader.Read()) {
                     validList.LP = dataReader.GetValue(0).ToString();
-                    validList.NationalCode = dataReader.GetValue(1).ToString();
-                    db_Read_Owner(dataReader.GetValue(1).ToString(), "ValidList");
-                    validList.Car = dataReader.GetValue(2).ToString() + " " + dataReader.GetValue(3).ToString();
-                    validList.CarImage = CvInvoke.Imread("Vehicle/" + dataReader.GetValue(4).ToString() + ".png");
+                    validList.OwnerName = dataReader.GetValue(1).ToString().Replace(" ", "") + " " + dataReader.GetValue(2).ToString().Replace(" ", "");
+                    validList.Car = dataReader.GetValue(3).ToString() + " " + dataReader.GetValue(4).ToString();
+                    validList.CarImage = CvInvoke.Imread("Vehicle/" + dataReader.GetValue(5).ToString() + ".png");
+                    validList.NationalCode = dataReader.GetValue(6).ToString();
                     validList.OwnerImage = CvInvoke.Imread("Owner/" + validList.NationalCode + ".png");
+                    validList.Description = dataReader.GetValue(7).ToString();
                     CvInvoke.Resize(validList.CarImage, validList.CarImage, new Size(150, 150), 0, 0, Emgu.CV.CvEnum.Inter.Cubic);
                     CvInvoke.Resize(validList.OwnerImage, validList.OwnerImage, new Size(150, 150), 0, 0, Emgu.CV.CvEnum.Inter.Cubic);
                     dataGridView_Valid.Rows.Add(validList.LP, validList.OwnerName, validList.Car, new Bitmap(validList.CarImage.Bitmap),
@@ -219,20 +222,21 @@ namespace EntranceControl
         {
             try {
                 cnn.Open();
-                command = new SqlCommand("SELECT LPNumber, Date, Time, Valid, OwnerID, LPImage, VehicleImage FROM Report WHERE LPNumber IS NOT NULL ORDER BY Date", cnn);
+                command = new SqlCommand("SELECT Report.LPNumber, Report.Date, Report.Time, Report.Valid, Owner.Name, Owner.Surname, Report.LPImage, " +
+                    "Report.VehicleImage FROM Report LEFT JOIN Owner ON Report.OwnerID=Owner.NationalCode ORDER BY Report.Date", cnn);
                 dataReader = command.ExecuteReader();
                 string validityText = "مجاز";
                 while (dataReader.Read()) {
                     detectionReport.LP = dataReader.GetValue(0).ToString();
-                    detectionReport.DetectionDate = dataReader.GetValue(1).ToString();
-                    detectionReport.DetectionTime = dataReader.GetValue(2).ToString();
+                    detectionReport.DetectionDate = dataReader.GetValue(1).ToString().Substring(0, dataReader.GetValue(1).ToString().IndexOf(" "));
+                    detectionReport.DetectionTime = dataReader.GetValue(2).ToString().Substring(0, 5);
                     detectionReport.Validity = (bool) dataReader.GetValue(3);                    
                     if (!detectionReport.Validity) validityText = "غیرمجاز";
-                    // db_OwnerFind_Report(dataReader.GetValue(4).ToString());
-                    // detectionReport.LPImage = dataReader.GetValue(5); -------- Temp Next Row
-                    detectionReport.LPImage = CvInvoke.Imread("Temp_LP.jpg");       // Default should be 150x150
-                    // detectionReport.LPImage = dataReader.GetValue(6); -------- Temp Next Row
-                    detectionReport.CarImage = CvInvoke.Imread("Temp_Car.jpg");     // Default should be 150x150
+                    detectionReport.OwnerName = dataReader.GetValue(4).ToString().Replace(" ", "") + " " + dataReader.GetValue(5).ToString().Replace(" ", "");
+                    string LPImageName = dataReader.GetValue(6).ToString();
+                    string CarImageName = dataReader.GetValue(7).ToString();
+                    detectionReport.LPImage = CvInvoke.Imread("Report/" + LPImageName.Substring(0, 4) + "/" + LPImageName.Substring(4, 2) + "/" + LPImageName + ".png");
+                    detectionReport.CarImage = CvInvoke.Imread("Report/" + CarImageName.Substring(0, 4) + "/" + CarImageName.Substring(4, 2) + "/" + CarImageName + ".png");
                     CvInvoke.Resize(detectionReport.CarImage, detectionReport.CarImage, new Size(150, 150), 0, 0, Emgu.CV.CvEnum.Inter.Cubic);
                     CvInvoke.Resize(detectionReport.LPImage, detectionReport.LPImage, new Size(300, 56), 0, 0, Emgu.CV.CvEnum.Inter.Cubic);
                     dataGridView_Report.Rows.Add(detectionReport.LP, detectionReport.DetectionDate, detectionReport.DetectionTime, validityText,
@@ -276,16 +280,18 @@ namespace EntranceControl
         {
             try {
                 cnn.Open();
-                command = new SqlCommand("SELECT TOP 1 LPNumber, Date, Time, Valid, OwnerID, LPImage, VehicleImage FROM Report WHERE LPNumber IS NOT NULL ORDER BY Date", cnn);
+                command = new SqlCommand("SELECT TOP 1 Report.LPNumber, Report.Date, Report.Time, Report.Valid, Owner.Name, " +
+                    "Owner.Surname, Report.OwnerID, Report.LPImage, Report.VehicleImage FROM Report INNER JOIN Owner ON Report.OwnerID=Owner.NationalCode ORDER BY Date", cnn);
                 dataReader = command.ExecuteReader();
                 while (dataReader.Read()) {
                     detectionReport.LP = dataReader.GetValue(0).ToString();
                     detectionReport.DetectionDate = dataReader.GetValue(1).ToString().Substring(0, dataReader.GetValue(1).ToString().IndexOf(" "));
                     detectionReport.DetectionTime = dataReader.GetValue(2).ToString().Substring(0, 5);
                     detectionReport.Validity = (bool) dataReader.GetValue(3);
-                    db_Read_Owner(dataReader.GetValue(4).ToString(), "LastCross");
-                    string LPImageName = dataReader.GetValue(5).ToString();
-                    string CarImageName = dataReader.GetValue(6).ToString();
+                    detectionReport.OwnerName = dataReader.GetValue(4).ToString().Replace(" ", "") + " " + dataReader.GetValue(5).ToString().Replace(" ", "");
+                    detectionReport.OwnerImage = CvInvoke.Imread("Owner/" + dataReader.GetValue(6) + ".png");
+                    string LPImageName = dataReader.GetValue(7).ToString();
+                    string CarImageName = dataReader.GetValue(8).ToString();
                     detectionReport.LPImage = CvInvoke.Imread("Report/" + LPImageName.Substring(0,4) + "/" + LPImageName.Substring(4,2) + "/" + LPImageName + ".png");
                     detectionReport.CarImage = CvInvoke.Imread("Report/" + CarImageName.Substring(0,4) + "/" + CarImageName.Substring(4,2) + "/" + CarImageName + ".png");
                 }
@@ -763,19 +769,14 @@ namespace EntranceControl
             }
         }
 
-        private void db_Read_Owner(string ownerID, string callerFunction)
+        private void db_Read_Owner(string ownerID)
         {
             try {
                 command2 = new SqlCommand("SELECT Top 1 Name, Surname, Gender, Description FROM Owner WHERE NationalCode = '" + ownerID + "' ORDER BY NationalCode", cnn);
                 dataReader2 = command2.ExecuteReader();
                 while (dataReader2.Read()) {
-                    if (callerFunction == "ValidList") {
-                        validList.OwnerName = dataReader2.GetValue(0).ToString() + " " + dataReader2.GetValue(1).ToString();
-                        validList.Description = dataReader2.GetValue(3).ToString();
-                    } else if (callerFunction == "LastCross") {
-                        detectionReport.OwnerName = dataReader2.GetValue(0).ToString() + " " + dataReader2.GetValue(1).ToString();
-                        detectionReport.OwnerImage = CvInvoke.Imread("Owner/" + ownerID + ".png");
-                    }
+                    validList.OwnerName = dataReader2.GetValue(0).ToString() + " " + dataReader2.GetValue(1).ToString();
+                    validList.Description = dataReader2.GetValue(3).ToString();
                 }
                 dataReader2.Close();
                 command2.Dispose();
