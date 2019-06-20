@@ -494,8 +494,9 @@ namespace EntranceControl
                     LicensePlateDetector();
 
                     // Temp: Save image
-                    // imageSave(frame.FrameLoad);
-                } catch (Exception error) {
+                    // imageSave(frame.FrameLoad, "Detection");
+                }
+                catch (Exception error) {
                     MessageBox.Show("خطای زیر رخ داده است: \r\n" + error.ToString(), "خطا");
                 }
             }
@@ -1012,8 +1013,11 @@ namespace EntranceControl
 
                                 double ratio = (double)(boundingBox.Width / boundingBox.Height);
                                 // LP Ratio: 5.375
-                                if (ratio >= 3 && ratio <= 7)
+                                if (ratio >= 3 && ratio <= 7) {
                                     CvInvoke.Rectangle(ColorFrame, boundingBox, new MCvScalar(0, 255, 255), 2);
+                                    imageSave(new Mat(ColorFrame, boundingBox), "Detection");
+                                }
+                                
                                 // CvInvoke.PutText(ThresholdedFrame, "LP", new Point(x, y), FontFace.HersheySimplex, 0.5, new MCvScalar(0,0,255), 2);
                                 /*
                                 LineSegment2D[] edges = PointCollection.PolyLine(pts, true);
@@ -1046,12 +1050,18 @@ namespace EntranceControl
             // pictureBox_Online.Image = new Bitmap(rectangleImage.Bitmap);            
         }
 
-        private void imageSave(Mat outputImage) {
+        private void imageSave(Mat outputImage, string refFunction) {
             try {
-                String fileName = today.ToString("yyyyMMdd") + "-" + DateTime.Now.ToString("hhmmss") + ".png";
-                // Create a new folder if not exists
-                Directory.CreateDirectory(Path.Combine("Report", today.ToString("yyyy/MM")));
-                outputImage.Save(Path.Combine("Report", today.ToString("yyyy/MM"), fileName));
+                switch (refFunction) {
+                    case "Detection":
+                        String fileName = today.ToString("yyyyMMdd") + "-" + DateTime.Now.ToString("hhmmss") + ".png";
+                        // Create a new folder if not exists
+                        Directory.CreateDirectory(Path.Combine("Report", today.ToString("yyyy/MM")));
+                        outputImage.Save(Path.Combine("Report", today.ToString("yyyy/MM"), fileName));
+                        break;
+                    case "Owner":
+                        break;
+            }                    
             } catch (Exception error) {
                 MessageBox.Show("خطای زیر در ذخیره تصویر رخ داده است: \r\n" + error, "خطا");
             }
