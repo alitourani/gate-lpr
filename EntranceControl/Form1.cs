@@ -386,6 +386,8 @@ namespace EntranceControl
                     roi.positionX = 1;
                 }
                 drawROI(processedFrame);
+                FrameProcess();
+                LicensePlateDetector();
             } catch(Exception error) {
                 MessageBox.Show("خطای زیر رخ داده است: \r\n" + error.ToString(), "خطا");
             }
@@ -403,6 +405,8 @@ namespace EntranceControl
                     roi.positionY = 1;
                 }
                 drawROI(processedFrame);
+                FrameProcess();
+                LicensePlateDetector();
             }
             catch (Exception error)
             {
@@ -494,8 +498,9 @@ namespace EntranceControl
                     LicensePlateDetector();
 
                     // Temp: Save image
-                    // imageSave(frame.FrameLoad);
-                } catch (Exception error) {
+                    // imageSave(frame.FrameLoad, "Detection");
+                }
+                catch (Exception error) {
                     MessageBox.Show("خطای زیر رخ داده است: \r\n" + error.ToString(), "خطا");
                 }
             }
@@ -669,7 +674,9 @@ namespace EntranceControl
                 processedFrame = frame.FrameLoad.Clone();
                 pictureBoxROISetting.Image = new Bitmap(processedFrame.Bitmap);
                 radioButton_ShowMainFrame.Checked = true;
+                drawROI(processedFrame);
                 FrameProcess();
+                LicensePlateDetector();
             }
         }
 
@@ -1012,10 +1019,12 @@ namespace EntranceControl
 
                                 double ratio = (double)(boundingBox.Width / boundingBox.Height);
                                 // LP Ratio: 5.375
-                                if (ratio >= 3 && ratio <= 7)
+                                if (ratio >= 3 && ratio <= 7) {
                                     CvInvoke.Rectangle(ColorFrame, boundingBox, new MCvScalar(0, 255, 255), 2);
-                                // CvInvoke.PutText(ThresholdedFrame, "LP", new Point(x, y), FontFace.HersheySimplex, 0.5, new MCvScalar(0,0,255), 2);
-                                /*
+                                    if (((boundingBox.X + boundingBox.Width) <= croppedFrame.Cols) & ((boundingBox.Y + boundingBox.Height) <= croppedFrame.Rows))
+                                        imageSave(new Mat(ColorFrame, boundingBox), "Detection");
+                                }
+                                
                                 LineSegment2D[] edges = PointCollection.PolyLine(pts, true);
                                 for (int j = 0; j < edges.Length; j++) {
                                     double angle = Math.Abs(
@@ -1024,7 +1033,7 @@ namespace EntranceControl
                                         isRectangle = false;
                                         break;
                                     }
-                                }*/
+                                }
                                 if (isRectangle) PlateImagesList.Add(CvInvoke.MinAreaRect(approxContour));                                
                             }
                         }
@@ -1032,26 +1041,20 @@ namespace EntranceControl
                 }
                 pictureBox_Online.Image = new Bitmap(ColorFrame.Bitmap);
             }
-
-            // Draw the detected LPs
-            /*
-            Mat rectangleImage = processedFrame.Clone();
-            foreach (RotatedRect box in PlateImagesList) {
-                int width = (int)Math.Round(box.Size.Height);
-                int height = (int)Math.Round(box.Size.Width);
-                Size axesSize = new Size(width, height);
-                Point center = Point.Round(box.Center);
-                CvInvoke.Ellipse(rectangleImage, center, axesSize, box.Angle, 0.0D, 360.0D, new MCvScalar(90, 120, 255), 2, LineType.EightConnected, 0);
-            }*/
-            // pictureBox_Online.Image = new Bitmap(rectangleImage.Bitmap);            
         }
 
-        private void imageSave(Mat outputImage) {
+        private void imageSave(Mat outputImage, string refFunction) {
             try {
-                String fileName = today.ToString("yyyyMMdd") + "-" + DateTime.Now.ToString("hhmmss") + ".png";
-                // Create a new folder if not exists
-                Directory.CreateDirectory(Path.Combine("Report", today.ToString("yyyy/MM")));
-                outputImage.Save(Path.Combine("Report", today.ToString("yyyy/MM"), fileName));
+                switch (refFunction) {
+                    case "Detection":
+                        String fileName = today.ToString("yyyyMMdd") + "-" + DateTime.Now.ToString("hhmmss") + ".png";
+                        // Create a new folder if not exists
+                        Directory.CreateDirectory(Path.Combine("Report", today.ToString("yyyy/MM")));
+                        outputImage.Save(Path.Combine("Report", today.ToString("yyyy/MM"), fileName));
+                        break;
+                    case "Owner":
+                        break;
+            }                    
             } catch (Exception error) {
                 MessageBox.Show("خطای زیر در ذخیره تصویر رخ داده است: \r\n" + error, "خطا");
             }
