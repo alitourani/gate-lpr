@@ -82,7 +82,7 @@ namespace EntranceControl
         Mat EdgeDetectionFrame = new Mat();     // Canny-enabled Frame
         Mat OpenMorphFrame = new Mat();         // Open Morphological Frame
         Mat CloseMorphFrame = new Mat();        // Close Morphological Frame
-        int gaussianKernel, thresholdValue, cannyThresholdFirst, cannyThresholdSecond;
+        int gaussianKernel, thresholdValue, cannyThresholdFirst, cannyThresholdSecond, thresholdBlockSize, thresholdParam1;
         int openKernel, closeKernel;
 
         // License-Plate
@@ -173,12 +173,16 @@ namespace EntranceControl
             // Image Processing
             gaussianKernel = 1;
             thresholdValue = 100;
+            thresholdBlockSize = 15;
+            thresholdParam1 = 10;
             cannyThresholdFirst = 20;
             cannyThresholdSecond = 50;
             openKernel = 1;
             closeKernel = 5;
             numericUpDownGaussian.Value = gaussianKernel;
             numericUpDownThreshold.Value = thresholdValue;
+            numericUpDownThresholdBlockSize.Value = thresholdBlockSize;
+            numericUpDownThresholdParam1.Value = thresholdParam1;
             numericUpDownEdge1.Value = cannyThresholdFirst;
             numericUpDownEdge2.Value = cannyThresholdSecond;
             numericUpDownMorphological_Open.Value = openKernel;
@@ -561,10 +565,10 @@ namespace EntranceControl
                 ColorFrame = processedFrame.Clone();
                 CvInvoke.CvtColor(ColorFrame, processedFrame, ColorConversion.Bgra2Gray, 1);
                 GrayFrame = processedFrame.Clone();
-                CvInvoke.GaussianBlur(processedFrame, processedFrame, new Size(gaussianKernel, gaussianKernel), 1);
+                //CvInvoke.GaussianBlur(processedFrame, processedFrame, new Size(gaussianKernel, gaussianKernel), 1);
                 GaussianFrame = processedFrame.Clone();
                 //CvInvoke.Threshold(processedFrame, processedFrame, thresholdValue, 100, Emgu.CV.CvEnum.ThresholdType.ToZero);
-                CvInvoke.AdaptiveThreshold(processedFrame, processedFrame, thresholdValue, AdaptiveThresholdType.GaussianC,ThresholdType.Binary, 15, 10);
+                CvInvoke.AdaptiveThreshold(processedFrame, processedFrame, thresholdValue, AdaptiveThresholdType.GaussianC,ThresholdType.Binary, thresholdBlockSize, thresholdParam1);
                 ThresholdedFrame = processedFrame.Clone();
                 CvInvoke.Canny(processedFrame, processedFrame, cannyThresholdFirst, cannyThresholdSecond);
                 EdgeDetectionFrame = processedFrame.Clone();
@@ -668,6 +672,8 @@ namespace EntranceControl
             if (processedFrame != null) {
                 gaussianKernel = (int) numericUpDownGaussian.Value;
                 thresholdValue = (int) numericUpDownThreshold.Value;
+                thresholdBlockSize = (int) numericUpDownThresholdBlockSize.Value;
+                thresholdParam1 = (int) numericUpDownThresholdParam1.Value;
                 cannyThresholdFirst = (int) numericUpDownEdge1.Value;
                 cannyThresholdSecond = (int) numericUpDownEdge2.Value;
                 openKernel = (int) numericUpDownMorphological_Open.Value;
@@ -685,12 +691,16 @@ namespace EntranceControl
         {
             gaussianKernel = 1;
             thresholdValue = 10;
+            thresholdBlockSize = 15;
+            thresholdParam1 = 10;
             cannyThresholdFirst = 20;
             cannyThresholdSecond = 50;
             openKernel = 5;
             closeKernel = 5;
             numericUpDownGaussian.Value = gaussianKernel;
             numericUpDownThreshold.Value = thresholdValue;
+            numericUpDownThresholdBlockSize.Value = thresholdBlockSize;
+            numericUpDownThresholdParam1.Value = thresholdParam1;
             numericUpDownEdge1.Value = cannyThresholdFirst;
             numericUpDownEdge2.Value = cannyThresholdSecond;
             numericUpDownMorphological_Open.Value = openKernel;

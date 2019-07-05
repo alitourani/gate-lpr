@@ -122,6 +122,8 @@
             this.tabSettings = new System.Windows.Forms.TabPage();
             this.panelSettings = new System.Windows.Forms.Panel();
             this.groupBoxAdvanced = new System.Windows.Forms.GroupBox();
+            this.numericUpDownThresholdParam1 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDownThresholdBlockSize = new System.Windows.Forms.NumericUpDown();
             this.button_DefaultCalibration = new System.Windows.Forms.Button();
             this.button_SubmitCalibration = new System.Windows.Forms.Button();
             this.numericUpDownMorphological_Close = new System.Windows.Forms.NumericUpDown();
@@ -191,6 +193,8 @@
             this.tabSettings.SuspendLayout();
             this.panelSettings.SuspendLayout();
             this.groupBoxAdvanced.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownThresholdParam1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownThresholdBlockSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMorphological_Close)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEdge2)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMorphological_Open)).BeginInit();
@@ -1196,6 +1200,8 @@
             // 
             // groupBoxAdvanced
             // 
+            this.groupBoxAdvanced.Controls.Add(this.numericUpDownThresholdParam1);
+            this.groupBoxAdvanced.Controls.Add(this.numericUpDownThresholdBlockSize);
             this.groupBoxAdvanced.Controls.Add(this.button_DefaultCalibration);
             this.groupBoxAdvanced.Controls.Add(this.button_SubmitCalibration);
             this.groupBoxAdvanced.Controls.Add(this.numericUpDownMorphological_Close);
@@ -1216,6 +1222,42 @@
             this.groupBoxAdvanced.TabIndex = 8;
             this.groupBoxAdvanced.TabStop = false;
             this.groupBoxAdvanced.Text = "تنظیمات پیشرفته کالیبراسیون";
+            // 
+            // numericUpDownThresholdParam1
+            // 
+            this.numericUpDownThresholdParam1.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.numericUpDownThresholdParam1.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numericUpDownThresholdParam1.Location = new System.Drawing.Point(18, 82);
+            this.numericUpDownThresholdParam1.Maximum = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+            this.numericUpDownThresholdParam1.Name = "numericUpDownThresholdParam1";
+            this.numericUpDownThresholdParam1.Size = new System.Drawing.Size(38, 26);
+            this.numericUpDownThresholdParam1.TabIndex = 65;
+            // 
+            // numericUpDownThresholdBlockSize
+            // 
+            this.numericUpDownThresholdBlockSize.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.numericUpDownThresholdBlockSize.Increment = new decimal(new int[] {
+            5,
+            0,
+            0,
+            0});
+            this.numericUpDownThresholdBlockSize.Location = new System.Drawing.Point(61, 82);
+            this.numericUpDownThresholdBlockSize.Maximum = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+            this.numericUpDownThresholdBlockSize.Name = "numericUpDownThresholdBlockSize";
+            this.numericUpDownThresholdBlockSize.Size = new System.Drawing.Size(38, 26);
+            this.numericUpDownThresholdBlockSize.TabIndex = 64;
             // 
             // button_DefaultCalibration
             // 
@@ -1325,14 +1367,14 @@
             0,
             0,
             0});
-            this.numericUpDownThreshold.Location = new System.Drawing.Point(18, 82);
+            this.numericUpDownThreshold.Location = new System.Drawing.Point(105, 82);
             this.numericUpDownThreshold.Maximum = new decimal(new int[] {
             200,
             0,
             0,
             0});
             this.numericUpDownThreshold.Name = "numericUpDownThreshold";
-            this.numericUpDownThreshold.Size = new System.Drawing.Size(127, 26);
+            this.numericUpDownThreshold.Size = new System.Drawing.Size(40, 26);
             this.numericUpDownThreshold.TabIndex = 57;
             // 
             // radioButton_ShowGaussian
@@ -1733,6 +1775,8 @@
             this.panelSettings.ResumeLayout(false);
             this.groupBoxAdvanced.ResumeLayout(false);
             this.groupBoxAdvanced.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownThresholdParam1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownThresholdBlockSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMorphological_Close)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownEdge2)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMorphological_Open)).EndInit();
@@ -1894,6 +1938,8 @@
         private System.Windows.Forms.NumericUpDown numericUpDownMorphological_Close;
         private System.Windows.Forms.Button button_SubmitCalibration;
         private System.Windows.Forms.Button button_DefaultCalibration;
+        private System.Windows.Forms.NumericUpDown numericUpDownThresholdParam1;
+        private System.Windows.Forms.NumericUpDown numericUpDownThresholdBlockSize;
     }
 }
 
