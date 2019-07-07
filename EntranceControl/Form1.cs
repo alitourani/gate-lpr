@@ -82,7 +82,7 @@ namespace EntranceControl
         Mat EdgeDetectionFrame = new Mat();     // Canny-enabled Frame
         Mat OpenMorphFrame = new Mat();         // Open Morphological Frame
         Mat CloseMorphFrame = new Mat();        // Close Morphological Frame
-        int gaussianKernel, thresholdValue, cannyThresholdFirst, cannyThresholdSecond;
+        int gaussianKernel, thresholdValue, cannyThresholdFirst, cannyThresholdSecond, thresholdBlockSize, thresholdParam1;
         int openKernel, closeKernel;
 
         // License-Plate
@@ -173,12 +173,16 @@ namespace EntranceControl
             // Image Processing
             gaussianKernel = 1;
             thresholdValue = 100;
+            thresholdBlockSize = 15;
+            thresholdParam1 = 10;
             cannyThresholdFirst = 20;
             cannyThresholdSecond = 50;
             openKernel = 1;
             closeKernel = 5;
             numericUpDownGaussian.Value = gaussianKernel;
             numericUpDownThreshold.Value = thresholdValue;
+            numericUpDownThresholdBlockSize.Value = thresholdBlockSize;
+            numericUpDownThresholdParam1.Value = thresholdParam1;
             numericUpDownEdge1.Value = cannyThresholdFirst;
             numericUpDownEdge2.Value = cannyThresholdSecond;
             numericUpDownMorphological_Open.Value = openKernel;
@@ -498,7 +502,7 @@ namespace EntranceControl
                     LicensePlateDetector();
 
                     // Temp: Save image
-                    // imageSave(frame.FrameLoad, "Detection");
+                    imageSave(frame.FrameLoad, "Detection");
                 }
                 catch (Exception error) {
                     MessageBox.Show("خطای زیر رخ داده است: \r\n" + error.ToString(), "خطا");
@@ -559,19 +563,20 @@ namespace EntranceControl
         public void FrameProcess() {
             try {
                 ColorFrame = processedFrame.Clone();
-                CvInvoke.CvtColor(ColorFrame, processedFrame, Emgu.CV.CvEnum.ColorConversion.Bgra2Gray, 1);
+                CvInvoke.CvtColor(ColorFrame, processedFrame, ColorConversion.Bgra2Gray, 1);
                 GrayFrame = processedFrame.Clone();
-                CvInvoke.GaussianBlur(processedFrame, processedFrame, new Size(gaussianKernel, gaussianKernel), 1);
+                //CvInvoke.GaussianBlur(processedFrame, processedFrame, new Size(gaussianKernel, gaussianKernel), 1);
                 GaussianFrame = processedFrame.Clone();
-                CvInvoke.Threshold(processedFrame, processedFrame, thresholdValue, 100, Emgu.CV.CvEnum.ThresholdType.Binary);
+                //CvInvoke.Threshold(processedFrame, processedFrame, thresholdValue, 100, Emgu.CV.CvEnum.ThresholdType.ToZero);
+                CvInvoke.AdaptiveThreshold(processedFrame, processedFrame, thresholdValue, AdaptiveThresholdType.GaussianC,ThresholdType.Binary, thresholdBlockSize, thresholdParam1);
                 ThresholdedFrame = processedFrame.Clone();
                 CvInvoke.Canny(processedFrame, processedFrame, cannyThresholdFirst, cannyThresholdSecond);
                 EdgeDetectionFrame = processedFrame.Clone();
-                var kernelOpen = CvInvoke.GetStructuringElement(Emgu.CV.CvEnum.ElementShape.Rectangle, new Size(openKernel, openKernel), new Point(-1, -1));
-                CvInvoke.MorphologyEx(processedFrame, processedFrame, Emgu.CV.CvEnum.MorphOp.Open, kernelOpen, new Point(-1, -1), 1, Emgu.CV.CvEnum.BorderType.Default, new MCvScalar());
+                var kernelOpen = CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(openKernel, openKernel), new Point(-1, -1));
+                CvInvoke.MorphologyEx(processedFrame, processedFrame, MorphOp.Open, kernelOpen, new Point(-1, -1), 1, BorderType.Default, new MCvScalar());
                 OpenMorphFrame = processedFrame.Clone();
-                var kernelClose = CvInvoke.GetStructuringElement(Emgu.CV.CvEnum.ElementShape.Rectangle, new Size(closeKernel, closeKernel), new Point(-1, -1));
-                CvInvoke.MorphologyEx(processedFrame, processedFrame, Emgu.CV.CvEnum.MorphOp.Close, kernelClose, new Point(-1, -1), 1, Emgu.CV.CvEnum.BorderType.Default, new MCvScalar());
+                var kernelClose = CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(closeKernel, closeKernel), new Point(-1, -1));
+                CvInvoke.MorphologyEx(processedFrame, processedFrame, MorphOp.Close, kernelClose, new Point(-1, -1), 1, BorderType.Default, new MCvScalar());
                 CloseMorphFrame = processedFrame.Clone();
             } catch (Exception error) {
                 MessageBox.Show("خطای زیر رخ داده است: \r\n" + error.ToString(), "خطا");
@@ -667,6 +672,8 @@ namespace EntranceControl
             if (processedFrame != null) {
                 gaussianKernel = (int) numericUpDownGaussian.Value;
                 thresholdValue = (int) numericUpDownThreshold.Value;
+                thresholdBlockSize = (int) numericUpDownThresholdBlockSize.Value;
+                thresholdParam1 = (int) numericUpDownThresholdParam1.Value;
                 cannyThresholdFirst = (int) numericUpDownEdge1.Value;
                 cannyThresholdSecond = (int) numericUpDownEdge2.Value;
                 openKernel = (int) numericUpDownMorphological_Open.Value;
@@ -684,12 +691,16 @@ namespace EntranceControl
         {
             gaussianKernel = 1;
             thresholdValue = 10;
+            thresholdBlockSize = 15;
+            thresholdParam1 = 10;
             cannyThresholdFirst = 20;
             cannyThresholdSecond = 50;
             openKernel = 5;
             closeKernel = 5;
             numericUpDownGaussian.Value = gaussianKernel;
             numericUpDownThreshold.Value = thresholdValue;
+            numericUpDownThresholdBlockSize.Value = thresholdBlockSize;
+            numericUpDownThresholdParam1.Value = thresholdParam1;
             numericUpDownEdge1.Value = cannyThresholdFirst;
             numericUpDownEdge2.Value = cannyThresholdSecond;
             numericUpDownMorphological_Open.Value = openKernel;
