@@ -489,7 +489,7 @@ namespace EntranceControl
                     frame.height = frame.FrameLoad.Rows;
                     processedFrame = frame.FrameLoad.Clone();
                     pictureBox_Online.Image = new Bitmap(processedFrame.Bitmap);
-                    pictureBoxROISetting.Image = new Bitmap(processedFrame.Bitmap);                    
+                    pictureBoxROISetting.Image = new Bitmap(processedFrame.Bitmap);
 
                     // Set ROI Size and Position
                     roi.positionX = 1;
@@ -535,6 +535,7 @@ namespace EntranceControl
                         frame.height = Convert.ToDecimal(_capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameHeight));
                         frame.width = Convert.ToDecimal(_capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameWidth));
                         frame.TotalFrames = Convert.ToDouble(_capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameCount));
+                        radioButton_ShowMainFrame.Checked = true;
 
                         // Set ROI Size and Position
                         roi.positionX = 1;
@@ -555,7 +556,10 @@ namespace EntranceControl
         {
             // Capture the frame of video
             _capture.Retrieve(frame.FrameLoad);
-            drawROI(frame.FrameLoad);
+            processedFrame = frame.FrameLoad.Clone();
+            drawROI(processedFrame);
+            FrameProcess();
+            LicensePlateDetector();
         }
 
         public void FrameProcess() {
