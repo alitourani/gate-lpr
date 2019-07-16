@@ -1380,6 +1380,7 @@
             // radioButton_ShowGaussian
             // 
             this.radioButton_ShowGaussian.AutoSize = true;
+            this.radioButton_ShowGaussian.Enabled = false;
             this.radioButton_ShowGaussian.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.radioButton_ShowGaussian.Location = new System.Drawing.Point(181, 57);
             this.radioButton_ShowGaussian.Name = "radioButton_ShowGaussian";
@@ -1391,6 +1392,7 @@
             // 
             // numericUpDownGaussian
             // 
+            this.numericUpDownGaussian.Enabled = false;
             this.numericUpDownGaussian.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.numericUpDownGaussian.Increment = new decimal(new int[] {
             2,

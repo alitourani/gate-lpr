@@ -73,6 +73,7 @@ namespace EntranceControl
             public double TotalFrames;
         }
         Frame frame = new Frame();
+        Rectangle RegionOfInterest;
         Mat processedFrame = new Mat();
         Mat croppedFrame = new Mat();           // Cropped region for LP detection
         Mat ColorFrame = new Mat();             // Color Frame to Show
@@ -321,7 +322,7 @@ namespace EntranceControl
 
         private void drawROI(Mat frameContent)
         {
-            Rectangle RegionOfInterest = new Rectangle((int)roi.positionX, (int)roi.positionY, (int)roi.width, (int)roi.height);
+            RegionOfInterest = new Rectangle((int)roi.positionX, (int)roi.positionY, (int)roi.width, (int)roi.height);
             CvInvoke.Rectangle(frameContent, RegionOfInterest, new MCvScalar(0, 0, 255), 2);
             pictureBoxROISetting.Image = new Bitmap(frameContent.Bitmap);
             croppedFrame = new Mat(frame.FrameLoad, RegionOfInterest);
@@ -488,7 +489,7 @@ namespace EntranceControl
                     frame.height = frame.FrameLoad.Rows;
                     processedFrame = frame.FrameLoad.Clone();
                     pictureBox_Online.Image = new Bitmap(processedFrame.Bitmap);
-                    pictureBoxROISetting.Image = new Bitmap(processedFrame.Bitmap);                    
+                    pictureBoxROISetting.Image = new Bitmap(processedFrame.Bitmap);
 
                     // Set ROI Size and Position
                     roi.positionX = 1;
@@ -500,9 +501,6 @@ namespace EntranceControl
                     drawROI(processedFrame);
                     FrameProcess();
                     LicensePlateDetector();
-
-                    // Temp: Save image
-                    imageSave(frame.FrameLoad, "Detection");
                 }
                 catch (Exception error) {
                     MessageBox.Show("خطای زیر رخ داده است: \r\n" + error.ToString(), "خطا");
@@ -537,6 +535,7 @@ namespace EntranceControl
                         frame.height = Convert.ToDecimal(_capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameHeight));
                         frame.width = Convert.ToDecimal(_capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameWidth));
                         frame.TotalFrames = Convert.ToDouble(_capture.GetCaptureProperty(Emgu.CV.CvEnum.CapProp.FrameCount));
+                        radioButton_ShowMainFrame.Checked = true;
 
                         // Set ROI Size and Position
                         roi.positionX = 1;
@@ -557,7 +556,10 @@ namespace EntranceControl
         {
             // Capture the frame of video
             _capture.Retrieve(frame.FrameLoad);
-            drawROI(frame.FrameLoad);
+            processedFrame = frame.FrameLoad.Clone();
+            drawROI(processedFrame);
+            FrameProcess();
+            LicensePlateDetector();
         }
 
         public void FrameProcess() {
@@ -1008,13 +1010,16 @@ namespace EntranceControl
 
         private void LicensePlateDetector() {
             using (VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint()) {
-                CvInvoke.FindContours(EdgeDetectionFrame, contours, null, RetrType.External, ChainApproxMethod.ChainApproxSimple);
+                Mat croppedEdgeDetectionFrame = new Mat(EdgeDetectionFrame, RegionOfInterest);
+                Mat croppedThresholdedFrame = new Mat(ThresholdedFrame, RegionOfInterest);
+                croppedFrame = new Mat(ColorFrame, RegionOfInterest);
+                CvInvoke.FindContours(croppedEdgeDetectionFrame, contours, null, RetrType.External, ChainApproxMethod.ChainApproxSimple);
                 int count = contours.Size;
                 for (int i = 0; i < count; i++) {
                     using (VectorOfPoint contour = contours[i])
                     using (VectorOfPoint approxContour = new VectorOfPoint()) {
                         CvInvoke.ApproxPolyDP(contour, approxContour, CvInvoke.ArcLength(contour, true) * 0.05, true);
-                        CvInvoke.DrawContours(ThresholdedFrame, contours, i, new MCvScalar(90, 120, 255), 2);
+                        CvInvoke.DrawContours(croppedThresholdedFrame, contours, i, new MCvScalar(90, 120, 255), 2);
 
                         var moments = CvInvoke.Moments(contours[i]);
                         int x = (int)(moments.M10 / moments.M00);
@@ -1031,9 +1036,9 @@ namespace EntranceControl
                                 double ratio = (double)(boundingBox.Width / boundingBox.Height);
                                 // LP Ratio: 5.375
                                 if (ratio >= 3 && ratio <= 7) {
-                                    CvInvoke.Rectangle(ColorFrame, boundingBox, new MCvScalar(0, 255, 255), 2);
+                                    CvInvoke.Rectangle(croppedFrame, boundingBox, new MCvScalar(0, 255, 255), 2);
                                     if (((boundingBox.X + boundingBox.Width) <= croppedFrame.Cols) & ((boundingBox.Y + boundingBox.Height) <= croppedFrame.Rows))
-                                        imageSave(new Mat(ColorFrame, boundingBox), "Detection");
+                                        imageSave(new Mat(croppedFrame, boundingBox), "Detection");
                                 }
                                 
                                 LineSegment2D[] edges = PointCollection.PolyLine(pts, true);
@@ -1045,12 +1050,12 @@ namespace EntranceControl
                                         break;
                                     }
                                 }
-                                if (isRectangle) PlateImagesList.Add(CvInvoke.MinAreaRect(approxContour));                                
+                                if (isRectangle) PlateImagesList.Add(CvInvoke.MinAreaRect(approxContour));
                             }
                         }
                     }
                 }
-                pictureBox_Online.Image = new Bitmap(ColorFrame.Bitmap);
+                pictureBox_Online.Image = new Bitmap(croppedFrame.Bitmap);
             }
         }
 
