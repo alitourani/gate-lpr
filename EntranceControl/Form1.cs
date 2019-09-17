@@ -1008,12 +1008,12 @@ namespace EntranceControl
             }
         }
 
-        private void LicensePlateDetector() {
+        private void LicensePlateDetectorMain() {
             using (VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint()) {
                 Mat croppedEdgeDetectionFrame = new Mat(EdgeDetectionFrame, RegionOfInterest);
                 Mat croppedThresholdedFrame = new Mat(ThresholdedFrame, RegionOfInterest);
                 croppedFrame = new Mat(ColorFrame, RegionOfInterest);
-                CvInvoke.FindContours(croppedEdgeDetectionFrame, contours, null, RetrType.External, ChainApproxMethod.ChainApproxSimple);
+                CvInvoke.FindContours(croppedEdgeDetectionFrame, contours, null, RetrType.External, ChainApproxMethod.ChainApproxNone);
                 int count = contours.Size;
                 for (int i = 0; i < count; i++) {
                     using (VectorOfPoint contour = contours[i])
@@ -1059,21 +1059,59 @@ namespace EntranceControl
             }
         }
 
-        private void imageSave(Mat outputImage, string refFunction) {
-            try {
-                switch (refFunction) {
-                    case "Detection":
-                        String fileName = today.ToString("yyyyMMdd") + "-" + DateTime.Now.ToString("hhmmss") + ".png";
-                        // Create a new folder if not exists
-                        Directory.CreateDirectory(Path.Combine("Report", today.ToString("yyyy/MM")));
-                        outputImage.Save(Path.Combine("Report", today.ToString("yyyy/MM"), fileName));
-                        break;
-                    case "Owner":
-                        break;
-            }                    
-            } catch (Exception error) {
-                MessageBox.Show("خطای زیر در ذخیره تصویر رخ داده است: \r\n" + error, "خطا");
+        private void LicensePlateDetector()
+        {
+            using (VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint())
+            {
+                Mat croppedGrayFrame = new Mat(GrayFrame, RegionOfInterest);
+                Mat detector = croppedGrayFrame.Clone();
+                CvInvoke.MedianBlur(croppedGrayFrame, detector, 5);
+                CvInvoke.Blur(detector, detector, new Size(21, 21), new Point(-1, -1));
+                Mat temp1 = croppedGrayFrame.Clone();
+                CvInvoke.AbsDiff(detector, croppedGrayFrame, temp1);
+                CvInvoke.Threshold(temp1, temp1, 25, 255, ThresholdType.Binary);
+                CvInvoke.Sobel(temp1, temp1, DepthType.Cv8U, 1, 0);
+                Mat stats = new Mat(), centroids = new Mat();
+                CvInvoke.ConnectedComponentsWithStats(temp1, temp1, stats, centroids, LineType.FourConnected);
+                temp1.ConvertTo(temp1, DepthType.Cv8U);
+                var kernelClose = CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(3, 10), new Point(-1, -1));
+                CvInvoke.MorphologyEx(temp1, temp1, MorphOp.Close, kernelClose, new Point(-1, -1), 1, BorderType.Default, new MCvScalar());
+                var kernelOpen = CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(4, 8), new Point(-1, -1));
+                CvInvoke.MorphologyEx(temp1, temp1, MorphOp.Open, kernelOpen, new Point(-1, -1), 1, BorderType.Default, new MCvScalar());
+                Mat temp2 = temp1.Clone();
+                CvInvoke.ConnectedComponentsWithStats(temp2, temp2, stats, centroids, LineType.FourConnected);
+                MessageBox.Show("" + stats, "");
+                /*
+                for (int i=1; i<stats.Rows; i++)
+                {
+                    if (stats.Data[i,2] > 120)
+                        CvInvoke.MorphologyEx(temp2, temp2, MorphOp.Open, CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(8, 8), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar());
+                    if (stats.Data(i, 2) <= 65)
+                        CvInvoke.MorphologyEx(temp1, temp1, MorphOp.Close, CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(1, 20), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar());
+                    if (stats.Data(i, 3) > 53)
+                        CvInvoke.MorphologyEx(temp2, temp2, MorphOp.Open, CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(1, 10), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar());
+                }
+                CvInvoke.ConnectedComponentsWithStats(temp2, temp2, stats, centroids, LineType.FourConnected);
+                */
+                pictureBox_Online.Image = new Bitmap(temp1.Bitmap);
             }
         }
-    }
+
+        private void imageSave(Mat outputImage, string refFunction) {
+                    try {
+                        switch (refFunction) {
+                            case "Detection":
+                                String fileName = today.ToString("yyyyMMdd") + "-" + DateTime.Now.ToString("hhmmss") + ".png";
+                                // Create a new folder if not exists
+                                Directory.CreateDirectory(Path.Combine("Report", today.ToString("yyyy/MM")));
+                                outputImage.Save(Path.Combine("Report", today.ToString("yyyy/MM"), fileName));
+                                break;
+                            case "Owner":
+                                break;
+                        }
+                    } catch (Exception error) {
+                        MessageBox.Show("خطای زیر در ذخیره تصویر رخ داده است: \r\n" + error, "خطا");
+                    }
+                }
+        }
 }
