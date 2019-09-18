@@ -94,7 +94,7 @@ namespace EntranceControl
 
             try {
                 connectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; Integrated Security = True; MultipleActiveResultSets = True;
-                    AttachDbFilename = D:\Git\gate-lpr\EntranceControl\GateDB.mdf";
+                    AttachDbFilename = E:\Git\gate-lpr\EntranceControl\GateDB.mdf";
                 cnn = new SqlConnection(connectionString);
                 dataAdapter = new SqlDataAdapter();
             } catch (Exception err) {
