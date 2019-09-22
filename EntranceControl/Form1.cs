@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.IO;
 using Emgu.CV.Util;
 using Emgu.CV.CvEnum;
+using System.Runtime.InteropServices;
 
 namespace EntranceControl
 {
@@ -94,7 +95,7 @@ namespace EntranceControl
 
             try {
                 connectionString = @"Data Source = (LocalDB)\MSSQLLocalDB; Integrated Security = True; MultipleActiveResultSets = True;
-                    AttachDbFilename = E:\Git\gate-lpr\EntranceControl\GateDB.mdf";
+                    AttachDbFilename = E:\Git\alitourani\gate-lpr\EntranceControl\GateDB.mdf";
                 cnn = new SqlConnection(connectionString);
                 dataAdapter = new SqlDataAdapter();
             } catch (Exception err) {
@@ -1059,6 +1060,46 @@ namespace EntranceControl
             }
         }
 
+        private int GetValue(Mat mat, int row, int col)
+        {
+            var value = CreateElement(mat.Depth);
+            Marshal.Copy(mat.DataPointer + (row * mat.Cols + col) * mat.ElementSize, value, 0, 1);
+            return value[0];
+        }
+
+        private dynamic CreateElement(DepthType depthType)
+        {
+            if (depthType == DepthType.Cv8S)
+            {
+                return new sbyte[1];
+            }
+            if (depthType == DepthType.Cv8U)
+            {
+                return new byte[1];
+            }
+            if (depthType == DepthType.Cv16S)
+            {
+                return new short[1];
+            }
+            if (depthType == DepthType.Cv16U)
+            {
+                return new ushort[1];
+            }
+            if (depthType == DepthType.Cv32S)
+            {
+                return new int[1];
+            }
+            if (depthType == DepthType.Cv32F)
+            {
+                return new float[1];
+            }
+            if (depthType == DepthType.Cv64F)
+            {
+                return new double[1];
+            }
+            return new float[1];
+        }
+
         private void LicensePlateDetector()
         {
             using (VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint())
@@ -1080,19 +1121,16 @@ namespace EntranceControl
                 CvInvoke.MorphologyEx(temp1, temp1, MorphOp.Open, kernelOpen, new Point(-1, -1), 1, BorderType.Default, new MCvScalar());
                 Mat temp2 = temp1.Clone();
                 CvInvoke.ConnectedComponentsWithStats(temp2, temp2, stats, centroids, LineType.FourConnected);
-                MessageBox.Show("" + stats, "");
-                /*
                 for (int i=1; i<stats.Rows; i++)
                 {
-                    if (stats.Data[i,2] > 120)
+                    if (GetValue(stats, i, 2) > 120)
                         CvInvoke.MorphologyEx(temp2, temp2, MorphOp.Open, CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(8, 8), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar());
-                    if (stats.Data(i, 2) <= 65)
+                    if (GetValue(stats, i, 2) <= 65)
                         CvInvoke.MorphologyEx(temp1, temp1, MorphOp.Close, CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(1, 20), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar());
-                    if (stats.Data(i, 3) > 53)
+                    if (GetValue(stats, i, 3) > 53)
                         CvInvoke.MorphologyEx(temp2, temp2, MorphOp.Open, CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(1, 10), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar());
                 }
                 CvInvoke.ConnectedComponentsWithStats(temp2, temp2, stats, centroids, LineType.FourConnected);
-                */
                 pictureBox_Online.Image = new Bitmap(temp1.Bitmap);
             }
         }
