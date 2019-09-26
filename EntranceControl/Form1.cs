@@ -1108,30 +1108,32 @@ namespace EntranceControl
                 Mat detector = croppedGrayFrame.Clone();
                 CvInvoke.MedianBlur(croppedGrayFrame, detector, 5);
                 CvInvoke.Blur(detector, detector, new Size(21, 21), new Point(-1, -1));
-                Mat temp1 = croppedGrayFrame.Clone();
-                CvInvoke.AbsDiff(detector, croppedGrayFrame, temp1);
-                CvInvoke.Threshold(temp1, temp1, 25, 255, ThresholdType.Binary);
-                CvInvoke.Sobel(temp1, temp1, DepthType.Cv8U, 1, 0);
+                // Pre-processing steps
+                Mat preprocessedResult = croppedGrayFrame.Clone();
+                CvInvoke.AbsDiff(detector, croppedGrayFrame, preprocessedResult);
+                CvInvoke.Threshold(preprocessedResult, preprocessedResult, 25, 255, ThresholdType.Binary);
+                CvInvoke.Sobel(preprocessedResult, preprocessedResult, DepthType.Cv8U, 1, 0);
                 Mat stats = new Mat(), centroids = new Mat();
-                CvInvoke.ConnectedComponentsWithStats(temp1, temp1, stats, centroids, LineType.FourConnected);
-                temp1.ConvertTo(temp1, DepthType.Cv8U);
+                CvInvoke.ConnectedComponentsWithStats(preprocessedResult, preprocessedResult, stats, centroids, LineType.FourConnected);
+                preprocessedResult.ConvertTo(preprocessedResult, DepthType.Cv8U);
                 var kernelClose = CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(3, 10), new Point(-1, -1));
-                CvInvoke.MorphologyEx(temp1, temp1, MorphOp.Close, kernelClose, new Point(-1, -1), 1, BorderType.Default, new MCvScalar());
+                CvInvoke.MorphologyEx(preprocessedResult, preprocessedResult, MorphOp.Close, kernelClose, new Point(-1, -1), 1, BorderType.Default, new MCvScalar());
                 var kernelOpen = CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(4, 8), new Point(-1, -1));
-                CvInvoke.MorphologyEx(temp1, temp1, MorphOp.Open, kernelOpen, new Point(-1, -1), 1, BorderType.Default, new MCvScalar());
-                Mat temp2 = temp1.Clone();
-                CvInvoke.ConnectedComponentsWithStats(temp2, temp2, stats, centroids, LineType.FourConnected);
+                CvInvoke.MorphologyEx(preprocessedResult, preprocessedResult, MorphOp.Open, kernelOpen, new Point(-1, -1), 1, BorderType.Default, new MCvScalar());
+                // Providing final results
+                Mat finalResult = preprocessedResult.Clone();
+                CvInvoke.ConnectedComponentsWithStats(finalResult, finalResult, stats, centroids, LineType.FourConnected);
                 for (int i=1; i<stats.Rows; i++)
                 {
                     if (GetValue(stats, i, 2) > 120)
-                        CvInvoke.MorphologyEx(temp2, temp2, MorphOp.Open, CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(8, 8), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar());
+                        CvInvoke.MorphologyEx(finalResult, finalResult, MorphOp.Open, CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(8, 8), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar());
                     if (GetValue(stats, i, 2) <= 65)
-                        CvInvoke.MorphologyEx(temp1, temp1, MorphOp.Close, CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(1, 20), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar());
+                        CvInvoke.MorphologyEx(preprocessedResult, preprocessedResult, MorphOp.Close, CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(1, 20), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar());
                     if (GetValue(stats, i, 3) > 53)
-                        CvInvoke.MorphologyEx(temp2, temp2, MorphOp.Open, CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(1, 10), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar());
+                        CvInvoke.MorphologyEx(finalResult, finalResult, MorphOp.Open, CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(1, 10), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar());
                 }
-                CvInvoke.ConnectedComponentsWithStats(temp2, temp2, stats, centroids, LineType.FourConnected);
-                pictureBox_Online.Image = new Bitmap(temp1.Bitmap);
+                // CvInvoke.ConnectedComponentsWithStats(finalResult, finalResult, stats, centroids, LineType.FourConnected);
+                pictureBox_Online.Image = new Bitmap(finalResult.Bitmap);
             }
         }
 
