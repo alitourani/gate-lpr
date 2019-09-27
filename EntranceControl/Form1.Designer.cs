@@ -1808,9 +1808,6 @@
 
         #endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.TabControl mainTab;
         private System.Windows.Forms.TabPage tabOnlineMonitoring;
