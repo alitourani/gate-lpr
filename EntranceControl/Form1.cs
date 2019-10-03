@@ -1132,8 +1132,14 @@ namespace EntranceControl
                     if (GetValue(stats, i, 3) > 53)
                         CvInvoke.MorphologyEx(finalResult, finalResult, MorphOp.Open, CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(1, 10), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar());
                 }
-                // CvInvoke.ConnectedComponentsWithStats(finalResult, finalResult, stats, centroids, LineType.FourConnected);
-                pictureBox_Online.Image = new Bitmap(finalResult.Bitmap);
+                finalResult.ConvertTo(finalResult, DepthType.Cv8U);
+                CvInvoke.ConnectedComponentsWithStats(finalResult, finalResult, stats, centroids, LineType.FourConnected);
+                // Draw Bounding Boxes
+                for (int i = 1; i < stats.Rows; i++) {
+                    Rectangle boundingBox = new Rectangle(GetValue(stats, i, 0), GetValue(stats, i, 1), GetValue(stats, i, 0)+GetValue(stats, i, 2), GetValue(stats, i, 1)+GetValue(stats, i, 3));
+                    CvInvoke.Rectangle(croppedFrame, boundingBox, new MCvScalar(0, 255, 255), 2);
+                }                
+                pictureBox_Online.Image = new Bitmap(croppedFrame.Bitmap);
             }
         }
 
