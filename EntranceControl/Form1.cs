@@ -1123,14 +1123,15 @@ namespace EntranceControl
                 // Providing final results
                 Mat finalResult = preprocessedResult.Clone();
                 CvInvoke.ConnectedComponentsWithStats(finalResult, finalResult, stats, centroids, LineType.FourConnected);
-                for (int i=1; i<stats.Rows; i++)
-                {
-                    if (GetValue(stats, i, 2) > 120)
+                finalResult.ConvertTo(finalResult, DepthType.Cv8U);
+                for (int i=1; i<stats.Rows; i++) {
+                    if (GetValue(stats, i, 2) > 120) {
                         CvInvoke.MorphologyEx(finalResult, finalResult, MorphOp.Open, CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(8, 8), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar());
-                    if (GetValue(stats, i, 2) <= 65)
+                    } else if (GetValue(stats, i, 2) <= 65) {
                         CvInvoke.MorphologyEx(preprocessedResult, preprocessedResult, MorphOp.Close, CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(1, 20), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar());
-                    if (GetValue(stats, i, 3) > 53)
+                    } else if (GetValue(stats, i, 3) > 53) {
                         CvInvoke.MorphologyEx(finalResult, finalResult, MorphOp.Open, CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(1, 10), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar());
+                    }
                 }
                 finalResult.ConvertTo(finalResult, DepthType.Cv8U);
                 CvInvoke.ConnectedComponentsWithStats(finalResult, finalResult, stats, centroids, LineType.FourConnected);
