@@ -161,6 +161,14 @@
             this.radioButtonCameraOff = new System.Windows.Forms.RadioButton();
             this.radioButtonCameraOn = new System.Windows.Forms.RadioButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.label_MedianBlur = new System.Windows.Forms.Label();
+            this.numericUpDownMedianBlur = new System.Windows.Forms.NumericUpDown();
+            this.label_AvgFilter = new System.Windows.Forms.Label();
+            this.numericUpDownAvgFilter = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
+            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
             this.mainTab.SuspendLayout();
             this.tabOnlineMonitoring.SuspendLayout();
             this.panelOnlineMonitoring.SuspendLayout();
@@ -212,15 +220,19 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxROISetting)).BeginInit();
             this.groupBoxGateConnection.SuspendLayout();
             this.groupBoxCameraSettings.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMedianBlur)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAvgFilter)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             this.SuspendLayout();
             // 
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
             this.linkLabel1.Font = new System.Drawing.Font("Cambria", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))));
-            this.linkLabel1.Location = new System.Drawing.Point(887, 589);
+            this.linkLabel1.Location = new System.Drawing.Point(1069, 663);
             this.linkLabel1.Name = "linkLabel1";
-            this.linkLabel1.Size = new System.Drawing.Size(179, 12);
+            this.linkLabel1.Size = new System.Drawing.Size(236, 16);
             this.linkLabel1.TabIndex = 39;
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "CopyRight 2019 - See More Info Here";
@@ -236,16 +248,16 @@
             this.mainTab.Name = "mainTab";
             this.mainTab.RightToLeftLayout = true;
             this.mainTab.SelectedIndex = 0;
-            this.mainTab.Size = new System.Drawing.Size(1030, 572);
+            this.mainTab.Size = new System.Drawing.Size(1288, 645);
             this.mainTab.TabIndex = 40;
             // 
             // tabOnlineMonitoring
             // 
             this.tabOnlineMonitoring.Controls.Add(this.panelOnlineMonitoring);
-            this.tabOnlineMonitoring.Location = new System.Drawing.Point(4, 33);
+            this.tabOnlineMonitoring.Location = new System.Drawing.Point(4, 39);
             this.tabOnlineMonitoring.Name = "tabOnlineMonitoring";
             this.tabOnlineMonitoring.Padding = new System.Windows.Forms.Padding(3);
-            this.tabOnlineMonitoring.Size = new System.Drawing.Size(1022, 535);
+            this.tabOnlineMonitoring.Size = new System.Drawing.Size(1280, 602);
             this.tabOnlineMonitoring.TabIndex = 0;
             this.tabOnlineMonitoring.Text = "نظارت آنلاین";
             this.tabOnlineMonitoring.UseVisualStyleBackColor = true;
@@ -258,7 +270,7 @@
             this.panelOnlineMonitoring.Controls.Add(this.groupBox_OnlineWatch);
             this.panelOnlineMonitoring.Location = new System.Drawing.Point(3, 3);
             this.panelOnlineMonitoring.Name = "panelOnlineMonitoring";
-            this.panelOnlineMonitoring.Size = new System.Drawing.Size(1016, 529);
+            this.panelOnlineMonitoring.Size = new System.Drawing.Size(1277, 599);
             this.panelOnlineMonitoring.TabIndex = 3;
             // 
             // groupBox_Last
@@ -269,9 +281,9 @@
             this.groupBox_Last.Controls.Add(this.pictureBox_LastOwnerImage);
             this.groupBox_Last.Controls.Add(this.label_LastLP);
             this.groupBox_Last.Controls.Add(this.label_LastDateTime);
-            this.groupBox_Last.Location = new System.Drawing.Point(13, 442);
+            this.groupBox_Last.Location = new System.Drawing.Point(13, 506);
             this.groupBox_Last.Name = "groupBox_Last";
-            this.groupBox_Last.Size = new System.Drawing.Size(993, 79);
+            this.groupBox_Last.Size = new System.Drawing.Size(1252, 79);
             this.groupBox_Last.TabIndex = 42;
             this.groupBox_Last.TabStop = false;
             this.groupBox_Last.Text = "آخرین تردد";
@@ -279,7 +291,7 @@
             // pictureBox_LastCarImage
             // 
             this.pictureBox_LastCarImage.InitialImage = global::EntranceControl.Properties.Resources.OwnerImage;
-            this.pictureBox_LastCarImage.Location = new System.Drawing.Point(189, 21);
+            this.pictureBox_LastCarImage.Location = new System.Drawing.Point(259, 21);
             this.pictureBox_LastCarImage.Name = "pictureBox_LastCarImage";
             this.pictureBox_LastCarImage.Size = new System.Drawing.Size(73, 52);
             this.pictureBox_LastCarImage.TabIndex = 67;
@@ -288,7 +300,7 @@
             // pictureBox_LastLPImage
             // 
             this.pictureBox_LastLPImage.InitialImage = global::EntranceControl.Properties.Resources.VehicleImage;
-            this.pictureBox_LastLPImage.Location = new System.Drawing.Point(408, 21);
+            this.pictureBox_LastLPImage.Location = new System.Drawing.Point(549, 21);
             this.pictureBox_LastLPImage.Name = "pictureBox_LastLPImage";
             this.pictureBox_LastLPImage.Size = new System.Drawing.Size(233, 52);
             this.pictureBox_LastLPImage.TabIndex = 65;
@@ -299,16 +311,16 @@
             this.label_LastOwner.AutoSize = true;
             this.label_LastOwner.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.label_LastOwner.ForeColor = System.Drawing.Color.Green;
-            this.label_LastOwner.Location = new System.Drawing.Point(15, 38);
+            this.label_LastOwner.Location = new System.Drawing.Point(43, 38);
             this.label_LastOwner.Name = "label_LastOwner";
-            this.label_LastOwner.Size = new System.Drawing.Size(115, 20);
+            this.label_LastOwner.Size = new System.Drawing.Size(146, 26);
             this.label_LastOwner.TabIndex = 66;
             this.label_LastOwner.Text = "مجاز (آقای رضایی)";
             // 
             // pictureBox_LastOwnerImage
             // 
             this.pictureBox_LastOwnerImage.InitialImage = global::EntranceControl.Properties.Resources.OwnerImage;
-            this.pictureBox_LastOwnerImage.Location = new System.Drawing.Point(299, 21);
+            this.pictureBox_LastOwnerImage.Location = new System.Drawing.Point(409, 21);
             this.pictureBox_LastOwnerImage.Name = "pictureBox_LastOwnerImage";
             this.pictureBox_LastOwnerImage.Size = new System.Drawing.Size(73, 52);
             this.pictureBox_LastOwnerImage.TabIndex = 64;
@@ -318,9 +330,9 @@
             // 
             this.label_LastLP.AutoSize = true;
             this.label_LastLP.Font = new System.Drawing.Font("B Yekan", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.label_LastLP.Location = new System.Drawing.Point(699, 38);
+            this.label_LastLP.Location = new System.Drawing.Point(852, 34);
             this.label_LastLP.Name = "label_LastLP";
-            this.label_LastLP.Size = new System.Drawing.Size(114, 24);
+            this.label_LastLP.Size = new System.Drawing.Size(145, 30);
             this.label_LastLP.TabIndex = 65;
             this.label_LastLP.Text = "45 - 97ب232";
             // 
@@ -328,9 +340,9 @@
             // 
             this.label_LastDateTime.AutoSize = true;
             this.label_LastDateTime.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.label_LastDateTime.Location = new System.Drawing.Point(858, 41);
+            this.label_LastDateTime.Location = new System.Drawing.Point(1059, 38);
             this.label_LastDateTime.Name = "label_LastDateTime";
-            this.label_LastDateTime.Size = new System.Drawing.Size(118, 20);
+            this.label_LastDateTime.Size = new System.Drawing.Size(151, 26);
             this.label_LastDateTime.TabIndex = 64;
             this.label_LastDateTime.Text = "97/05/12 - 19:12";
             // 
@@ -338,9 +350,9 @@
             // 
             this.groupBox_RecentReport.Controls.Add(this.label_HintReport);
             this.groupBox_RecentReport.Controls.Add(this.dataGridView_Recent);
-            this.groupBox_RecentReport.Location = new System.Drawing.Point(671, 12);
+            this.groupBox_RecentReport.Location = new System.Drawing.Point(838, 12);
             this.groupBox_RecentReport.Name = "groupBox_RecentReport";
-            this.groupBox_RecentReport.Size = new System.Drawing.Size(332, 424);
+            this.groupBox_RecentReport.Size = new System.Drawing.Size(433, 488);
             this.groupBox_RecentReport.TabIndex = 62;
             this.groupBox_RecentReport.TabStop = false;
             this.groupBox_RecentReport.Text = "خلاصه ترددهای اخیر";
@@ -350,9 +362,9 @@
             this.label_HintReport.AutoSize = true;
             this.label_HintReport.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.label_HintReport.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label_HintReport.Location = new System.Drawing.Point(67, 395);
+            this.label_HintReport.Location = new System.Drawing.Point(67, 451);
             this.label_HintReport.Name = "label_HintReport";
-            this.label_HintReport.Size = new System.Drawing.Size(215, 18);
+            this.label_HintReport.Size = new System.Drawing.Size(265, 23);
             this.label_HintReport.TabIndex = 10;
             this.label_HintReport.Text = "گزارش با جزئیات بیشتر در زبانه گزارش ترددها";
             // 
@@ -368,11 +380,12 @@
             this.dataGridViewTextBoxColumn7,
             this.dataGridViewTextBoxColumn8,
             this.dataGridViewTextBoxColumn9});
-            this.dataGridView_Recent.Location = new System.Drawing.Point(6, 31);
+            this.dataGridView_Recent.Location = new System.Drawing.Point(11, 31);
             this.dataGridView_Recent.Name = "dataGridView_Recent";
             this.dataGridView_Recent.RowHeadersVisible = false;
+            this.dataGridView_Recent.RowHeadersWidth = 51;
             this.dataGridView_Recent.RowTemplate.Height = 25;
-            this.dataGridView_Recent.Size = new System.Drawing.Size(320, 353);
+            this.dataGridView_Recent.Size = new System.Drawing.Size(416, 409);
             this.dataGridView_Recent.TabIndex = 0;
             // 
             // dataGridViewTextBoxColumn6
@@ -380,31 +393,36 @@
             this.dataGridViewTextBoxColumn6.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.dataGridViewTextBoxColumn6.HeaderText = "شماره پلاک";
             this.dataGridViewTextBoxColumn6.MaxInputLength = 9;
+            this.dataGridViewTextBoxColumn6.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn6.Name = "dataGridViewTextBoxColumn6";
+            this.dataGridViewTextBoxColumn6.Width = 124;
             // 
             // dataGridViewTextBoxColumn7
             // 
             this.dataGridViewTextBoxColumn7.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.dataGridViewTextBoxColumn7.HeaderText = "تاریخ";
             this.dataGridViewTextBoxColumn7.MaxInputLength = 50;
+            this.dataGridViewTextBoxColumn7.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn7.Name = "dataGridViewTextBoxColumn7";
-            this.dataGridViewTextBoxColumn7.Width = 65;
+            this.dataGridViewTextBoxColumn7.Width = 80;
             // 
             // dataGridViewTextBoxColumn8
             // 
             this.dataGridViewTextBoxColumn8.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.dataGridViewTextBoxColumn8.HeaderText = "ساعت";
             this.dataGridViewTextBoxColumn8.MaxInputLength = 10;
+            this.dataGridViewTextBoxColumn8.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn8.Name = "dataGridViewTextBoxColumn8";
-            this.dataGridViewTextBoxColumn8.Width = 70;
+            this.dataGridViewTextBoxColumn8.Width = 87;
             // 
             // dataGridViewTextBoxColumn9
             // 
             this.dataGridViewTextBoxColumn9.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.dataGridViewTextBoxColumn9.HeaderText = "مجوز عبور";
             this.dataGridViewTextBoxColumn9.MaxInputLength = 100;
+            this.dataGridViewTextBoxColumn9.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn9.Name = "dataGridViewTextBoxColumn9";
-            this.dataGridViewTextBoxColumn9.Width = 94;
+            this.dataGridViewTextBoxColumn9.Width = 115;
             // 
             // groupBox_OnlineWatch
             // 
@@ -414,7 +432,7 @@
             this.groupBox_OnlineWatch.Controls.Add(this.button_OfflineVideo);
             this.groupBox_OnlineWatch.Location = new System.Drawing.Point(13, 12);
             this.groupBox_OnlineWatch.Name = "groupBox_OnlineWatch";
-            this.groupBox_OnlineWatch.Size = new System.Drawing.Size(652, 424);
+            this.groupBox_OnlineWatch.Size = new System.Drawing.Size(819, 488);
             this.groupBox_OnlineWatch.TabIndex = 42;
             this.groupBox_OnlineWatch.TabStop = false;
             this.groupBox_OnlineWatch.Text = "نظارت آنلاین";
@@ -423,7 +441,7 @@
             // 
             this.button_ClearLoadedFrame.Font = new System.Drawing.Font("B Yekan", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.button_ClearLoadedFrame.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.button_ClearLoadedFrame.Location = new System.Drawing.Point(263, 390);
+            this.button_ClearLoadedFrame.Location = new System.Drawing.Point(474, 448);
             this.button_ClearLoadedFrame.Name = "button_ClearLoadedFrame";
             this.button_ClearLoadedFrame.Size = new System.Drawing.Size(62, 28);
             this.button_ClearLoadedFrame.TabIndex = 62;
@@ -433,16 +451,16 @@
             // 
             // pictureBox_Online
             // 
-            this.pictureBox_Online.Location = new System.Drawing.Point(6, 24);
+            this.pictureBox_Online.Location = new System.Drawing.Point(43, 24);
             this.pictureBox_Online.Name = "pictureBox_Online";
-            this.pictureBox_Online.Size = new System.Drawing.Size(635, 360);
+            this.pictureBox_Online.Size = new System.Drawing.Size(752, 416);
             this.pictureBox_Online.TabIndex = 41;
             this.pictureBox_Online.TabStop = false;
             // 
             // button_OfflinePicture
             // 
             this.button_OfflinePicture.Font = new System.Drawing.Font("B Yekan", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.button_OfflinePicture.Location = new System.Drawing.Point(132, 390);
+            this.button_OfflinePicture.Location = new System.Drawing.Point(324, 448);
             this.button_OfflinePicture.Name = "button_OfflinePicture";
             this.button_OfflinePicture.Size = new System.Drawing.Size(125, 28);
             this.button_OfflinePicture.TabIndex = 60;
@@ -453,7 +471,7 @@
             // button_OfflineVideo
             // 
             this.button_OfflineVideo.Font = new System.Drawing.Font("B Yekan", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.button_OfflineVideo.Location = new System.Drawing.Point(6, 390);
+            this.button_OfflineVideo.Location = new System.Drawing.Point(184, 448);
             this.button_OfflineVideo.Name = "button_OfflineVideo";
             this.button_OfflineVideo.Size = new System.Drawing.Size(120, 28);
             this.button_OfflineVideo.TabIndex = 61;
@@ -464,10 +482,10 @@
             // tabReport
             // 
             this.tabReport.Controls.Add(this.panelReport);
-            this.tabReport.Location = new System.Drawing.Point(4, 33);
+            this.tabReport.Location = new System.Drawing.Point(4, 39);
             this.tabReport.Name = "tabReport";
             this.tabReport.Padding = new System.Windows.Forms.Padding(3);
-            this.tabReport.Size = new System.Drawing.Size(1022, 535);
+            this.tabReport.Size = new System.Drawing.Size(1280, 602);
             this.tabReport.TabIndex = 1;
             this.tabReport.Text = "گزارش ترددها";
             this.tabReport.UseVisualStyleBackColor = true;
@@ -482,7 +500,7 @@
             this.panelReport.Controls.Add(this.groupBox_Report);
             this.panelReport.Location = new System.Drawing.Point(3, 3);
             this.panelReport.Name = "panelReport";
-            this.panelReport.Size = new System.Drawing.Size(1016, 529);
+            this.panelReport.Size = new System.Drawing.Size(1281, 599);
             this.panelReport.TabIndex = 2;
             // 
             // groupBox_Filtration
@@ -492,9 +510,9 @@
             this.groupBox_Filtration.Controls.Add(this.textBox_FromDate);
             this.groupBox_Filtration.Controls.Add(this.label_TillDate);
             this.groupBox_Filtration.Controls.Add(this.label_FromDate);
-            this.groupBox_Filtration.Location = new System.Drawing.Point(192, 463);
+            this.groupBox_Filtration.Location = new System.Drawing.Point(192, 518);
             this.groupBox_Filtration.Name = "groupBox_Filtration";
-            this.groupBox_Filtration.Size = new System.Drawing.Size(338, 59);
+            this.groupBox_Filtration.Size = new System.Drawing.Size(505, 75);
             this.groupBox_Filtration.TabIndex = 67;
             this.groupBox_Filtration.TabStop = false;
             this.groupBox_Filtration.Text = "فیلتر زمانی";
@@ -503,29 +521,29 @@
             // 
             this.button_ApplyFilter.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.button_ApplyFilter.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.button_ApplyFilter.Location = new System.Drawing.Point(9, 21);
+            this.button_ApplyFilter.Location = new System.Drawing.Point(6, 32);
             this.button_ApplyFilter.Name = "button_ApplyFilter";
-            this.button_ApplyFilter.Size = new System.Drawing.Size(53, 32);
+            this.button_ApplyFilter.Size = new System.Drawing.Size(113, 32);
             this.button_ApplyFilter.TabIndex = 62;
             this.button_ApplyFilter.Text = "اعمال";
             this.button_ApplyFilter.UseVisualStyleBackColor = true;
             // 
             // textBox_TillDate
             // 
-            this.textBox_TillDate.Location = new System.Drawing.Point(68, 22);
+            this.textBox_TillDate.Location = new System.Drawing.Point(164, 31);
             this.textBox_TillDate.MaxLength = 250;
             this.textBox_TillDate.Name = "textBox_TillDate";
-            this.textBox_TillDate.Size = new System.Drawing.Size(103, 32);
+            this.textBox_TillDate.Size = new System.Drawing.Size(119, 38);
             this.textBox_TillDate.TabIndex = 68;
             this.textBox_TillDate.Text = "1397/01/02";
             this.textBox_TillDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // textBox_FromDate
             // 
-            this.textBox_FromDate.Location = new System.Drawing.Point(208, 22);
+            this.textBox_FromDate.Location = new System.Drawing.Point(336, 30);
             this.textBox_FromDate.MaxLength = 250;
             this.textBox_FromDate.Name = "textBox_FromDate";
-            this.textBox_FromDate.Size = new System.Drawing.Size(99, 32);
+            this.textBox_FromDate.Size = new System.Drawing.Size(122, 38);
             this.textBox_FromDate.TabIndex = 67;
             this.textBox_FromDate.Text = "1397/01/01";
             this.textBox_FromDate.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -534,9 +552,9 @@
             // 
             this.label_TillDate.AutoSize = true;
             this.label_TillDate.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.label_TillDate.Location = new System.Drawing.Point(177, 28);
+            this.label_TillDate.Location = new System.Drawing.Point(289, 37);
             this.label_TillDate.Name = "label_TillDate";
-            this.label_TillDate.Size = new System.Drawing.Size(20, 20);
+            this.label_TillDate.Size = new System.Drawing.Size(27, 26);
             this.label_TillDate.TabIndex = 65;
             this.label_TillDate.Text = "تا:";
             // 
@@ -544,30 +562,32 @@
             // 
             this.label_FromDate.AutoSize = true;
             this.label_FromDate.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.label_FromDate.Location = new System.Drawing.Point(308, 29);
+            this.label_FromDate.Location = new System.Drawing.Point(459, 37);
             this.label_FromDate.Name = "label_FromDate";
-            this.label_FromDate.Size = new System.Drawing.Size(23, 20);
+            this.label_FromDate.Size = new System.Drawing.Size(29, 26);
             this.label_FromDate.TabIndex = 63;
             this.label_FromDate.Text = "از:";
             // 
             // button_Excel
             // 
+            this.button_Excel.Enabled = false;
             this.button_Excel.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.button_Excel.ForeColor = System.Drawing.Color.Green;
-            this.button_Excel.Location = new System.Drawing.Point(17, 495);
+            this.button_Excel.Location = new System.Drawing.Point(17, 561);
             this.button_Excel.Name = "button_Excel";
-            this.button_Excel.Size = new System.Drawing.Size(138, 26);
+            this.button_Excel.Size = new System.Drawing.Size(156, 32);
             this.button_Excel.TabIndex = 61;
             this.button_Excel.Text = "خروجی اکسل";
             this.button_Excel.UseVisualStyleBackColor = true;
             // 
             // button_Print
             // 
+            this.button_Print.Enabled = false;
             this.button_Print.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.button_Print.ForeColor = System.Drawing.Color.Teal;
-            this.button_Print.Location = new System.Drawing.Point(17, 463);
+            this.button_Print.Location = new System.Drawing.Point(17, 518);
             this.button_Print.Name = "button_Print";
-            this.button_Print.Size = new System.Drawing.Size(138, 26);
+            this.button_Print.Size = new System.Drawing.Size(156, 37);
             this.button_Print.TabIndex = 60;
             this.button_Print.Text = "ارائه نسخه چاپی";
             this.button_Print.UseVisualStyleBackColor = true;
@@ -578,46 +598,46 @@
             this.groupBox_SearchReports.Controls.Add(this.label_SearchOwnerReports);
             this.groupBox_SearchReports.Controls.Add(this.textBox_SearchLPReports);
             this.groupBox_SearchReports.Controls.Add(this.label_SearchLP);
-            this.groupBox_SearchReports.Location = new System.Drawing.Point(567, 463);
+            this.groupBox_SearchReports.Location = new System.Drawing.Point(718, 519);
             this.groupBox_SearchReports.Name = "groupBox_SearchReports";
-            this.groupBox_SearchReports.Size = new System.Drawing.Size(427, 59);
+            this.groupBox_SearchReports.Size = new System.Drawing.Size(539, 74);
             this.groupBox_SearchReports.TabIndex = 9;
             this.groupBox_SearchReports.TabStop = false;
             this.groupBox_SearchReports.Text = "جستجو در فهرست";
             // 
             // textBox_SearchOwnerReports
             // 
-            this.textBox_SearchOwnerReports.Location = new System.Drawing.Point(6, 21);
+            this.textBox_SearchOwnerReports.Location = new System.Drawing.Point(6, 30);
             this.textBox_SearchOwnerReports.MaxLength = 250;
             this.textBox_SearchOwnerReports.Name = "textBox_SearchOwnerReports";
-            this.textBox_SearchOwnerReports.Size = new System.Drawing.Size(112, 32);
+            this.textBox_SearchOwnerReports.Size = new System.Drawing.Size(144, 38);
             this.textBox_SearchOwnerReports.TabIndex = 66;
             // 
             // label_SearchOwnerReports
             // 
             this.label_SearchOwnerReports.AutoSize = true;
             this.label_SearchOwnerReports.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.label_SearchOwnerReports.Location = new System.Drawing.Point(125, 27);
+            this.label_SearchOwnerReports.Location = new System.Drawing.Point(156, 37);
             this.label_SearchOwnerReports.Name = "label_SearchOwnerReports";
-            this.label_SearchOwnerReports.Size = new System.Drawing.Size(98, 20);
+            this.label_SearchOwnerReports.Size = new System.Drawing.Size(130, 26);
             this.label_SearchOwnerReports.TabIndex = 65;
             this.label_SearchOwnerReports.Text = "نام خانوادگی مالک:";
             // 
             // textBox_SearchLPReports
             // 
-            this.textBox_SearchLPReports.Location = new System.Drawing.Point(233, 21);
+            this.textBox_SearchLPReports.Location = new System.Drawing.Point(301, 30);
             this.textBox_SearchLPReports.MaxLength = 250;
             this.textBox_SearchLPReports.Name = "textBox_SearchLPReports";
-            this.textBox_SearchLPReports.Size = new System.Drawing.Size(116, 32);
+            this.textBox_SearchLPReports.Size = new System.Drawing.Size(130, 38);
             this.textBox_SearchLPReports.TabIndex = 64;
             // 
             // label_SearchLP
             // 
             this.label_SearchLP.AutoSize = true;
             this.label_SearchLP.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.label_SearchLP.Location = new System.Drawing.Point(353, 27);
+            this.label_SearchLP.Location = new System.Drawing.Point(435, 36);
             this.label_SearchLP.Name = "label_SearchLP";
-            this.label_SearchLP.Size = new System.Drawing.Size(66, 20);
+            this.label_SearchLP.Size = new System.Drawing.Size(87, 26);
             this.label_SearchLP.TabIndex = 63;
             this.label_SearchLP.Text = "شماره پلاک:";
             // 
@@ -626,7 +646,7 @@
             this.groupBox_Report.Controls.Add(this.dataGridView_Report);
             this.groupBox_Report.Location = new System.Drawing.Point(17, 14);
             this.groupBox_Report.Name = "groupBox_Report";
-            this.groupBox_Report.Size = new System.Drawing.Size(983, 443);
+            this.groupBox_Report.Size = new System.Drawing.Size(1254, 498);
             this.groupBox_Report.TabIndex = 8;
             this.groupBox_Report.TabStop = false;
             this.groupBox_Report.Text = "گزارش آخرین ترددها";
@@ -646,8 +666,9 @@
             this.dataGridViewImageColumn1});
             this.dataGridView_Report.Location = new System.Drawing.Point(7, 32);
             this.dataGridView_Report.Name = "dataGridView_Report";
+            this.dataGridView_Report.RowHeadersWidth = 51;
             this.dataGridView_Report.RowTemplate.Height = 150;
-            this.dataGridView_Report.Size = new System.Drawing.Size(970, 399);
+            this.dataGridView_Report.Size = new System.Drawing.Size(1233, 452);
             this.dataGridView_Report.TabIndex = 0;
             // 
             // dataGridViewTextBoxColumn1
@@ -655,64 +676,72 @@
             this.dataGridViewTextBoxColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.dataGridViewTextBoxColumn1.HeaderText = "شماره پلاک";
             this.dataGridViewTextBoxColumn1.MaxInputLength = 9;
+            this.dataGridViewTextBoxColumn1.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.Width = 124;
             // 
             // dataGridViewTextBoxColumn3
             // 
             this.dataGridViewTextBoxColumn3.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.dataGridViewTextBoxColumn3.HeaderText = "تاریخ";
             this.dataGridViewTextBoxColumn3.MaxInputLength = 50;
+            this.dataGridViewTextBoxColumn3.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn3.Name = "dataGridViewTextBoxColumn3";
-            this.dataGridViewTextBoxColumn3.Width = 65;
+            this.dataGridViewTextBoxColumn3.Width = 80;
             // 
             // dataGridViewTextBoxColumn4
             // 
             this.dataGridViewTextBoxColumn4.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.dataGridViewTextBoxColumn4.HeaderText = "ساعت";
             this.dataGridViewTextBoxColumn4.MaxInputLength = 10;
+            this.dataGridViewTextBoxColumn4.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn4.Name = "dataGridViewTextBoxColumn4";
-            this.dataGridViewTextBoxColumn4.Width = 70;
+            this.dataGridViewTextBoxColumn4.Width = 87;
             // 
             // dataGridViewTextBoxColumn5
             // 
             this.dataGridViewTextBoxColumn5.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.dataGridViewTextBoxColumn5.HeaderText = "مجوز عبور";
             this.dataGridViewTextBoxColumn5.MaxInputLength = 100;
+            this.dataGridViewTextBoxColumn5.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn5.Name = "dataGridViewTextBoxColumn5";
-            this.dataGridViewTextBoxColumn5.Width = 94;
+            this.dataGridViewTextBoxColumn5.Width = 115;
             // 
             // dataGridViewTextBoxColumn2
             // 
             this.dataGridViewTextBoxColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.dataGridViewTextBoxColumn2.HeaderText = "مالک";
             this.dataGridViewTextBoxColumn2.MaxInputLength = 50;
+            this.dataGridViewTextBoxColumn2.MinimumWidth = 6;
             this.dataGridViewTextBoxColumn2.Name = "dataGridViewTextBoxColumn2";
-            this.dataGridViewTextBoxColumn2.Width = 64;
+            this.dataGridViewTextBoxColumn2.Width = 77;
             // 
             // dataGridViewImageColumn2
             // 
             this.dataGridViewImageColumn2.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.dataGridViewImageColumn2.HeaderText = "تصویر پلاک";
+            this.dataGridViewImageColumn2.MinimumWidth = 6;
             this.dataGridViewImageColumn2.Name = "dataGridViewImageColumn2";
             this.dataGridViewImageColumn2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridViewImageColumn2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.dataGridViewImageColumn2.Width = 101;
+            this.dataGridViewImageColumn2.Width = 127;
             // 
             // dataGridViewImageColumn1
             // 
             this.dataGridViewImageColumn1.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.dataGridViewImageColumn1.HeaderText = "تصویر خودرو";
+            this.dataGridViewImageColumn1.MinimumWidth = 6;
             this.dataGridViewImageColumn1.Name = "dataGridViewImageColumn1";
             this.dataGridViewImageColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.dataGridViewImageColumn1.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.dataGridViewImageColumn1.Width = 112;
+            this.dataGridViewImageColumn1.Width = 140;
             // 
             // tabValidPeople
             // 
             this.tabValidPeople.Controls.Add(this.panelValidCars);
-            this.tabValidPeople.Location = new System.Drawing.Point(4, 33);
+            this.tabValidPeople.Location = new System.Drawing.Point(4, 39);
             this.tabValidPeople.Name = "tabValidPeople";
-            this.tabValidPeople.Size = new System.Drawing.Size(1022, 535);
+            this.tabValidPeople.Size = new System.Drawing.Size(1280, 602);
             this.tabValidPeople.TabIndex = 2;
             this.tabValidPeople.Text = "خودروهای مجاز";
             this.tabValidPeople.UseVisualStyleBackColor = true;
@@ -724,7 +753,7 @@
             this.panelValidCars.Controls.Add(this.groupBox_Vehicles);
             this.panelValidCars.Location = new System.Drawing.Point(3, 3);
             this.panelValidCars.Name = "panelValidCars";
-            this.panelValidCars.Size = new System.Drawing.Size(1016, 529);
+            this.panelValidCars.Size = new System.Drawing.Size(1277, 596);
             this.panelValidCars.TabIndex = 2;
             // 
             // groupBox_VehicleList
@@ -733,7 +762,7 @@
             this.groupBox_VehicleList.Controls.Add(this.dataGridView_Valid);
             this.groupBox_VehicleList.Location = new System.Drawing.Point(17, 13);
             this.groupBox_VehicleList.Name = "groupBox_VehicleList";
-            this.groupBox_VehicleList.Size = new System.Drawing.Size(624, 500);
+            this.groupBox_VehicleList.Size = new System.Drawing.Size(843, 567);
             this.groupBox_VehicleList.TabIndex = 7;
             this.groupBox_VehicleList.TabStop = false;
             this.groupBox_VehicleList.Text = "لیست خودروهای مجاز";
@@ -746,64 +775,64 @@
             this.groupBox_ValidSearch.Controls.Add(this.label_LP_Search);
             this.groupBox_ValidSearch.Controls.Add(this.textBox_NationalCode_Search);
             this.groupBox_ValidSearch.Controls.Add(this.label_NationalCode_Search);
-            this.groupBox_ValidSearch.Location = new System.Drawing.Point(7, 430);
+            this.groupBox_ValidSearch.Location = new System.Drawing.Point(7, 478);
             this.groupBox_ValidSearch.Name = "groupBox_ValidSearch";
-            this.groupBox_ValidSearch.Size = new System.Drawing.Size(611, 59);
+            this.groupBox_ValidSearch.Size = new System.Drawing.Size(818, 76);
             this.groupBox_ValidSearch.TabIndex = 6;
             this.groupBox_ValidSearch.TabStop = false;
             this.groupBox_ValidSearch.Text = "جستجو در فهرست";
             // 
             // textBox_Surname_Search
             // 
-            this.textBox_Surname_Search.Location = new System.Drawing.Point(6, 22);
+            this.textBox_Surname_Search.Location = new System.Drawing.Point(18, 28);
             this.textBox_Surname_Search.MaxLength = 250;
             this.textBox_Surname_Search.Name = "textBox_Surname_Search";
-            this.textBox_Surname_Search.Size = new System.Drawing.Size(112, 32);
+            this.textBox_Surname_Search.Size = new System.Drawing.Size(156, 38);
             this.textBox_Surname_Search.TabIndex = 66;
             // 
             // label_Surname_Search
             // 
             this.label_Surname_Search.AutoSize = true;
             this.label_Surname_Search.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.label_Surname_Search.Location = new System.Drawing.Point(125, 28);
+            this.label_Surname_Search.Location = new System.Drawing.Point(181, 34);
             this.label_Surname_Search.Name = "label_Surname_Search";
-            this.label_Surname_Search.Size = new System.Drawing.Size(98, 20);
+            this.label_Surname_Search.Size = new System.Drawing.Size(130, 26);
             this.label_Surname_Search.TabIndex = 65;
             this.label_Surname_Search.Text = "نام خانوادگی مالک:";
             // 
             // textBox_LP_Search
             // 
-            this.textBox_LP_Search.Location = new System.Drawing.Point(418, 22);
+            this.textBox_LP_Search.Location = new System.Drawing.Point(558, 28);
             this.textBox_LP_Search.MaxLength = 250;
             this.textBox_LP_Search.Name = "textBox_LP_Search";
-            this.textBox_LP_Search.Size = new System.Drawing.Size(116, 32);
+            this.textBox_LP_Search.Size = new System.Drawing.Size(149, 38);
             this.textBox_LP_Search.TabIndex = 64;
             // 
             // label_LP_Search
             // 
             this.label_LP_Search.AutoSize = true;
             this.label_LP_Search.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.label_LP_Search.Location = new System.Drawing.Point(538, 28);
+            this.label_LP_Search.Location = new System.Drawing.Point(711, 34);
             this.label_LP_Search.Name = "label_LP_Search";
-            this.label_LP_Search.Size = new System.Drawing.Size(66, 20);
+            this.label_LP_Search.Size = new System.Drawing.Size(87, 26);
             this.label_LP_Search.TabIndex = 63;
             this.label_LP_Search.Text = "شماره پلاک:";
             // 
             // textBox_NationalCode_Search
             // 
-            this.textBox_NationalCode_Search.Location = new System.Drawing.Point(236, 22);
+            this.textBox_NationalCode_Search.Location = new System.Drawing.Point(338, 28);
             this.textBox_NationalCode_Search.MaxLength = 250;
             this.textBox_NationalCode_Search.Name = "textBox_NationalCode_Search";
-            this.textBox_NationalCode_Search.Size = new System.Drawing.Size(112, 32);
+            this.textBox_NationalCode_Search.Size = new System.Drawing.Size(130, 38);
             this.textBox_NationalCode_Search.TabIndex = 62;
             // 
             // label_NationalCode_Search
             // 
             this.label_NationalCode_Search.AutoSize = true;
             this.label_NationalCode_Search.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.label_NationalCode_Search.Location = new System.Drawing.Point(354, 28);
+            this.label_NationalCode_Search.Location = new System.Drawing.Point(474, 34);
             this.label_NationalCode_Search.Name = "label_NationalCode_Search";
-            this.label_NationalCode_Search.Size = new System.Drawing.Size(45, 20);
+            this.label_NationalCode_Search.Size = new System.Drawing.Size(61, 26);
             this.label_NationalCode_Search.TabIndex = 61;
             this.label_NationalCode_Search.Text = "کد ملی:";
             // 
@@ -822,8 +851,9 @@
             this.Description});
             this.dataGridView_Valid.Location = new System.Drawing.Point(7, 32);
             this.dataGridView_Valid.Name = "dataGridView_Valid";
+            this.dataGridView_Valid.RowHeadersWidth = 51;
             this.dataGridView_Valid.RowTemplate.Height = 150;
-            this.dataGridView_Valid.Size = new System.Drawing.Size(600, 392);
+            this.dataGridView_Valid.Size = new System.Drawing.Size(818, 440);
             this.dataGridView_Valid.TabIndex = 0;
             // 
             // LicensePlate
@@ -831,57 +861,65 @@
             this.LicensePlate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.LicensePlate.HeaderText = "شماره پلاک";
             this.LicensePlate.MaxInputLength = 9;
+            this.LicensePlate.MinimumWidth = 6;
             this.LicensePlate.Name = "LicensePlate";
+            this.LicensePlate.Width = 124;
             // 
             // Owner
             // 
             this.Owner.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.Owner.HeaderText = "مالک";
             this.Owner.MaxInputLength = 50;
+            this.Owner.MinimumWidth = 6;
             this.Owner.Name = "Owner";
-            this.Owner.Width = 64;
+            this.Owner.Width = 77;
             // 
             // Car
             // 
             this.Car.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.Car.HeaderText = "خودرو";
             this.Car.MaxInputLength = 50;
+            this.Car.MinimumWidth = 6;
             this.Car.Name = "Car";
-            this.Car.Width = 72;
+            this.Car.Width = 88;
             // 
             // VehicleImage
             // 
             this.VehicleImage.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.VehicleImage.HeaderText = "تصویر خودرو";
+            this.VehicleImage.MinimumWidth = 6;
             this.VehicleImage.Name = "VehicleImage";
             this.VehicleImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.VehicleImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.VehicleImage.Width = 112;
+            this.VehicleImage.Width = 140;
             // 
             // OwnerImage
             // 
             this.OwnerImage.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.OwnerImage.HeaderText = "تصویر مالک";
+            this.OwnerImage.MinimumWidth = 6;
             this.OwnerImage.Name = "OwnerImage";
             this.OwnerImage.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this.OwnerImage.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.OwnerImage.Width = 104;
+            this.OwnerImage.Width = 129;
             // 
             // NationalCode
             // 
             this.NationalCode.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.NationalCode.HeaderText = "کد ملی";
             this.NationalCode.MaxInputLength = 10;
+            this.NationalCode.MinimumWidth = 6;
             this.NationalCode.Name = "NationalCode";
-            this.NationalCode.Width = 77;
+            this.NationalCode.Width = 93;
             // 
             // Description
             // 
             this.Description.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.Description.HeaderText = "توضیح کوتاه";
             this.Description.MaxInputLength = 100;
+            this.Description.MinimumWidth = 6;
             this.Description.Name = "Description";
-            this.Description.Width = 107;
+            this.Description.Width = 133;
             // 
             // groupBox_Vehicles
             // 
@@ -908,9 +946,9 @@
             this.groupBox_Vehicles.Controls.Add(this.labelLicensePlate);
             this.groupBox_Vehicles.Controls.Add(this.radioButton_Woman);
             this.groupBox_Vehicles.Controls.Add(this.radioButton_Man);
-            this.groupBox_Vehicles.Location = new System.Drawing.Point(659, 13);
+            this.groupBox_Vehicles.Location = new System.Drawing.Point(876, 13);
             this.groupBox_Vehicles.Name = "groupBox_Vehicles";
-            this.groupBox_Vehicles.Size = new System.Drawing.Size(344, 500);
+            this.groupBox_Vehicles.Size = new System.Drawing.Size(387, 567);
             this.groupBox_Vehicles.TabIndex = 6;
             this.groupBox_Vehicles.TabStop = false;
             this.groupBox_Vehicles.Text = "مشخصات خودروها";
@@ -919,7 +957,7 @@
             // 
             this.pictureBox_VehicleImage.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox_VehicleImage.InitialImage = global::EntranceControl.Properties.Resources.VehicleImage;
-            this.pictureBox_VehicleImage.Location = new System.Drawing.Point(40, 367);
+            this.pictureBox_VehicleImage.Location = new System.Drawing.Point(37, 430);
             this.pictureBox_VehicleImage.Name = "pictureBox_VehicleImage";
             this.pictureBox_VehicleImage.Size = new System.Drawing.Size(133, 82);
             this.pictureBox_VehicleImage.TabIndex = 63;
@@ -930,7 +968,7 @@
             // 
             this.pictureBox_OwnerImage.Cursor = System.Windows.Forms.Cursors.Hand;
             this.pictureBox_OwnerImage.InitialImage = global::EntranceControl.Properties.Resources.OwnerImage;
-            this.pictureBox_OwnerImage.Location = new System.Drawing.Point(216, 367);
+            this.pictureBox_OwnerImage.Location = new System.Drawing.Point(216, 430);
             this.pictureBox_OwnerImage.Name = "pictureBox_OwnerImage";
             this.pictureBox_OwnerImage.Size = new System.Drawing.Size(97, 82);
             this.pictureBox_OwnerImage.TabIndex = 62;
@@ -939,19 +977,19 @@
             // 
             // textBox_NationalCode
             // 
-            this.textBox_NationalCode.Location = new System.Drawing.Point(13, 279);
+            this.textBox_NationalCode.Location = new System.Drawing.Point(13, 331);
             this.textBox_NationalCode.MaxLength = 10;
             this.textBox_NationalCode.Name = "textBox_NationalCode";
-            this.textBox_NationalCode.Size = new System.Drawing.Size(233, 32);
+            this.textBox_NationalCode.Size = new System.Drawing.Size(233, 38);
             this.textBox_NationalCode.TabIndex = 61;
             // 
             // label_NationalCode
             // 
             this.label_NationalCode.AutoSize = true;
             this.label_NationalCode.Font = new System.Drawing.Font("B Yekan", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.label_NationalCode.Location = new System.Drawing.Point(278, 286);
+            this.label_NationalCode.Location = new System.Drawing.Point(311, 334);
             this.label_NationalCode.Name = "label_NationalCode";
-            this.label_NationalCode.Size = new System.Drawing.Size(56, 24);
+            this.label_NationalCode.Size = new System.Drawing.Size(70, 30);
             this.label_NationalCode.TabIndex = 60;
             this.label_NationalCode.Text = "کد ملی:";
             // 
@@ -959,9 +997,9 @@
             // 
             this.button_Clear.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.button_Clear.ForeColor = System.Drawing.Color.Teal;
-            this.button_Clear.Location = new System.Drawing.Point(13, 455);
+            this.button_Clear.Location = new System.Drawing.Point(13, 518);
             this.button_Clear.Name = "button_Clear";
-            this.button_Clear.Size = new System.Drawing.Size(94, 36);
+            this.button_Clear.Size = new System.Drawing.Size(137, 36);
             this.button_Clear.TabIndex = 59;
             this.button_Clear.Text = "پاک کردن فرم";
             this.button_Clear.UseVisualStyleBackColor = true;
@@ -971,7 +1009,7 @@
             // 
             this.button_Register.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.button_Register.ForeColor = System.Drawing.Color.Green;
-            this.button_Register.Location = new System.Drawing.Point(111, 455);
+            this.button_Register.Location = new System.Drawing.Point(156, 518);
             this.button_Register.Name = "button_Register";
             this.button_Register.Size = new System.Drawing.Size(225, 36);
             this.button_Register.TabIndex = 56;
@@ -983,69 +1021,69 @@
             // 
             this.label_OwnerDescription.AutoSize = true;
             this.label_OwnerDescription.Font = new System.Drawing.Font("B Yekan", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.label_OwnerDescription.Location = new System.Drawing.Point(248, 321);
+            this.label_OwnerDescription.Location = new System.Drawing.Point(271, 382);
             this.label_OwnerDescription.Name = "label_OwnerDescription";
-            this.label_OwnerDescription.Size = new System.Drawing.Size(86, 24);
+            this.label_OwnerDescription.Size = new System.Drawing.Size(110, 30);
             this.label_OwnerDescription.TabIndex = 55;
             this.label_OwnerDescription.Text = "توضیح کوتاه:";
             // 
             // textBox_OwnerDescription
             // 
-            this.textBox_OwnerDescription.Location = new System.Drawing.Point(13, 318);
+            this.textBox_OwnerDescription.Location = new System.Drawing.Point(13, 379);
             this.textBox_OwnerDescription.MaxLength = 50;
             this.textBox_OwnerDescription.Name = "textBox_OwnerDescription";
-            this.textBox_OwnerDescription.Size = new System.Drawing.Size(233, 32);
+            this.textBox_OwnerDescription.Size = new System.Drawing.Size(233, 38);
             this.textBox_OwnerDescription.TabIndex = 54;
             // 
             // textBox_OwnerSurname
             // 
-            this.textBox_OwnerSurname.Location = new System.Drawing.Point(13, 241);
+            this.textBox_OwnerSurname.Location = new System.Drawing.Point(13, 278);
             this.textBox_OwnerSurname.MaxLength = 30;
             this.textBox_OwnerSurname.Name = "textBox_OwnerSurname";
-            this.textBox_OwnerSurname.Size = new System.Drawing.Size(168, 32);
+            this.textBox_OwnerSurname.Size = new System.Drawing.Size(168, 38);
             this.textBox_OwnerSurname.TabIndex = 53;
             // 
             // textBox_OwnerName
             // 
-            this.textBox_OwnerName.Location = new System.Drawing.Point(187, 241);
+            this.textBox_OwnerName.Location = new System.Drawing.Point(187, 278);
             this.textBox_OwnerName.MaxLength = 20;
             this.textBox_OwnerName.Name = "textBox_OwnerName";
-            this.textBox_OwnerName.Size = new System.Drawing.Size(143, 32);
+            this.textBox_OwnerName.Size = new System.Drawing.Size(189, 38);
             this.textBox_OwnerName.TabIndex = 52;
             // 
             // textBox_VehicleColor
             // 
-            this.textBox_VehicleColor.Location = new System.Drawing.Point(13, 165);
+            this.textBox_VehicleColor.Location = new System.Drawing.Point(13, 188);
             this.textBox_VehicleColor.MaxLength = 20;
             this.textBox_VehicleColor.Name = "textBox_VehicleColor";
-            this.textBox_VehicleColor.Size = new System.Drawing.Size(233, 32);
+            this.textBox_VehicleColor.Size = new System.Drawing.Size(233, 38);
             this.textBox_VehicleColor.TabIndex = 51;
             // 
             // label_VehicleColor
             // 
             this.label_VehicleColor.AutoSize = true;
             this.label_VehicleColor.Font = new System.Drawing.Font("B Yekan", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.label_VehicleColor.Location = new System.Drawing.Point(253, 168);
+            this.label_VehicleColor.Location = new System.Drawing.Point(280, 191);
             this.label_VehicleColor.Name = "label_VehicleColor";
-            this.label_VehicleColor.Size = new System.Drawing.Size(81, 24);
+            this.label_VehicleColor.Size = new System.Drawing.Size(101, 30);
             this.label_VehicleColor.TabIndex = 50;
             this.label_VehicleColor.Text = "رنگ خودرو:";
             // 
             // textBox_VehicleType
             // 
-            this.textBox_VehicleType.Location = new System.Drawing.Point(13, 124);
+            this.textBox_VehicleType.Location = new System.Drawing.Point(13, 142);
             this.textBox_VehicleType.MaxLength = 20;
             this.textBox_VehicleType.Name = "textBox_VehicleType";
-            this.textBox_VehicleType.Size = new System.Drawing.Size(233, 32);
+            this.textBox_VehicleType.Size = new System.Drawing.Size(233, 38);
             this.textBox_VehicleType.TabIndex = 49;
             // 
             // label_VehicleType
             // 
             this.label_VehicleType.AutoSize = true;
             this.label_VehicleType.Font = new System.Drawing.Font("B Yekan", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.label_VehicleType.Location = new System.Drawing.Point(258, 127);
+            this.label_VehicleType.Location = new System.Drawing.Point(285, 145);
             this.label_VehicleType.Name = "label_VehicleType";
-            this.label_VehicleType.Size = new System.Drawing.Size(76, 24);
+            this.label_VehicleType.Size = new System.Drawing.Size(96, 30);
             this.label_VehicleType.TabIndex = 48;
             this.label_VehicleType.Text = "نوع خودرو:";
             // 
@@ -1053,24 +1091,24 @@
             // 
             this.labelVehicleOwner.AutoSize = true;
             this.labelVehicleOwner.Font = new System.Drawing.Font("B Yekan", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.labelVehicleOwner.Location = new System.Drawing.Point(250, 212);
+            this.labelVehicleOwner.Location = new System.Drawing.Point(276, 232);
             this.labelVehicleOwner.Name = "labelVehicleOwner";
-            this.labelVehicleOwner.Size = new System.Drawing.Size(84, 24);
+            this.labelVehicleOwner.Size = new System.Drawing.Size(105, 30);
             this.labelVehicleOwner.TabIndex = 47;
             this.labelVehicleOwner.Text = "مالک خودرو:";
             // 
             // comboBox_LP_Char_VehicleProperties
             // 
             this.comboBox_LP_Char_VehicleProperties.FormattingEnabled = true;
-            this.comboBox_LP_Char_VehicleProperties.Location = new System.Drawing.Point(111, 70);
+            this.comboBox_LP_Char_VehicleProperties.Location = new System.Drawing.Point(114, 80);
             this.comboBox_LP_Char_VehicleProperties.Name = "comboBox_LP_Char_VehicleProperties";
-            this.comboBox_LP_Char_VehicleProperties.Size = new System.Drawing.Size(59, 32);
+            this.comboBox_LP_Char_VehicleProperties.Size = new System.Drawing.Size(77, 38);
             this.comboBox_LP_Char_VehicleProperties.TabIndex = 46;
             // 
             // numericUpDown_LP_City_VehicleProperties
             // 
             this.numericUpDown_LP_City_VehicleProperties.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.numericUpDown_LP_City_VehicleProperties.Location = new System.Drawing.Point(263, 73);
+            this.numericUpDown_LP_City_VehicleProperties.Location = new System.Drawing.Point(311, 84);
             this.numericUpDown_LP_City_VehicleProperties.Maximum = new decimal(new int[] {
             99,
             0,
@@ -1082,7 +1120,7 @@
             0,
             0});
             this.numericUpDown_LP_City_VehicleProperties.Name = "numericUpDown_LP_City_VehicleProperties";
-            this.numericUpDown_LP_City_VehicleProperties.Size = new System.Drawing.Size(50, 27);
+            this.numericUpDown_LP_City_VehicleProperties.Size = new System.Drawing.Size(50, 32);
             this.numericUpDown_LP_City_VehicleProperties.TabIndex = 45;
             this.numericUpDown_LP_City_VehicleProperties.Value = new decimal(new int[] {
             11,
@@ -1092,7 +1130,7 @@
             // 
             // numericUpDown_LP_NumberR_VehicleProperties
             // 
-            this.numericUpDown_LP_NumberR_VehicleProperties.Location = new System.Drawing.Point(175, 70);
+            this.numericUpDown_LP_NumberR_VehicleProperties.Location = new System.Drawing.Point(216, 80);
             this.numericUpDown_LP_NumberR_VehicleProperties.Maximum = new decimal(new int[] {
             999,
             0,
@@ -1104,7 +1142,7 @@
             0,
             0});
             this.numericUpDown_LP_NumberR_VehicleProperties.Name = "numericUpDown_LP_NumberR_VehicleProperties";
-            this.numericUpDown_LP_NumberR_VehicleProperties.Size = new System.Drawing.Size(71, 32);
+            this.numericUpDown_LP_NumberR_VehicleProperties.Size = new System.Drawing.Size(71, 38);
             this.numericUpDown_LP_NumberR_VehicleProperties.TabIndex = 44;
             this.numericUpDown_LP_NumberR_VehicleProperties.Value = new decimal(new int[] {
             111,
@@ -1114,7 +1152,7 @@
             // 
             // numericUpDown_LP_NumberL_VehicleProperties
             // 
-            this.numericUpDown_LP_NumberL_VehicleProperties.Location = new System.Drawing.Point(50, 70);
+            this.numericUpDown_LP_NumberL_VehicleProperties.Location = new System.Drawing.Point(37, 80);
             this.numericUpDown_LP_NumberL_VehicleProperties.Maximum = new decimal(new int[] {
             99,
             0,
@@ -1126,7 +1164,7 @@
             0,
             0});
             this.numericUpDown_LP_NumberL_VehicleProperties.Name = "numericUpDown_LP_NumberL_VehicleProperties";
-            this.numericUpDown_LP_NumberL_VehicleProperties.Size = new System.Drawing.Size(57, 32);
+            this.numericUpDown_LP_NumberL_VehicleProperties.Size = new System.Drawing.Size(57, 38);
             this.numericUpDown_LP_NumberL_VehicleProperties.TabIndex = 43;
             this.numericUpDown_LP_NumberL_VehicleProperties.Value = new decimal(new int[] {
             11,
@@ -1137,9 +1175,9 @@
             // pictureBoxLicensePlate_groupBoxVehicles
             // 
             this.pictureBoxLicensePlate_groupBoxVehicles.InitialImage = global::EntranceControl.Properties.Resources.LP;
-            this.pictureBoxLicensePlate_groupBoxVehicles.Location = new System.Drawing.Point(13, 50);
+            this.pictureBoxLicensePlate_groupBoxVehicles.Location = new System.Drawing.Point(13, 65);
             this.pictureBoxLicensePlate_groupBoxVehicles.Name = "pictureBoxLicensePlate_groupBoxVehicles";
-            this.pictureBoxLicensePlate_groupBoxVehicles.Size = new System.Drawing.Size(317, 65);
+            this.pictureBoxLicensePlate_groupBoxVehicles.Size = new System.Drawing.Size(363, 65);
             this.pictureBoxLicensePlate_groupBoxVehicles.TabIndex = 42;
             this.pictureBoxLicensePlate_groupBoxVehicles.TabStop = false;
             // 
@@ -1147,18 +1185,18 @@
             // 
             this.labelLicensePlate.AutoSize = true;
             this.labelLicensePlate.Font = new System.Drawing.Font("B Yekan", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.labelLicensePlate.Location = new System.Drawing.Point(253, 23);
+            this.labelLicensePlate.Location = new System.Drawing.Point(278, 32);
             this.labelLicensePlate.Name = "labelLicensePlate";
-            this.labelLicensePlate.Size = new System.Drawing.Size(81, 24);
+            this.labelLicensePlate.Size = new System.Drawing.Size(103, 30);
             this.labelLicensePlate.TabIndex = 9;
             this.labelLicensePlate.Text = "پلاک خودرو:";
             // 
             // radioButton_Woman
             // 
             this.radioButton_Woman.AutoSize = true;
-            this.radioButton_Woman.Location = new System.Drawing.Point(13, 210);
+            this.radioButton_Woman.Location = new System.Drawing.Point(13, 232);
             this.radioButton_Woman.Name = "radioButton_Woman";
-            this.radioButton_Woman.Size = new System.Drawing.Size(55, 28);
+            this.radioButton_Woman.Size = new System.Drawing.Size(67, 34);
             this.radioButton_Woman.TabIndex = 4;
             this.radioButton_Woman.Text = "خانم";
             this.radioButton_Woman.UseVisualStyleBackColor = true;
@@ -1167,9 +1205,9 @@
             // 
             this.radioButton_Man.AutoSize = true;
             this.radioButton_Man.Checked = true;
-            this.radioButton_Man.Location = new System.Drawing.Point(84, 210);
+            this.radioButton_Man.Location = new System.Drawing.Point(84, 232);
             this.radioButton_Man.Name = "radioButton_Man";
-            this.radioButton_Man.Size = new System.Drawing.Size(44, 28);
+            this.radioButton_Man.Size = new System.Drawing.Size(55, 34);
             this.radioButton_Man.TabIndex = 2;
             this.radioButton_Man.TabStop = true;
             this.radioButton_Man.Text = "آقا";
@@ -1178,9 +1216,9 @@
             // tabSettings
             // 
             this.tabSettings.Controls.Add(this.panelSettings);
-            this.tabSettings.Location = new System.Drawing.Point(4, 33);
+            this.tabSettings.Location = new System.Drawing.Point(4, 39);
             this.tabSettings.Name = "tabSettings";
-            this.tabSettings.Size = new System.Drawing.Size(1022, 535);
+            this.tabSettings.Size = new System.Drawing.Size(1280, 602);
             this.tabSettings.TabIndex = 3;
             this.tabSettings.Text = "تنظیمات";
             this.tabSettings.UseVisualStyleBackColor = true;
@@ -1195,11 +1233,19 @@
             this.panelSettings.Controls.Add(this.groupBoxCameraSettings);
             this.panelSettings.Location = new System.Drawing.Point(3, 3);
             this.panelSettings.Name = "panelSettings";
-            this.panelSettings.Size = new System.Drawing.Size(1016, 529);
+            this.panelSettings.Size = new System.Drawing.Size(1274, 603);
             this.panelSettings.TabIndex = 1;
             // 
             // groupBoxAdvanced
             // 
+            this.groupBoxAdvanced.Controls.Add(this.numericUpDown2);
+            this.groupBoxAdvanced.Controls.Add(this.label2);
+            this.groupBoxAdvanced.Controls.Add(this.numericUpDown1);
+            this.groupBoxAdvanced.Controls.Add(this.label1);
+            this.groupBoxAdvanced.Controls.Add(this.numericUpDownAvgFilter);
+            this.groupBoxAdvanced.Controls.Add(this.label_AvgFilter);
+            this.groupBoxAdvanced.Controls.Add(this.numericUpDownMedianBlur);
+            this.groupBoxAdvanced.Controls.Add(this.label_MedianBlur);
             this.groupBoxAdvanced.Controls.Add(this.numericUpDownThresholdParam1);
             this.groupBoxAdvanced.Controls.Add(this.numericUpDownThresholdBlockSize);
             this.groupBoxAdvanced.Controls.Add(this.button_DefaultCalibration);
@@ -1216,9 +1262,9 @@
             this.groupBoxAdvanced.Controls.Add(this.radioButton_ShowEdge);
             this.groupBoxAdvanced.Controls.Add(this.radioButton_ShowMainFrame);
             this.groupBoxAdvanced.Controls.Add(this.numericUpDownEdge1);
-            this.groupBoxAdvanced.Location = new System.Drawing.Point(659, 227);
+            this.groupBoxAdvanced.Location = new System.Drawing.Point(659, 157);
             this.groupBoxAdvanced.Name = "groupBoxAdvanced";
-            this.groupBoxAdvanced.Size = new System.Drawing.Size(344, 288);
+            this.groupBoxAdvanced.Size = new System.Drawing.Size(612, 439);
             this.groupBoxAdvanced.TabIndex = 8;
             this.groupBoxAdvanced.TabStop = false;
             this.groupBoxAdvanced.Text = "تنظیمات پیشرفته کالیبراسیون";
@@ -1231,14 +1277,14 @@
             0,
             0,
             0});
-            this.numericUpDownThresholdParam1.Location = new System.Drawing.Point(18, 82);
+            this.numericUpDownThresholdParam1.Location = new System.Drawing.Point(239, 103);
             this.numericUpDownThresholdParam1.Maximum = new decimal(new int[] {
             200,
             0,
             0,
             0});
             this.numericUpDownThresholdParam1.Name = "numericUpDownThresholdParam1";
-            this.numericUpDownThresholdParam1.Size = new System.Drawing.Size(38, 26);
+            this.numericUpDownThresholdParam1.Size = new System.Drawing.Size(38, 30);
             this.numericUpDownThresholdParam1.TabIndex = 65;
             // 
             // numericUpDownThresholdBlockSize
@@ -1249,22 +1295,22 @@
             0,
             0,
             0});
-            this.numericUpDownThresholdBlockSize.Location = new System.Drawing.Point(61, 82);
+            this.numericUpDownThresholdBlockSize.Location = new System.Drawing.Point(283, 103);
             this.numericUpDownThresholdBlockSize.Maximum = new decimal(new int[] {
             200,
             0,
             0,
             0});
             this.numericUpDownThresholdBlockSize.Name = "numericUpDownThresholdBlockSize";
-            this.numericUpDownThresholdBlockSize.Size = new System.Drawing.Size(38, 26);
+            this.numericUpDownThresholdBlockSize.Size = new System.Drawing.Size(38, 30);
             this.numericUpDownThresholdBlockSize.TabIndex = 64;
             // 
             // button_DefaultCalibration
             // 
             this.button_DefaultCalibration.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.button_DefaultCalibration.Location = new System.Drawing.Point(6, 256);
+            this.button_DefaultCalibration.Location = new System.Drawing.Point(134, 398);
             this.button_DefaultCalibration.Name = "button_DefaultCalibration";
-            this.button_DefaultCalibration.Size = new System.Drawing.Size(78, 26);
+            this.button_DefaultCalibration.Size = new System.Drawing.Size(133, 35);
             this.button_DefaultCalibration.TabIndex = 63;
             this.button_DefaultCalibration.Text = "پیشفرض";
             this.button_DefaultCalibration.UseVisualStyleBackColor = true;
@@ -1273,9 +1319,9 @@
             // button_SubmitCalibration
             // 
             this.button_SubmitCalibration.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.button_SubmitCalibration.Location = new System.Drawing.Point(90, 256);
+            this.button_SubmitCalibration.Location = new System.Drawing.Point(297, 398);
             this.button_SubmitCalibration.Name = "button_SubmitCalibration";
-            this.button_SubmitCalibration.Size = new System.Drawing.Size(248, 26);
+            this.button_SubmitCalibration.Size = new System.Drawing.Size(248, 35);
             this.button_SubmitCalibration.TabIndex = 50;
             this.button_SubmitCalibration.Text = "ثبت تغییرات کالیبراسیون";
             this.button_SubmitCalibration.UseVisualStyleBackColor = true;
@@ -1289,14 +1335,14 @@
             0,
             0,
             0});
-            this.numericUpDownMorphological_Close.Location = new System.Drawing.Point(18, 141);
+            this.numericUpDownMorphological_Close.Location = new System.Drawing.Point(239, 172);
             this.numericUpDownMorphological_Close.Maximum = new decimal(new int[] {
             99,
             0,
             0,
             0});
             this.numericUpDownMorphological_Close.Name = "numericUpDownMorphological_Close";
-            this.numericUpDownMorphological_Close.Size = new System.Drawing.Size(62, 26);
+            this.numericUpDownMorphological_Close.Size = new System.Drawing.Size(62, 30);
             this.numericUpDownMorphological_Close.TabIndex = 62;
             // 
             // numericUpDownEdge2
@@ -1307,23 +1353,23 @@
             0,
             0,
             0});
-            this.numericUpDownEdge2.Location = new System.Drawing.Point(18, 111);
+            this.numericUpDownEdge2.Location = new System.Drawing.Point(240, 139);
             this.numericUpDownEdge2.Maximum = new decimal(new int[] {
             99,
             0,
             0,
             0});
             this.numericUpDownEdge2.Name = "numericUpDownEdge2";
-            this.numericUpDownEdge2.Size = new System.Drawing.Size(61, 26);
+            this.numericUpDownEdge2.Size = new System.Drawing.Size(61, 30);
             this.numericUpDownEdge2.TabIndex = 61;
             // 
             // radioButton_ShowMorphological
             // 
             this.radioButton_ShowMorphological.AutoSize = true;
             this.radioButton_ShowMorphological.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.radioButton_ShowMorphological.Location = new System.Drawing.Point(177, 144);
+            this.radioButton_ShowMorphological.Location = new System.Drawing.Point(407, 175);
             this.radioButton_ShowMorphological.Name = "radioButton_ShowMorphological";
-            this.radioButton_ShowMorphological.Size = new System.Drawing.Size(149, 22);
+            this.radioButton_ShowMorphological.Size = new System.Drawing.Size(188, 27);
             this.radioButton_ShowMorphological.TabIndex = 60;
             this.radioButton_ShowMorphological.Text = "نمایش خروجی مورفولوژیکی:";
             this.radioButton_ShowMorphological.UseVisualStyleBackColor = true;
@@ -1337,23 +1383,23 @@
             0,
             0,
             0});
-            this.numericUpDownMorphological_Open.Location = new System.Drawing.Point(83, 141);
+            this.numericUpDownMorphological_Open.Location = new System.Drawing.Point(304, 172);
             this.numericUpDownMorphological_Open.Maximum = new decimal(new int[] {
             99,
             0,
             0,
             0});
             this.numericUpDownMorphological_Open.Name = "numericUpDownMorphological_Open";
-            this.numericUpDownMorphological_Open.Size = new System.Drawing.Size(62, 26);
+            this.numericUpDownMorphological_Open.Size = new System.Drawing.Size(62, 30);
             this.numericUpDownMorphological_Open.TabIndex = 59;
             // 
             // radioButton_ShowThreshold
             // 
             this.radioButton_ShowThreshold.AutoSize = true;
             this.radioButton_ShowThreshold.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.radioButton_ShowThreshold.Location = new System.Drawing.Point(161, 86);
+            this.radioButton_ShowThreshold.Location = new System.Drawing.Point(392, 103);
             this.radioButton_ShowThreshold.Name = "radioButton_ShowThreshold";
-            this.radioButton_ShowThreshold.Size = new System.Drawing.Size(165, 22);
+            this.radioButton_ShowThreshold.Size = new System.Drawing.Size(203, 27);
             this.radioButton_ShowThreshold.TabIndex = 58;
             this.radioButton_ShowThreshold.Text = "نمایش تصویر دودویی با آستانه:";
             this.radioButton_ShowThreshold.UseVisualStyleBackColor = true;
@@ -1367,14 +1413,14 @@
             0,
             0,
             0});
-            this.numericUpDownThreshold.Location = new System.Drawing.Point(105, 82);
+            this.numericUpDownThreshold.Location = new System.Drawing.Point(327, 103);
             this.numericUpDownThreshold.Maximum = new decimal(new int[] {
             200,
             0,
             0,
             0});
             this.numericUpDownThreshold.Name = "numericUpDownThreshold";
-            this.numericUpDownThreshold.Size = new System.Drawing.Size(40, 26);
+            this.numericUpDownThreshold.Size = new System.Drawing.Size(40, 30);
             this.numericUpDownThreshold.TabIndex = 57;
             // 
             // radioButton_ShowGaussian
@@ -1382,9 +1428,9 @@
             this.radioButton_ShowGaussian.AutoSize = true;
             this.radioButton_ShowGaussian.Enabled = false;
             this.radioButton_ShowGaussian.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.radioButton_ShowGaussian.Location = new System.Drawing.Point(181, 57);
+            this.radioButton_ShowGaussian.Location = new System.Drawing.Point(420, 70);
             this.radioButton_ShowGaussian.Name = "radioButton_ShowGaussian";
-            this.radioButton_ShowGaussian.Size = new System.Drawing.Size(145, 22);
+            this.radioButton_ShowGaussian.Size = new System.Drawing.Size(175, 27);
             this.radioButton_ShowGaussian.TabIndex = 56;
             this.radioButton_ShowGaussian.Text = "اعمال تابع گاوسی - هسته:";
             this.radioButton_ShowGaussian.UseVisualStyleBackColor = true;
@@ -1399,23 +1445,23 @@
             0,
             0,
             0});
-            this.numericUpDownGaussian.Location = new System.Drawing.Point(18, 53);
+            this.numericUpDownGaussian.Location = new System.Drawing.Point(240, 67);
             this.numericUpDownGaussian.Maximum = new decimal(new int[] {
             199,
             0,
             0,
             0});
             this.numericUpDownGaussian.Name = "numericUpDownGaussian";
-            this.numericUpDownGaussian.Size = new System.Drawing.Size(127, 26);
+            this.numericUpDownGaussian.Size = new System.Drawing.Size(127, 30);
             this.numericUpDownGaussian.TabIndex = 55;
             // 
             // radioButton_ShowGrayscale
             // 
             this.radioButton_ShowGrayscale.AutoSize = true;
             this.radioButton_ShowGrayscale.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.radioButton_ShowGrayscale.Location = new System.Drawing.Point(18, 29);
+            this.radioButton_ShowGrayscale.Location = new System.Drawing.Point(210, 37);
             this.radioButton_ShowGrayscale.Name = "radioButton_ShowGrayscale";
-            this.radioButton_ShowGrayscale.Size = new System.Drawing.Size(127, 22);
+            this.radioButton_ShowGrayscale.Size = new System.Drawing.Size(157, 27);
             this.radioButton_ShowGrayscale.TabIndex = 54;
             this.radioButton_ShowGrayscale.Text = "نمایش تصویر خاکستری";
             this.radioButton_ShowGrayscale.UseVisualStyleBackColor = true;
@@ -1425,9 +1471,9 @@
             // 
             this.radioButton_ShowEdge.AutoSize = true;
             this.radioButton_ShowEdge.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.radioButton_ShowEdge.Location = new System.Drawing.Point(172, 114);
+            this.radioButton_ShowEdge.Location = new System.Drawing.Point(405, 139);
             this.radioButton_ShowEdge.Name = "radioButton_ShowEdge";
-            this.radioButton_ShowEdge.Size = new System.Drawing.Size(154, 22);
+            this.radioButton_ShowEdge.Size = new System.Drawing.Size(190, 27);
             this.radioButton_ShowEdge.TabIndex = 53;
             this.radioButton_ShowEdge.Text = "نمایش لبه‌ها - هسته لبه‌یاب:";
             this.radioButton_ShowEdge.UseVisualStyleBackColor = true;
@@ -1438,9 +1484,9 @@
             this.radioButton_ShowMainFrame.AutoSize = true;
             this.radioButton_ShowMainFrame.Checked = true;
             this.radioButton_ShowMainFrame.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.radioButton_ShowMainFrame.Location = new System.Drawing.Point(215, 29);
+            this.radioButton_ShowMainFrame.Location = new System.Drawing.Point(459, 37);
             this.radioButton_ShowMainFrame.Name = "radioButton_ShowMainFrame";
-            this.radioButton_ShowMainFrame.Size = new System.Drawing.Size(111, 22);
+            this.radioButton_ShowMainFrame.Size = new System.Drawing.Size(136, 27);
             this.radioButton_ShowMainFrame.TabIndex = 52;
             this.radioButton_ShowMainFrame.TabStop = true;
             this.radioButton_ShowMainFrame.Text = "نمایش تصویر اصلی";
@@ -1455,23 +1501,23 @@
             0,
             0,
             0});
-            this.numericUpDownEdge1.Location = new System.Drawing.Point(83, 111);
+            this.numericUpDownEdge1.Location = new System.Drawing.Point(305, 139);
             this.numericUpDownEdge1.Maximum = new decimal(new int[] {
             99,
             0,
             0,
             0});
             this.numericUpDownEdge1.Name = "numericUpDownEdge1";
-            this.numericUpDownEdge1.Size = new System.Drawing.Size(62, 26);
+            this.numericUpDownEdge1.Size = new System.Drawing.Size(62, 30);
             this.numericUpDownEdge1.TabIndex = 50;
             // 
             // groupBoxROIControl
             // 
             this.groupBoxROIControl.Controls.Add(this.radioButtonROIDisabled);
             this.groupBoxROIControl.Controls.Add(this.radioButtonROIEnabled);
-            this.groupBoxROIControl.Location = new System.Drawing.Point(659, 147);
+            this.groupBoxROIControl.Location = new System.Drawing.Point(659, 84);
             this.groupBoxROIControl.Name = "groupBoxROIControl";
-            this.groupBoxROIControl.Size = new System.Drawing.Size(344, 59);
+            this.groupBoxROIControl.Size = new System.Drawing.Size(612, 67);
             this.groupBoxROIControl.TabIndex = 7;
             this.groupBoxROIControl.TabStop = false;
             this.groupBoxROIControl.Text = "تنظیمات مربوط به ناحیه نظارتی";
@@ -1479,9 +1525,9 @@
             // radioButtonROIDisabled
             // 
             this.radioButtonROIDisabled.AutoSize = true;
-            this.radioButtonROIDisabled.Location = new System.Drawing.Point(12, 22);
+            this.radioButtonROIDisabled.Location = new System.Drawing.Point(11, 26);
             this.radioButtonROIDisabled.Name = "radioButtonROIDisabled";
-            this.radioButtonROIDisabled.Size = new System.Drawing.Size(165, 28);
+            this.radioButtonROIDisabled.Size = new System.Drawing.Size(204, 34);
             this.radioButtonROIDisabled.TabIndex = 4;
             this.radioButtonROIDisabled.Text = "عدم وجود ناحیه محدود";
             this.radioButtonROIDisabled.UseVisualStyleBackColor = true;
@@ -1491,9 +1537,9 @@
             // 
             this.radioButtonROIEnabled.AutoSize = true;
             this.radioButtonROIEnabled.Checked = true;
-            this.radioButtonROIEnabled.Location = new System.Drawing.Point(196, 22);
+            this.radioButtonROIEnabled.Location = new System.Drawing.Point(240, 27);
             this.radioButtonROIEnabled.Name = "radioButtonROIEnabled";
-            this.radioButtonROIEnabled.Size = new System.Drawing.Size(142, 28);
+            this.radioButtonROIEnabled.Size = new System.Drawing.Size(177, 34);
             this.radioButtonROIEnabled.TabIndex = 2;
             this.radioButtonROIEnabled.TabStop = true;
             this.radioButtonROIEnabled.Text = "تعریف ناحیه محدود";
@@ -1507,7 +1553,7 @@
             this.groupBoxROILocation.Controls.Add(this.pictureBoxROISetting);
             this.groupBoxROILocation.Location = new System.Drawing.Point(12, 8);
             this.groupBoxROILocation.Name = "groupBoxROILocation";
-            this.groupBoxROILocation.Size = new System.Drawing.Size(624, 507);
+            this.groupBoxROILocation.Size = new System.Drawing.Size(624, 588);
             this.groupBoxROILocation.TabIndex = 7;
             this.groupBoxROILocation.TabStop = false;
             this.groupBoxROILocation.Text = "تنظیم محل ناحیه نظارتی";
@@ -1521,7 +1567,7 @@
             this.groupBoxROICoverage.Controls.Add(this.labelROICoverageH);
             this.groupBoxROICoverage.Location = new System.Drawing.Point(16, 387);
             this.groupBoxROICoverage.Name = "groupBoxROICoverage";
-            this.groupBoxROICoverage.Size = new System.Drawing.Size(271, 114);
+            this.groupBoxROICoverage.Size = new System.Drawing.Size(271, 183);
             this.groupBoxROICoverage.TabIndex = 47;
             this.groupBoxROICoverage.TabStop = false;
             this.groupBoxROICoverage.Text = "درصد پوشش کل ویدئو";
@@ -1533,14 +1579,14 @@
             0,
             0,
             0});
-            this.numericUpDownROIW.Location = new System.Drawing.Point(109, 67);
+            this.numericUpDownROIW.Location = new System.Drawing.Point(19, 73);
             this.numericUpDownROIW.Maximum = new decimal(new int[] {
             99,
             0,
             0,
             0});
             this.numericUpDownROIW.Name = "numericUpDownROIW";
-            this.numericUpDownROIW.Size = new System.Drawing.Size(93, 32);
+            this.numericUpDownROIW.Size = new System.Drawing.Size(183, 38);
             this.numericUpDownROIW.TabIndex = 49;
             // 
             // numericUpDownROIH
@@ -1550,22 +1596,22 @@
             0,
             0,
             0});
-            this.numericUpDownROIH.Location = new System.Drawing.Point(109, 29);
+            this.numericUpDownROIH.Location = new System.Drawing.Point(19, 29);
             this.numericUpDownROIH.Maximum = new decimal(new int[] {
             99,
             0,
             0,
             0});
             this.numericUpDownROIH.Name = "numericUpDownROIH";
-            this.numericUpDownROIH.Size = new System.Drawing.Size(93, 32);
+            this.numericUpDownROIH.Size = new System.Drawing.Size(183, 38);
             this.numericUpDownROIH.TabIndex = 48;
             // 
             // buttonSetROICoverage
             // 
             this.buttonSetROICoverage.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.buttonSetROICoverage.Location = new System.Drawing.Point(17, 35);
+            this.buttonSetROICoverage.Location = new System.Drawing.Point(6, 118);
             this.buttonSetROICoverage.Name = "buttonSetROICoverage";
-            this.buttonSetROICoverage.Size = new System.Drawing.Size(75, 59);
+            this.buttonSetROICoverage.Size = new System.Drawing.Size(259, 59);
             this.buttonSetROICoverage.TabIndex = 47;
             this.buttonSetROICoverage.Text = "ثبت";
             this.buttonSetROICoverage.UseVisualStyleBackColor = true;
@@ -1575,9 +1621,9 @@
             // 
             this.labelROICoverageW.AutoSize = true;
             this.labelROICoverageW.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.labelROICoverageW.Location = new System.Drawing.Point(212, 74);
+            this.labelROICoverageW.Location = new System.Drawing.Point(212, 80);
             this.labelROICoverageW.Name = "labelROICoverageW";
-            this.labelROICoverageW.Size = new System.Drawing.Size(39, 20);
+            this.labelROICoverageW.Size = new System.Drawing.Size(52, 26);
             this.labelROICoverageW.TabIndex = 46;
             this.labelROICoverageW.Text = "عرضی";
             // 
@@ -1587,7 +1633,7 @@
             this.labelROICoverageH.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
             this.labelROICoverageH.Location = new System.Drawing.Point(216, 35);
             this.labelROICoverageH.Name = "labelROICoverageH";
-            this.labelROICoverageH.Size = new System.Drawing.Size(32, 20);
+            this.labelROICoverageH.Size = new System.Drawing.Size(42, 26);
             this.labelROICoverageH.TabIndex = 8;
             this.labelROICoverageH.Text = "طولی";
             // 
@@ -1599,7 +1645,7 @@
             this.groupBoxROITrackbar.Controls.Add(this.trackBarROIHorizontal);
             this.groupBoxROITrackbar.Location = new System.Drawing.Point(331, 387);
             this.groupBoxROITrackbar.Name = "groupBoxROITrackbar";
-            this.groupBoxROITrackbar.Size = new System.Drawing.Size(271, 114);
+            this.groupBoxROITrackbar.Size = new System.Drawing.Size(271, 183);
             this.groupBoxROITrackbar.TabIndex = 42;
             this.groupBoxROITrackbar.TabStop = false;
             this.groupBoxROITrackbar.Text = "جابجایی افقی و عمودی ناحیه";
@@ -1608,9 +1654,9 @@
             // 
             this.labelROILocationV.AutoSize = true;
             this.labelROILocationV.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.labelROILocationV.Location = new System.Drawing.Point(212, 68);
+            this.labelROILocationV.Location = new System.Drawing.Point(216, 118);
             this.labelROILocationV.Name = "labelROILocationV";
-            this.labelROILocationV.Size = new System.Drawing.Size(41, 20);
+            this.labelROILocationV.Size = new System.Drawing.Size(54, 26);
             this.labelROILocationV.TabIndex = 46;
             this.labelROILocationV.Text = "عمودی";
             // 
@@ -1618,28 +1664,28 @@
             // 
             this.labelROILocationH.AutoSize = true;
             this.labelROILocationH.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.labelROILocationH.Location = new System.Drawing.Point(216, 35);
+            this.labelROILocationH.Location = new System.Drawing.Point(220, 54);
             this.labelROILocationH.Name = "labelROILocationH";
-            this.labelROILocationH.Size = new System.Drawing.Size(32, 20);
+            this.labelROILocationH.Size = new System.Drawing.Size(43, 26);
             this.labelROILocationH.TabIndex = 8;
             this.labelROILocationH.Text = "افقی";
             // 
             // trackBarROIVertical
             // 
-            this.trackBarROIVertical.Location = new System.Drawing.Point(6, 63);
+            this.trackBarROIVertical.Location = new System.Drawing.Point(10, 113);
             this.trackBarROIVertical.Name = "trackBarROIVertical";
             this.trackBarROIVertical.RightToLeftLayout = true;
-            this.trackBarROIVertical.Size = new System.Drawing.Size(201, 45);
+            this.trackBarROIVertical.Size = new System.Drawing.Size(201, 56);
             this.trackBarROIVertical.TabIndex = 45;
             this.trackBarROIVertical.Value = 5;
             this.trackBarROIVertical.Scroll += new System.EventHandler(this.trackBarROIVertical_Scroll);
             // 
             // trackBarROIHorizontal
             // 
-            this.trackBarROIHorizontal.Location = new System.Drawing.Point(6, 31);
+            this.trackBarROIHorizontal.Location = new System.Drawing.Point(10, 50);
             this.trackBarROIHorizontal.Name = "trackBarROIHorizontal";
             this.trackBarROIHorizontal.RightToLeftLayout = true;
-            this.trackBarROIHorizontal.Size = new System.Drawing.Size(201, 45);
+            this.trackBarROIHorizontal.Size = new System.Drawing.Size(201, 56);
             this.trackBarROIHorizontal.TabIndex = 44;
             this.trackBarROIHorizontal.Value = 5;
             this.trackBarROIHorizontal.Scroll += new System.EventHandler(this.trackBarROIHorizontal_Scroll);
@@ -1657,9 +1703,9 @@
             // 
             this.groupBoxGateConnection.Controls.Add(this.radioButtonGateDisconnected);
             this.groupBoxGateConnection.Controls.Add(this.radioButtonGateConnected);
-            this.groupBoxGateConnection.Location = new System.Drawing.Point(659, 73);
+            this.groupBoxGateConnection.Location = new System.Drawing.Point(659, 19);
             this.groupBoxGateConnection.Name = "groupBoxGateConnection";
-            this.groupBoxGateConnection.Size = new System.Drawing.Size(344, 59);
+            this.groupBoxGateConnection.Size = new System.Drawing.Size(316, 59);
             this.groupBoxGateConnection.TabIndex = 6;
             this.groupBoxGateConnection.TabStop = false;
             this.groupBoxGateConnection.Text = "تنظیمات اتصال به گیت";
@@ -1670,7 +1716,7 @@
             this.radioButtonGateDisconnected.Checked = true;
             this.radioButtonGateDisconnected.Location = new System.Drawing.Point(12, 22);
             this.radioButtonGateDisconnected.Name = "radioButtonGateDisconnected";
-            this.radioButtonGateDisconnected.Size = new System.Drawing.Size(84, 28);
+            this.radioButtonGateDisconnected.Size = new System.Drawing.Size(103, 34);
             this.radioButtonGateDisconnected.TabIndex = 4;
             this.radioButtonGateDisconnected.TabStop = true;
             this.radioButtonGateDisconnected.Text = "غیرمتصل";
@@ -1682,7 +1728,7 @@
             this.radioButtonGateConnected.AutoSize = true;
             this.radioButtonGateConnected.Location = new System.Drawing.Point(105, 22);
             this.radioButtonGateConnected.Name = "radioButtonGateConnected";
-            this.radioButtonGateConnected.Size = new System.Drawing.Size(64, 28);
+            this.radioButtonGateConnected.Size = new System.Drawing.Size(78, 34);
             this.radioButtonGateConnected.TabIndex = 2;
             this.radioButtonGateConnected.Text = "متصل";
             this.radioButtonGateConnected.UseVisualStyleBackColor = true;
@@ -1692,9 +1738,9 @@
             // 
             this.groupBoxCameraSettings.Controls.Add(this.radioButtonCameraOff);
             this.groupBoxCameraSettings.Controls.Add(this.radioButtonCameraOn);
-            this.groupBoxCameraSettings.Location = new System.Drawing.Point(659, 8);
+            this.groupBoxCameraSettings.Location = new System.Drawing.Point(981, 8);
             this.groupBoxCameraSettings.Name = "groupBoxCameraSettings";
-            this.groupBoxCameraSettings.Size = new System.Drawing.Size(344, 59);
+            this.groupBoxCameraSettings.Size = new System.Drawing.Size(290, 70);
             this.groupBoxCameraSettings.TabIndex = 5;
             this.groupBoxCameraSettings.TabStop = false;
             this.groupBoxCameraSettings.Text = "تنظیمات دوربین";
@@ -1702,9 +1748,9 @@
             // radioButtonCameraOff
             // 
             this.radioButtonCameraOff.AutoSize = true;
-            this.radioButtonCameraOff.Location = new System.Drawing.Point(12, 22);
+            this.radioButtonCameraOff.Location = new System.Drawing.Point(12, 27);
             this.radioButtonCameraOff.Name = "radioButtonCameraOff";
-            this.radioButtonCameraOff.Size = new System.Drawing.Size(72, 28);
+            this.radioButtonCameraOff.Size = new System.Drawing.Size(88, 34);
             this.radioButtonCameraOff.TabIndex = 4;
             this.radioButtonCameraOff.Text = "خاموش";
             this.radioButtonCameraOff.UseVisualStyleBackColor = true;
@@ -1714,20 +1760,136 @@
             // 
             this.radioButtonCameraOn.AutoSize = true;
             this.radioButtonCameraOn.Checked = true;
-            this.radioButtonCameraOn.Location = new System.Drawing.Point(105, 22);
+            this.radioButtonCameraOn.Location = new System.Drawing.Point(105, 27);
             this.radioButtonCameraOn.Name = "radioButtonCameraOn";
-            this.radioButtonCameraOn.Size = new System.Drawing.Size(64, 28);
+            this.radioButtonCameraOn.Size = new System.Drawing.Size(78, 34);
             this.radioButtonCameraOn.TabIndex = 2;
             this.radioButtonCameraOn.TabStop = true;
             this.radioButtonCameraOn.Text = "روشن";
             this.radioButtonCameraOn.UseVisualStyleBackColor = true;
             this.radioButtonCameraOn.CheckedChanged += new System.EventHandler(this.radioButtonCameraOn_CheckedChanged);
             // 
+            // label_MedianBlur
+            // 
+            this.label_MedianBlur.AutoSize = true;
+            this.label_MedianBlur.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.label_MedianBlur.Location = new System.Drawing.Point(475, 238);
+            this.label_MedianBlur.Name = "label_MedianBlur";
+            this.label_MedianBlur.Size = new System.Drawing.Size(125, 26);
+            this.label_MedianBlur.TabIndex = 47;
+            this.label_MedianBlur.Text = "تنظیم فیلتر میانه:";
+            // 
+            // numericUpDownMedianBlur
+            // 
+            this.numericUpDownMedianBlur.Enabled = false;
+            this.numericUpDownMedianBlur.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.numericUpDownMedianBlur.Increment = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.numericUpDownMedianBlur.Location = new System.Drawing.Point(322, 237);
+            this.numericUpDownMedianBlur.Maximum = new decimal(new int[] {
+            199,
+            0,
+            0,
+            0});
+            this.numericUpDownMedianBlur.Name = "numericUpDownMedianBlur";
+            this.numericUpDownMedianBlur.Size = new System.Drawing.Size(117, 30);
+            this.numericUpDownMedianBlur.TabIndex = 66;
+            // 
+            // label_AvgFilter
+            // 
+            this.label_AvgFilter.AutoSize = true;
+            this.label_AvgFilter.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.label_AvgFilter.Location = new System.Drawing.Point(164, 238);
+            this.label_AvgFilter.Name = "label_AvgFilter";
+            this.label_AvgFilter.Size = new System.Drawing.Size(142, 26);
+            this.label_AvgFilter.TabIndex = 67;
+            this.label_AvgFilter.Text = "تنظیم فیلتر میانگین:";
+            // 
+            // numericUpDownAvgFilter
+            // 
+            this.numericUpDownAvgFilter.Enabled = false;
+            this.numericUpDownAvgFilter.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.numericUpDownAvgFilter.Increment = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.numericUpDownAvgFilter.Location = new System.Drawing.Point(12, 237);
+            this.numericUpDownAvgFilter.Maximum = new decimal(new int[] {
+            199,
+            0,
+            0,
+            0});
+            this.numericUpDownAvgFilter.Name = "numericUpDownAvgFilter";
+            this.numericUpDownAvgFilter.Size = new System.Drawing.Size(127, 30);
+            this.numericUpDownAvgFilter.TabIndex = 68;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.label1.Location = new System.Drawing.Point(445, 273);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(155, 26);
+            this.label1.TabIndex = 69;
+            this.label1.Text = "تنظیم آستانه تفاضلات:";
+            // 
+            // numericUpDown1
+            // 
+            this.numericUpDown1.Enabled = false;
+            this.numericUpDown1.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.numericUpDown1.Increment = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Location = new System.Drawing.Point(322, 272);
+            this.numericUpDown1.Maximum = new decimal(new int[] {
+            199,
+            0,
+            0,
+            0});
+            this.numericUpDown1.Name = "numericUpDown1";
+            this.numericUpDown1.Size = new System.Drawing.Size(117, 30);
+            this.numericUpDown1.TabIndex = 70;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.label2.Location = new System.Drawing.Point(164, 272);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(139, 26);
+            this.label2.TabIndex = 71;
+            this.label2.Text = "تنظیم لبه‌یاب سوبل:";
+            // 
+            // numericUpDown2
+            // 
+            this.numericUpDown2.Enabled = false;
+            this.numericUpDown2.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.numericUpDown2.Increment = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Location = new System.Drawing.Point(11, 271);
+            this.numericUpDown2.Maximum = new decimal(new int[] {
+            199,
+            0,
+            0,
+            0});
+            this.numericUpDown2.Name = "numericUpDown2";
+            this.numericUpDown2.Size = new System.Drawing.Size(127, 30);
+            this.numericUpDown2.TabIndex = 72;
+            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1074, 608);
+            this.ClientSize = new System.Drawing.Size(1321, 685);
             this.Controls.Add(this.mainTab);
             this.Controls.Add(this.linkLabel1);
             this.Font = new System.Drawing.Font("B Yekan", 12F);
@@ -1801,6 +1963,10 @@
             this.groupBoxGateConnection.PerformLayout();
             this.groupBoxCameraSettings.ResumeLayout(false);
             this.groupBoxCameraSettings.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMedianBlur)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAvgFilter)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1939,6 +2105,14 @@
         private System.Windows.Forms.Button button_DefaultCalibration;
         private System.Windows.Forms.NumericUpDown numericUpDownThresholdParam1;
         private System.Windows.Forms.NumericUpDown numericUpDownThresholdBlockSize;
+        private System.Windows.Forms.NumericUpDown numericUpDownMedianBlur;
+        private System.Windows.Forms.Label label_MedianBlur;
+        private System.Windows.Forms.Label label_AvgFilter;
+        private System.Windows.Forms.NumericUpDown numericUpDownAvgFilter;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.NumericUpDown numericUpDown2;
     }
 }
 
