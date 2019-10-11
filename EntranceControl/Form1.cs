@@ -1105,6 +1105,7 @@ namespace EntranceControl
             using (VectorOfVectorOfPoint contours = new VectorOfVectorOfPoint())
             {
                 Mat croppedGrayFrame = new Mat(GrayFrame, RegionOfInterest);
+                croppedFrame = new Mat(ColorFrame, RegionOfInterest);
                 Mat detector = croppedGrayFrame.Clone();
                 CvInvoke.MedianBlur(croppedGrayFrame, detector, 5);
                 CvInvoke.Blur(detector, detector, new Size(21, 21), new Point(-1, -1));
