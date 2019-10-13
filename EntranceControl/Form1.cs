@@ -85,6 +85,8 @@ namespace EntranceControl
         Mat OpenMorphFrame = new Mat();         // Open Morphological Frame
         Mat CloseMorphFrame = new Mat();        // Close Morphological Frame
         int gaussianKernel, thresholdValue, cannyThresholdFirst, cannyThresholdSecond, thresholdBlockSize, thresholdParam1;
+        int medianBlurFilter, averageFilter, sobelKernelSize;
+        double differenceThreshold;
         int openKernel, closeKernel;
 
         // License-Plate
@@ -181,6 +183,10 @@ namespace EntranceControl
             cannyThresholdSecond = 50;
             openKernel = 1;
             closeKernel = 5;
+            medianBlurFilter = 5;
+            averageFilter = 21;
+            differenceThreshold = 25;
+            sobelKernelSize = 5;
             numericUpDownGaussian.Value = gaussianKernel;
             numericUpDownThreshold.Value = thresholdValue;
             numericUpDownThresholdBlockSize.Value = thresholdBlockSize;
@@ -189,6 +195,10 @@ namespace EntranceControl
             numericUpDownEdge2.Value = cannyThresholdSecond;
             numericUpDownMorphological_Open.Value = openKernel;
             numericUpDownMorphological_Close.Value = closeKernel;
+            numericUpDownMedianBlur.Value = medianBlurFilter;
+            numericUpDownAvgFilter.Value = averageFilter;
+            numericUpDownDifferenceThreshold.Value = (int) differenceThreshold;
+            numericUpDownSobelKernel.Value = sobelKernelSize;
 
             // Data Management
             uploadedOwnerImage = null;
@@ -681,6 +691,10 @@ namespace EntranceControl
                 cannyThresholdSecond = (int) numericUpDownEdge2.Value;
                 openKernel = (int) numericUpDownMorphological_Open.Value;
                 closeKernel = (int) numericUpDownMorphological_Close.Value;
+                medianBlurFilter = (int) numericUpDownMedianBlur.Value;
+                averageFilter = (int) numericUpDownAvgFilter.Value;
+                differenceThreshold = (double) numericUpDownDifferenceThreshold.Value;
+                sobelKernelSize = (int) numericUpDownSobelKernel.Value;
                 processedFrame = frame.FrameLoad.Clone();
                 pictureBoxROISetting.Image = new Bitmap(processedFrame.Bitmap);
                 radioButton_ShowMainFrame.Checked = true;
@@ -1107,13 +1121,13 @@ namespace EntranceControl
                 Mat croppedGrayFrame = new Mat(GrayFrame, RegionOfInterest);
                 croppedFrame = new Mat(ColorFrame, RegionOfInterest);
                 Mat detector = croppedGrayFrame.Clone();
-                CvInvoke.MedianBlur(croppedGrayFrame, detector, 5);
-                CvInvoke.Blur(detector, detector, new Size(21, 21), new Point(-1, -1));
+                CvInvoke.MedianBlur(croppedGrayFrame, detector, medianBlurFilter);
+                CvInvoke.Blur(detector, detector, new Size(averageFilter, averageFilter), new Point(-1, -1));
                 // Pre-processing steps
                 Mat preprocessedResult = croppedGrayFrame.Clone();
                 CvInvoke.AbsDiff(detector, croppedGrayFrame, preprocessedResult);
-                CvInvoke.Threshold(preprocessedResult, preprocessedResult, 25, 255, ThresholdType.Binary);
-                CvInvoke.Sobel(preprocessedResult, preprocessedResult, DepthType.Cv8U, 1, 0);
+                CvInvoke.Threshold(preprocessedResult, preprocessedResult, differenceThreshold, 255, ThresholdType.Binary);
+                CvInvoke.Sobel(preprocessedResult, preprocessedResult, DepthType.Cv8U, 1, 0, sobelKernelSize);
                 Mat stats = new Mat(), centroids = new Mat();
                 CvInvoke.ConnectedComponentsWithStats(preprocessedResult, preprocessedResult, stats, centroids, LineType.FourConnected);
                 preprocessedResult.ConvertTo(preprocessedResult, DepthType.Cv8U);

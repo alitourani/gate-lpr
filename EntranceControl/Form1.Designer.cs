@@ -122,6 +122,14 @@
             this.tabSettings = new System.Windows.Forms.TabPage();
             this.panelSettings = new System.Windows.Forms.Panel();
             this.groupBoxAdvanced = new System.Windows.Forms.GroupBox();
+            this.numericUpDownSobelKernel = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
+            this.numericUpDownDifferenceThreshold = new System.Windows.Forms.NumericUpDown();
+            this.label1 = new System.Windows.Forms.Label();
+            this.numericUpDownAvgFilter = new System.Windows.Forms.NumericUpDown();
+            this.label_AvgFilter = new System.Windows.Forms.Label();
+            this.numericUpDownMedianBlur = new System.Windows.Forms.NumericUpDown();
+            this.label_MedianBlur = new System.Windows.Forms.Label();
             this.numericUpDownThresholdParam1 = new System.Windows.Forms.NumericUpDown();
             this.numericUpDownThresholdBlockSize = new System.Windows.Forms.NumericUpDown();
             this.button_DefaultCalibration = new System.Windows.Forms.Button();
@@ -161,14 +169,6 @@
             this.radioButtonCameraOff = new System.Windows.Forms.RadioButton();
             this.radioButtonCameraOn = new System.Windows.Forms.RadioButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
-            this.label_MedianBlur = new System.Windows.Forms.Label();
-            this.numericUpDownMedianBlur = new System.Windows.Forms.NumericUpDown();
-            this.label_AvgFilter = new System.Windows.Forms.Label();
-            this.numericUpDownAvgFilter = new System.Windows.Forms.NumericUpDown();
-            this.label1 = new System.Windows.Forms.Label();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.label2 = new System.Windows.Forms.Label();
-            this.numericUpDown2 = new System.Windows.Forms.NumericUpDown();
             this.mainTab.SuspendLayout();
             this.tabOnlineMonitoring.SuspendLayout();
             this.panelOnlineMonitoring.SuspendLayout();
@@ -201,6 +201,10 @@
             this.tabSettings.SuspendLayout();
             this.panelSettings.SuspendLayout();
             this.groupBoxAdvanced.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSobelKernel)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDifferenceThreshold)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAvgFilter)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMedianBlur)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownThresholdParam1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownThresholdBlockSize)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMorphological_Close)).BeginInit();
@@ -220,10 +224,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxROISetting)).BeginInit();
             this.groupBoxGateConnection.SuspendLayout();
             this.groupBoxCameraSettings.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMedianBlur)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAvgFilter)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).BeginInit();
             this.SuspendLayout();
             // 
             // linkLabel1
@@ -1238,9 +1238,9 @@
             // 
             // groupBoxAdvanced
             // 
-            this.groupBoxAdvanced.Controls.Add(this.numericUpDown2);
+            this.groupBoxAdvanced.Controls.Add(this.numericUpDownSobelKernel);
             this.groupBoxAdvanced.Controls.Add(this.label2);
-            this.groupBoxAdvanced.Controls.Add(this.numericUpDown1);
+            this.groupBoxAdvanced.Controls.Add(this.numericUpDownDifferenceThreshold);
             this.groupBoxAdvanced.Controls.Add(this.label1);
             this.groupBoxAdvanced.Controls.Add(this.numericUpDownAvgFilter);
             this.groupBoxAdvanced.Controls.Add(this.label_AvgFilter);
@@ -1268,6 +1268,118 @@
             this.groupBoxAdvanced.TabIndex = 8;
             this.groupBoxAdvanced.TabStop = false;
             this.groupBoxAdvanced.Text = "تنظیمات پیشرفته کالیبراسیون";
+            // 
+            // numericUpDownSobelKernel
+            // 
+            this.numericUpDownSobelKernel.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.numericUpDownSobelKernel.Increment = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.numericUpDownSobelKernel.Location = new System.Drawing.Point(11, 271);
+            this.numericUpDownSobelKernel.Maximum = new decimal(new int[] {
+            199,
+            0,
+            0,
+            0});
+            this.numericUpDownSobelKernel.Name = "numericUpDownSobelKernel";
+            this.numericUpDownSobelKernel.Size = new System.Drawing.Size(127, 30);
+            this.numericUpDownSobelKernel.TabIndex = 72;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.label2.Location = new System.Drawing.Point(164, 272);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(139, 26);
+            this.label2.TabIndex = 71;
+            this.label2.Text = "تنظیم لبه‌یاب سوبل:";
+            // 
+            // numericUpDownDifferenceThreshold
+            // 
+            this.numericUpDownDifferenceThreshold.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.numericUpDownDifferenceThreshold.Increment = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.numericUpDownDifferenceThreshold.Location = new System.Drawing.Point(322, 272);
+            this.numericUpDownDifferenceThreshold.Maximum = new decimal(new int[] {
+            199,
+            0,
+            0,
+            0});
+            this.numericUpDownDifferenceThreshold.Name = "numericUpDownDifferenceThreshold";
+            this.numericUpDownDifferenceThreshold.Size = new System.Drawing.Size(117, 30);
+            this.numericUpDownDifferenceThreshold.TabIndex = 70;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.label1.Location = new System.Drawing.Point(445, 273);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(155, 26);
+            this.label1.TabIndex = 69;
+            this.label1.Text = "تنظیم آستانه تفاضلات:";
+            // 
+            // numericUpDownAvgFilter
+            // 
+            this.numericUpDownAvgFilter.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.numericUpDownAvgFilter.Increment = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.numericUpDownAvgFilter.Location = new System.Drawing.Point(12, 237);
+            this.numericUpDownAvgFilter.Maximum = new decimal(new int[] {
+            199,
+            0,
+            0,
+            0});
+            this.numericUpDownAvgFilter.Name = "numericUpDownAvgFilter";
+            this.numericUpDownAvgFilter.Size = new System.Drawing.Size(127, 30);
+            this.numericUpDownAvgFilter.TabIndex = 68;
+            // 
+            // label_AvgFilter
+            // 
+            this.label_AvgFilter.AutoSize = true;
+            this.label_AvgFilter.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.label_AvgFilter.Location = new System.Drawing.Point(164, 238);
+            this.label_AvgFilter.Name = "label_AvgFilter";
+            this.label_AvgFilter.Size = new System.Drawing.Size(142, 26);
+            this.label_AvgFilter.TabIndex = 67;
+            this.label_AvgFilter.Text = "تنظیم فیلتر میانگین:";
+            // 
+            // numericUpDownMedianBlur
+            // 
+            this.numericUpDownMedianBlur.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.numericUpDownMedianBlur.Increment = new decimal(new int[] {
+            2,
+            0,
+            0,
+            0});
+            this.numericUpDownMedianBlur.Location = new System.Drawing.Point(322, 237);
+            this.numericUpDownMedianBlur.Maximum = new decimal(new int[] {
+            199,
+            0,
+            0,
+            0});
+            this.numericUpDownMedianBlur.Name = "numericUpDownMedianBlur";
+            this.numericUpDownMedianBlur.Size = new System.Drawing.Size(117, 30);
+            this.numericUpDownMedianBlur.TabIndex = 66;
+            // 
+            // label_MedianBlur
+            // 
+            this.label_MedianBlur.AutoSize = true;
+            this.label_MedianBlur.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.label_MedianBlur.Location = new System.Drawing.Point(475, 238);
+            this.label_MedianBlur.Name = "label_MedianBlur";
+            this.label_MedianBlur.Size = new System.Drawing.Size(125, 26);
+            this.label_MedianBlur.TabIndex = 47;
+            this.label_MedianBlur.Text = "تنظیم فیلتر میانه:";
             // 
             // numericUpDownThresholdParam1
             // 
@@ -1769,122 +1881,6 @@
             this.radioButtonCameraOn.UseVisualStyleBackColor = true;
             this.radioButtonCameraOn.CheckedChanged += new System.EventHandler(this.radioButtonCameraOn_CheckedChanged);
             // 
-            // label_MedianBlur
-            // 
-            this.label_MedianBlur.AutoSize = true;
-            this.label_MedianBlur.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.label_MedianBlur.Location = new System.Drawing.Point(475, 238);
-            this.label_MedianBlur.Name = "label_MedianBlur";
-            this.label_MedianBlur.Size = new System.Drawing.Size(125, 26);
-            this.label_MedianBlur.TabIndex = 47;
-            this.label_MedianBlur.Text = "تنظیم فیلتر میانه:";
-            // 
-            // numericUpDownMedianBlur
-            // 
-            this.numericUpDownMedianBlur.Enabled = false;
-            this.numericUpDownMedianBlur.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.numericUpDownMedianBlur.Increment = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-            this.numericUpDownMedianBlur.Location = new System.Drawing.Point(322, 237);
-            this.numericUpDownMedianBlur.Maximum = new decimal(new int[] {
-            199,
-            0,
-            0,
-            0});
-            this.numericUpDownMedianBlur.Name = "numericUpDownMedianBlur";
-            this.numericUpDownMedianBlur.Size = new System.Drawing.Size(117, 30);
-            this.numericUpDownMedianBlur.TabIndex = 66;
-            // 
-            // label_AvgFilter
-            // 
-            this.label_AvgFilter.AutoSize = true;
-            this.label_AvgFilter.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.label_AvgFilter.Location = new System.Drawing.Point(164, 238);
-            this.label_AvgFilter.Name = "label_AvgFilter";
-            this.label_AvgFilter.Size = new System.Drawing.Size(142, 26);
-            this.label_AvgFilter.TabIndex = 67;
-            this.label_AvgFilter.Text = "تنظیم فیلتر میانگین:";
-            // 
-            // numericUpDownAvgFilter
-            // 
-            this.numericUpDownAvgFilter.Enabled = false;
-            this.numericUpDownAvgFilter.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.numericUpDownAvgFilter.Increment = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-            this.numericUpDownAvgFilter.Location = new System.Drawing.Point(12, 237);
-            this.numericUpDownAvgFilter.Maximum = new decimal(new int[] {
-            199,
-            0,
-            0,
-            0});
-            this.numericUpDownAvgFilter.Name = "numericUpDownAvgFilter";
-            this.numericUpDownAvgFilter.Size = new System.Drawing.Size(127, 30);
-            this.numericUpDownAvgFilter.TabIndex = 68;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.label1.Location = new System.Drawing.Point(445, 273);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(155, 26);
-            this.label1.TabIndex = 69;
-            this.label1.Text = "تنظیم آستانه تفاضلات:";
-            // 
-            // numericUpDown1
-            // 
-            this.numericUpDown1.Enabled = false;
-            this.numericUpDown1.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.numericUpDown1.Increment = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-            this.numericUpDown1.Location = new System.Drawing.Point(322, 272);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
-            199,
-            0,
-            0,
-            0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(117, 30);
-            this.numericUpDown1.TabIndex = 70;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.label2.Location = new System.Drawing.Point(164, 272);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(139, 26);
-            this.label2.TabIndex = 71;
-            this.label2.Text = "تنظیم لبه‌یاب سوبل:";
-            // 
-            // numericUpDown2
-            // 
-            this.numericUpDown2.Enabled = false;
-            this.numericUpDown2.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.numericUpDown2.Increment = new decimal(new int[] {
-            2,
-            0,
-            0,
-            0});
-            this.numericUpDown2.Location = new System.Drawing.Point(11, 271);
-            this.numericUpDown2.Maximum = new decimal(new int[] {
-            199,
-            0,
-            0,
-            0});
-            this.numericUpDown2.Name = "numericUpDown2";
-            this.numericUpDown2.Size = new System.Drawing.Size(127, 30);
-            this.numericUpDown2.TabIndex = 72;
-            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
@@ -1939,6 +1935,10 @@
             this.panelSettings.ResumeLayout(false);
             this.groupBoxAdvanced.ResumeLayout(false);
             this.groupBoxAdvanced.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownSobelKernel)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownDifferenceThreshold)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAvgFilter)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMedianBlur)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownThresholdParam1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownThresholdBlockSize)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMorphological_Close)).EndInit();
@@ -1963,10 +1963,6 @@
             this.groupBoxGateConnection.PerformLayout();
             this.groupBoxCameraSettings.ResumeLayout(false);
             this.groupBoxCameraSettings.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMedianBlur)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownAvgFilter)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -2110,9 +2106,9 @@
         private System.Windows.Forms.Label label_AvgFilter;
         private System.Windows.Forms.NumericUpDown numericUpDownAvgFilter;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown numericUpDownDifferenceThreshold;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.NumericUpDown numericUpDown2;
+        private System.Windows.Forms.NumericUpDown numericUpDownSobelKernel;
     }
 }
 
