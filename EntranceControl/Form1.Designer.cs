@@ -169,6 +169,12 @@
             this.radioButtonCameraOff = new System.Windows.Forms.RadioButton();
             this.radioButtonCameraOn = new System.Windows.Forms.RadioButton();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.radioButton_FilteredFrame = new System.Windows.Forms.RadioButton();
+            this.radioButton_ThresholdDiffered = new System.Windows.Forms.RadioButton();
+            this.radioButton_SobelResult = new System.Windows.Forms.RadioButton();
+            this.radioButton_CC2 = new System.Windows.Forms.RadioButton();
+            this.radioButton_CC3 = new System.Windows.Forms.RadioButton();
+            this.radioButton_CC1 = new System.Windows.Forms.RadioButton();
             this.mainTab.SuspendLayout();
             this.tabOnlineMonitoring.SuspendLayout();
             this.panelOnlineMonitoring.SuspendLayout();
@@ -1238,6 +1244,12 @@
             // 
             // groupBoxAdvanced
             // 
+            this.groupBoxAdvanced.Controls.Add(this.radioButton_CC1);
+            this.groupBoxAdvanced.Controls.Add(this.radioButton_CC3);
+            this.groupBoxAdvanced.Controls.Add(this.radioButton_CC2);
+            this.groupBoxAdvanced.Controls.Add(this.radioButton_SobelResult);
+            this.groupBoxAdvanced.Controls.Add(this.radioButton_ThresholdDiffered);
+            this.groupBoxAdvanced.Controls.Add(this.radioButton_FilteredFrame);
             this.groupBoxAdvanced.Controls.Add(this.numericUpDownSobelKernel);
             this.groupBoxAdvanced.Controls.Add(this.label2);
             this.groupBoxAdvanced.Controls.Add(this.numericUpDownDifferenceThreshold);
@@ -1277,7 +1289,7 @@
             0,
             0,
             0});
-            this.numericUpDownSobelKernel.Location = new System.Drawing.Point(11, 271);
+            this.numericUpDownSobelKernel.Location = new System.Drawing.Point(11, 339);
             this.numericUpDownSobelKernel.Maximum = new decimal(new int[] {
             199,
             0,
@@ -1291,7 +1303,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.label2.Location = new System.Drawing.Point(164, 272);
+            this.label2.Location = new System.Drawing.Point(164, 340);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(139, 26);
             this.label2.TabIndex = 71;
@@ -1305,7 +1317,7 @@
             0,
             0,
             0});
-            this.numericUpDownDifferenceThreshold.Location = new System.Drawing.Point(322, 272);
+            this.numericUpDownDifferenceThreshold.Location = new System.Drawing.Point(322, 340);
             this.numericUpDownDifferenceThreshold.Maximum = new decimal(new int[] {
             199,
             0,
@@ -1319,7 +1331,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.label1.Location = new System.Drawing.Point(445, 273);
+            this.label1.Location = new System.Drawing.Point(445, 341);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(155, 26);
             this.label1.TabIndex = 69;
@@ -1333,7 +1345,7 @@
             0,
             0,
             0});
-            this.numericUpDownAvgFilter.Location = new System.Drawing.Point(12, 237);
+            this.numericUpDownAvgFilter.Location = new System.Drawing.Point(12, 305);
             this.numericUpDownAvgFilter.Maximum = new decimal(new int[] {
             199,
             0,
@@ -1347,7 +1359,7 @@
             // 
             this.label_AvgFilter.AutoSize = true;
             this.label_AvgFilter.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.label_AvgFilter.Location = new System.Drawing.Point(164, 238);
+            this.label_AvgFilter.Location = new System.Drawing.Point(164, 306);
             this.label_AvgFilter.Name = "label_AvgFilter";
             this.label_AvgFilter.Size = new System.Drawing.Size(142, 26);
             this.label_AvgFilter.TabIndex = 67;
@@ -1361,7 +1373,7 @@
             0,
             0,
             0});
-            this.numericUpDownMedianBlur.Location = new System.Drawing.Point(322, 237);
+            this.numericUpDownMedianBlur.Location = new System.Drawing.Point(322, 305);
             this.numericUpDownMedianBlur.Maximum = new decimal(new int[] {
             199,
             0,
@@ -1375,7 +1387,7 @@
             // 
             this.label_MedianBlur.AutoSize = true;
             this.label_MedianBlur.Font = new System.Drawing.Font("B Yekan", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.label_MedianBlur.Location = new System.Drawing.Point(475, 238);
+            this.label_MedianBlur.Location = new System.Drawing.Point(475, 306);
             this.label_MedianBlur.Name = "label_MedianBlur";
             this.label_MedianBlur.Size = new System.Drawing.Size(125, 26);
             this.label_MedianBlur.TabIndex = 47;
@@ -1389,7 +1401,7 @@
             0,
             0,
             0});
-            this.numericUpDownThresholdParam1.Location = new System.Drawing.Point(239, 103);
+            this.numericUpDownThresholdParam1.Location = new System.Drawing.Point(311, 103);
             this.numericUpDownThresholdParam1.Maximum = new decimal(new int[] {
             200,
             0,
@@ -1407,7 +1419,7 @@
             0,
             0,
             0});
-            this.numericUpDownThresholdBlockSize.Location = new System.Drawing.Point(283, 103);
+            this.numericUpDownThresholdBlockSize.Location = new System.Drawing.Point(355, 103);
             this.numericUpDownThresholdBlockSize.Maximum = new decimal(new int[] {
             200,
             0,
@@ -1447,7 +1459,7 @@
             0,
             0,
             0});
-            this.numericUpDownMorphological_Close.Location = new System.Drawing.Point(239, 172);
+            this.numericUpDownMorphological_Close.Location = new System.Drawing.Point(312, 175);
             this.numericUpDownMorphological_Close.Maximum = new decimal(new int[] {
             99,
             0,
@@ -1465,7 +1477,7 @@
             0,
             0,
             0});
-            this.numericUpDownEdge2.Location = new System.Drawing.Point(240, 139);
+            this.numericUpDownEdge2.Location = new System.Drawing.Point(312, 139);
             this.numericUpDownEdge2.Maximum = new decimal(new int[] {
             99,
             0,
@@ -1479,11 +1491,11 @@
             // 
             this.radioButton_ShowMorphological.AutoSize = true;
             this.radioButton_ShowMorphological.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.radioButton_ShowMorphological.Location = new System.Drawing.Point(407, 175);
+            this.radioButton_ShowMorphological.Location = new System.Drawing.Point(458, 175);
             this.radioButton_ShowMorphological.Name = "radioButton_ShowMorphological";
-            this.radioButton_ShowMorphological.Size = new System.Drawing.Size(188, 27);
+            this.radioButton_ShowMorphological.Size = new System.Drawing.Size(137, 27);
             this.radioButton_ShowMorphological.TabIndex = 60;
-            this.radioButton_ShowMorphological.Text = "نمایش خروجی مورفولوژیکی:";
+            this.radioButton_ShowMorphological.Text = "خروجی مورفولوژی:";
             this.radioButton_ShowMorphological.UseVisualStyleBackColor = true;
             this.radioButton_ShowMorphological.CheckedChanged += new System.EventHandler(this.radioButton_ShowMorphological_CheckedChanged);
             // 
@@ -1495,7 +1507,7 @@
             0,
             0,
             0});
-            this.numericUpDownMorphological_Open.Location = new System.Drawing.Point(304, 172);
+            this.numericUpDownMorphological_Open.Location = new System.Drawing.Point(377, 175);
             this.numericUpDownMorphological_Open.Maximum = new decimal(new int[] {
             99,
             0,
@@ -1509,11 +1521,11 @@
             // 
             this.radioButton_ShowThreshold.AutoSize = true;
             this.radioButton_ShowThreshold.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.radioButton_ShowThreshold.Location = new System.Drawing.Point(392, 103);
+            this.radioButton_ShowThreshold.Location = new System.Drawing.Point(480, 106);
             this.radioButton_ShowThreshold.Name = "radioButton_ShowThreshold";
-            this.radioButton_ShowThreshold.Size = new System.Drawing.Size(203, 27);
+            this.radioButton_ShowThreshold.Size = new System.Drawing.Size(115, 27);
             this.radioButton_ShowThreshold.TabIndex = 58;
-            this.radioButton_ShowThreshold.Text = "نمایش تصویر دودویی با آستانه:";
+            this.radioButton_ShowThreshold.Text = "تصویر دودویی:";
             this.radioButton_ShowThreshold.UseVisualStyleBackColor = true;
             this.radioButton_ShowThreshold.CheckedChanged += new System.EventHandler(this.radioButton_ShowThreshold_CheckedChanged);
             // 
@@ -1525,7 +1537,7 @@
             0,
             0,
             0});
-            this.numericUpDownThreshold.Location = new System.Drawing.Point(327, 103);
+            this.numericUpDownThreshold.Location = new System.Drawing.Point(399, 103);
             this.numericUpDownThreshold.Maximum = new decimal(new int[] {
             200,
             0,
@@ -1540,11 +1552,11 @@
             this.radioButton_ShowGaussian.AutoSize = true;
             this.radioButton_ShowGaussian.Enabled = false;
             this.radioButton_ShowGaussian.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.radioButton_ShowGaussian.Location = new System.Drawing.Point(420, 70);
+            this.radioButton_ShowGaussian.Location = new System.Drawing.Point(454, 70);
             this.radioButton_ShowGaussian.Name = "radioButton_ShowGaussian";
-            this.radioButton_ShowGaussian.Size = new System.Drawing.Size(175, 27);
+            this.radioButton_ShowGaussian.Size = new System.Drawing.Size(141, 27);
             this.radioButton_ShowGaussian.TabIndex = 56;
-            this.radioButton_ShowGaussian.Text = "اعمال تابع گاوسی - هسته:";
+            this.radioButton_ShowGaussian.Text = "تابع گاوسی - هسته:";
             this.radioButton_ShowGaussian.UseVisualStyleBackColor = true;
             this.radioButton_ShowGaussian.CheckedChanged += new System.EventHandler(this.radioButton_ShowGaussian_CheckedChanged);
             // 
@@ -1557,7 +1569,7 @@
             0,
             0,
             0});
-            this.numericUpDownGaussian.Location = new System.Drawing.Point(240, 67);
+            this.numericUpDownGaussian.Location = new System.Drawing.Point(312, 67);
             this.numericUpDownGaussian.Maximum = new decimal(new int[] {
             199,
             0,
@@ -1571,11 +1583,11 @@
             // 
             this.radioButton_ShowGrayscale.AutoSize = true;
             this.radioButton_ShowGrayscale.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.radioButton_ShowGrayscale.Location = new System.Drawing.Point(210, 37);
+            this.radioButton_ShowGrayscale.Location = new System.Drawing.Point(321, 37);
             this.radioButton_ShowGrayscale.Name = "radioButton_ShowGrayscale";
-            this.radioButton_ShowGrayscale.Size = new System.Drawing.Size(157, 27);
+            this.radioButton_ShowGrayscale.Size = new System.Drawing.Size(118, 27);
             this.radioButton_ShowGrayscale.TabIndex = 54;
-            this.radioButton_ShowGrayscale.Text = "نمایش تصویر خاکستری";
+            this.radioButton_ShowGrayscale.Text = "تصویر خاکستری";
             this.radioButton_ShowGrayscale.UseVisualStyleBackColor = true;
             this.radioButton_ShowGrayscale.CheckedChanged += new System.EventHandler(this.radioButton_ShowGrayscale_CheckedChanged);
             // 
@@ -1583,11 +1595,11 @@
             // 
             this.radioButton_ShowEdge.AutoSize = true;
             this.radioButton_ShowEdge.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.radioButton_ShowEdge.Location = new System.Drawing.Point(405, 139);
+            this.radioButton_ShowEdge.Location = new System.Drawing.Point(477, 142);
             this.radioButton_ShowEdge.Name = "radioButton_ShowEdge";
-            this.radioButton_ShowEdge.Size = new System.Drawing.Size(190, 27);
+            this.radioButton_ShowEdge.Size = new System.Drawing.Size(118, 27);
             this.radioButton_ShowEdge.TabIndex = 53;
-            this.radioButton_ShowEdge.Text = "نمایش لبه‌ها - هسته لبه‌یاب:";
+            this.radioButton_ShowEdge.Text = "لبه‌های Canny:";
             this.radioButton_ShowEdge.UseVisualStyleBackColor = true;
             this.radioButton_ShowEdge.CheckedChanged += new System.EventHandler(this.radioButton_ShowEdge_CheckedChanged);
             // 
@@ -1596,12 +1608,12 @@
             this.radioButton_ShowMainFrame.AutoSize = true;
             this.radioButton_ShowMainFrame.Checked = true;
             this.radioButton_ShowMainFrame.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
-            this.radioButton_ShowMainFrame.Location = new System.Drawing.Point(459, 37);
+            this.radioButton_ShowMainFrame.Location = new System.Drawing.Point(498, 37);
             this.radioButton_ShowMainFrame.Name = "radioButton_ShowMainFrame";
-            this.radioButton_ShowMainFrame.Size = new System.Drawing.Size(136, 27);
+            this.radioButton_ShowMainFrame.Size = new System.Drawing.Size(97, 27);
             this.radioButton_ShowMainFrame.TabIndex = 52;
             this.radioButton_ShowMainFrame.TabStop = true;
-            this.radioButton_ShowMainFrame.Text = "نمایش تصویر اصلی";
+            this.radioButton_ShowMainFrame.Text = "تصویر اصلی";
             this.radioButton_ShowMainFrame.UseVisualStyleBackColor = true;
             this.radioButton_ShowMainFrame.CheckedChanged += new System.EventHandler(this.radioButton_ShowMainFrame_CheckedChanged);
             // 
@@ -1613,7 +1625,7 @@
             0,
             0,
             0});
-            this.numericUpDownEdge1.Location = new System.Drawing.Point(305, 139);
+            this.numericUpDownEdge1.Location = new System.Drawing.Point(377, 139);
             this.numericUpDownEdge1.Maximum = new decimal(new int[] {
             99,
             0,
@@ -1881,6 +1893,73 @@
             this.radioButtonCameraOn.UseVisualStyleBackColor = true;
             this.radioButtonCameraOn.CheckedChanged += new System.EventHandler(this.radioButtonCameraOn_CheckedChanged);
             // 
+            // radioButton_FilteredFrame
+            // 
+            this.radioButton_FilteredFrame.AutoSize = true;
+            this.radioButton_FilteredFrame.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.radioButton_FilteredFrame.Location = new System.Drawing.Point(29, 67);
+            this.radioButton_FilteredFrame.Name = "radioButton_FilteredFrame";
+            this.radioButton_FilteredFrame.Size = new System.Drawing.Size(222, 27);
+            this.radioButton_FilteredFrame.TabIndex = 73;
+            this.radioButton_FilteredFrame.Text = "خروجی پس از فیلتر میانه و میانگین";
+            this.radioButton_FilteredFrame.UseVisualStyleBackColor = true;
+            this.radioButton_FilteredFrame.CheckedChanged += new System.EventHandler(this.RadioButton_FilteredFrame_CheckedChanged);
+            // 
+            // radioButton_ThresholdDiffered
+            // 
+            this.radioButton_ThresholdDiffered.AutoSize = true;
+            this.radioButton_ThresholdDiffered.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.radioButton_ThresholdDiffered.Location = new System.Drawing.Point(22, 103);
+            this.radioButton_ThresholdDiffered.Name = "radioButton_ThresholdDiffered";
+            this.radioButton_ThresholdDiffered.Size = new System.Drawing.Size(229, 27);
+            this.radioButton_ThresholdDiffered.TabIndex = 74;
+            this.radioButton_ThresholdDiffered.Text = "خروجی پس از تفاضل و آستانه‌گذاری";
+            this.radioButton_ThresholdDiffered.UseVisualStyleBackColor = true;
+            // 
+            // radioButton_SobelResult
+            // 
+            this.radioButton_SobelResult.AutoSize = true;
+            this.radioButton_SobelResult.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.radioButton_SobelResult.Location = new System.Drawing.Point(99, 142);
+            this.radioButton_SobelResult.Name = "radioButton_SobelResult";
+            this.radioButton_SobelResult.Size = new System.Drawing.Size(152, 27);
+            this.radioButton_SobelResult.TabIndex = 75;
+            this.radioButton_SobelResult.Text = "خروجی لبه‌های Sobel";
+            this.radioButton_SobelResult.UseVisualStyleBackColor = true;
+            // 
+            // radioButton_CC2
+            // 
+            this.radioButton_CC2.AutoSize = true;
+            this.radioButton_CC2.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.radioButton_CC2.Location = new System.Drawing.Point(92, 211);
+            this.radioButton_CC2.Name = "radioButton_CC2";
+            this.radioButton_CC2.Size = new System.Drawing.Size(159, 27);
+            this.radioButton_CC2.TabIndex = 76;
+            this.radioButton_CC2.Text = "خروجی اجزاء مرتبط دوم";
+            this.radioButton_CC2.UseVisualStyleBackColor = true;
+            // 
+            // radioButton_CC3
+            // 
+            this.radioButton_CC3.AutoSize = true;
+            this.radioButton_CC3.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.radioButton_CC3.Location = new System.Drawing.Point(88, 244);
+            this.radioButton_CC3.Name = "radioButton_CC3";
+            this.radioButton_CC3.Size = new System.Drawing.Size(163, 27);
+            this.radioButton_CC3.TabIndex = 77;
+            this.radioButton_CC3.Text = "خروجی اجزاء مرتبط سوم";
+            this.radioButton_CC3.UseVisualStyleBackColor = true;
+            // 
+            // radioButton_CC1
+            // 
+            this.radioButton_CC1.AutoSize = true;
+            this.radioButton_CC1.Font = new System.Drawing.Font("B Yekan", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(178)));
+            this.radioButton_CC1.Location = new System.Drawing.Point(93, 178);
+            this.radioButton_CC1.Name = "radioButton_CC1";
+            this.radioButton_CC1.Size = new System.Drawing.Size(158, 27);
+            this.radioButton_CC1.TabIndex = 78;
+            this.radioButton_CC1.Text = "خروجی اجزاء مرتبط اول";
+            this.radioButton_CC1.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
@@ -2109,6 +2188,12 @@
         private System.Windows.Forms.NumericUpDown numericUpDownDifferenceThreshold;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown numericUpDownSobelKernel;
+        private System.Windows.Forms.RadioButton radioButton_FilteredFrame;
+        private System.Windows.Forms.RadioButton radioButton_ThresholdDiffered;
+        private System.Windows.Forms.RadioButton radioButton_SobelResult;
+        private System.Windows.Forms.RadioButton radioButton_CC1;
+        private System.Windows.Forms.RadioButton radioButton_CC3;
+        private System.Windows.Forms.RadioButton radioButton_CC2;
     }
 }
 

@@ -84,6 +84,13 @@ namespace EntranceControl
         Mat EdgeDetectionFrame = new Mat();     // Canny-enabled Frame
         Mat OpenMorphFrame = new Mat();         // Open Morphological Frame
         Mat CloseMorphFrame = new Mat();        // Close Morphological Frame
+        // New LPD Method
+        Mat FilteredFrame = new Mat();          // Keeps the Results of Median and Average Frame
+        Mat ThresholdDiffered = new Mat();      // Keeps the result of AbsDiff and Thresholding
+        Mat SobelResult = new Mat();            // Keeps the output of Sobel
+        Mat ConnectedComponents1 = new Mat();   // Keeps the output of the first Connected Components
+        Mat ConnectedComponents2 = new Mat();   // Keeps the output of the second Connected Components
+        Mat ConnectedComponents3 = new Mat();   // Keeps the output of the third Connected Components
         int gaussianKernel, thresholdValue, cannyThresholdFirst, cannyThresholdSecond, thresholdBlockSize, thresholdParam1;
         int medianBlurFilter, averageFilter, sobelKernelSize;
         double differenceThreshold;
@@ -185,7 +192,7 @@ namespace EntranceControl
             closeKernel = 5;
             medianBlurFilter = 5;
             averageFilter = 21;
-            differenceThreshold = 25;
+            differenceThreshold = 80;
             sobelKernelSize = 5;
             numericUpDownGaussian.Value = gaussianKernel;
             numericUpDownThreshold.Value = thresholdValue;
@@ -865,6 +872,12 @@ namespace EntranceControl
             }
         }
 
+        private void RadioButton_FilteredFrame_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton_FilteredFrame.Checked && processedFrame != null)
+                pictureBoxROISetting.Image = new Bitmap(FilteredFrame.Bitmap);
+        }
+
         public void db_Delete_Owner(string NationalCode)
         {
             try
@@ -1120,17 +1133,21 @@ namespace EntranceControl
             {
                 Mat croppedGrayFrame = new Mat(GrayFrame, RegionOfInterest);
                 croppedFrame = new Mat(ColorFrame, RegionOfInterest);
-                Mat detector = croppedGrayFrame.Clone();
-                CvInvoke.MedianBlur(croppedGrayFrame, detector, medianBlurFilter);
-                CvInvoke.Blur(detector, detector, new Size(averageFilter, averageFilter), new Point(-1, -1));
+                FilteredFrame = croppedGrayFrame.Clone();
+                CvInvoke.MedianBlur(croppedGrayFrame, FilteredFrame, medianBlurFilter);
+                CvInvoke.Blur(FilteredFrame, FilteredFrame, new Size(averageFilter, averageFilter), new Point(-1, -1));
                 // Pre-processing steps
                 Mat preprocessedResult = croppedGrayFrame.Clone();
-                CvInvoke.AbsDiff(detector, croppedGrayFrame, preprocessedResult);
+                CvInvoke.AbsDiff(FilteredFrame, croppedGrayFrame, preprocessedResult);
                 CvInvoke.Threshold(preprocessedResult, preprocessedResult, differenceThreshold, 255, ThresholdType.Binary);
+                ThresholdDiffered = preprocessedResult.Clone();
                 CvInvoke.Sobel(preprocessedResult, preprocessedResult, DepthType.Cv8U, 1, 0, sobelKernelSize);
+                SobelResult = preprocessedResult.Clone();
                 Mat stats = new Mat(), centroids = new Mat();
                 CvInvoke.ConnectedComponentsWithStats(preprocessedResult, preprocessedResult, stats, centroids, LineType.FourConnected);
+                // Console.WriteLine(stats.Rows);
                 preprocessedResult.ConvertTo(preprocessedResult, DepthType.Cv8U);
+                ConnectedComponents1 = preprocessedResult.Clone();
                 var kernelClose = CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(3, 10), new Point(-1, -1));
                 CvInvoke.MorphologyEx(preprocessedResult, preprocessedResult, MorphOp.Close, kernelClose, new Point(-1, -1), 1, BorderType.Default, new MCvScalar());
                 var kernelOpen = CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(4, 8), new Point(-1, -1));
@@ -1139,6 +1156,7 @@ namespace EntranceControl
                 Mat finalResult = preprocessedResult.Clone();
                 CvInvoke.ConnectedComponentsWithStats(finalResult, finalResult, stats, centroids, LineType.FourConnected);
                 finalResult.ConvertTo(finalResult, DepthType.Cv8U);
+                ConnectedComponents2 = preprocessedResult.Clone();
                 for (int i=1; i<stats.Rows; i++) {
                     if (GetValue(stats, i, 2) > 120) {
                         CvInvoke.MorphologyEx(finalResult, finalResult, MorphOp.Open, CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(8, 8), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar());
@@ -1150,6 +1168,7 @@ namespace EntranceControl
                 }
                 finalResult.ConvertTo(finalResult, DepthType.Cv8U);
                 CvInvoke.ConnectedComponentsWithStats(finalResult, finalResult, stats, centroids, LineType.FourConnected);
+                ConnectedComponents3 = preprocessedResult.Clone();
                 // Draw Bounding Boxes
                 for (int i = 1; i < stats.Rows; i++) {
                     Rectangle boundingBox = new Rectangle(GetValue(stats, i, 0), GetValue(stats, i, 1), GetValue(stats, i, 0)+GetValue(stats, i, 2), GetValue(stats, i, 1)+GetValue(stats, i, 3));
