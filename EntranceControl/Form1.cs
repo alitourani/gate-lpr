@@ -191,7 +191,7 @@ namespace EntranceControl
             openKernel = 1;
             closeKernel = 5;
             medianBlurFilter = 5;
-            averageFilter = 21;
+            averageFilter = 5;
             differenceThreshold = 80;
             sobelKernelSize = 5;
             numericUpDownGaussian.Value = gaussianKernel;
@@ -878,6 +878,36 @@ namespace EntranceControl
                 pictureBoxROISetting.Image = new Bitmap(FilteredFrame.Bitmap);
         }
 
+        private void RadioButton_ThresholdDiffered_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton_ThresholdDiffered.Checked && processedFrame != null)
+                pictureBoxROISetting.Image = new Bitmap(ThresholdDiffered.Bitmap);
+        }
+
+        private void RadioButton_SobelResult_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton_SobelResult.Checked && processedFrame != null)
+                pictureBoxROISetting.Image = new Bitmap(SobelResult.Bitmap);
+        }
+
+        private void RadioButton_CC1_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton_CC1.Checked && processedFrame != null)
+                pictureBoxROISetting.Image = new Bitmap(ConnectedComponents1.Bitmap);
+        }
+
+        private void RadioButton_CC2_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton_CC2.Checked && processedFrame != null)
+                pictureBoxROISetting.Image = new Bitmap(ConnectedComponents2.Bitmap);
+        }
+
+        private void RadioButton_CC3_CheckedChanged(object sender, EventArgs e)
+        {
+            if (radioButton_CC3.Checked && processedFrame != null)
+                pictureBoxROISetting.Image = new Bitmap(ConnectedComponents3.Bitmap);
+        }
+
         public void db_Delete_Owner(string NationalCode)
         {
             try
@@ -1156,19 +1186,19 @@ namespace EntranceControl
                 Mat finalResult = preprocessedResult.Clone();
                 CvInvoke.ConnectedComponentsWithStats(finalResult, finalResult, stats, centroids, LineType.FourConnected);
                 finalResult.ConvertTo(finalResult, DepthType.Cv8U);
-                ConnectedComponents2 = preprocessedResult.Clone();
+                ConnectedComponents2 = finalResult.Clone();
                 for (int i=1; i<stats.Rows; i++) {
                     if (GetValue(stats, i, 2) > 120) {
                         CvInvoke.MorphologyEx(finalResult, finalResult, MorphOp.Open, CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(8, 8), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar());
                     } else if (GetValue(stats, i, 2) <= 65) {
-                        CvInvoke.MorphologyEx(preprocessedResult, preprocessedResult, MorphOp.Close, CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(1, 20), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar());
+                        CvInvoke.MorphologyEx(finalResult, finalResult, MorphOp.Close, CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(1, 20), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar());
                     } else if (GetValue(stats, i, 3) > 53) {
                         CvInvoke.MorphologyEx(finalResult, finalResult, MorphOp.Open, CvInvoke.GetStructuringElement(ElementShape.Rectangle, new Size(1, 10), new Point(-1, -1)), new Point(-1, -1), 1, BorderType.Default, new MCvScalar());
                     }
                 }
                 finalResult.ConvertTo(finalResult, DepthType.Cv8U);
                 CvInvoke.ConnectedComponentsWithStats(finalResult, finalResult, stats, centroids, LineType.FourConnected);
-                ConnectedComponents3 = preprocessedResult.Clone();
+                ConnectedComponents3 = finalResult.Clone();
                 // Draw Bounding Boxes
                 for (int i = 1; i < stats.Rows; i++) {
                     Rectangle boundingBox = new Rectangle(GetValue(stats, i, 0), GetValue(stats, i, 1), GetValue(stats, i, 0)+GetValue(stats, i, 2), GetValue(stats, i, 1)+GetValue(stats, i, 3));
